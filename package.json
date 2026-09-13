@@ -7,7 +7,9 @@
     "dev": "vite",
     "server": "node server/server.mjs",
     "build": "tsc -b && vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "assets:sync": "node tools/sync-ro-assets.mjs",
+    "assets:verify": "node tools/verify-ro-assets.mjs"
   },
   "dependencies": {
     "@vitejs/plugin-react": "latest",

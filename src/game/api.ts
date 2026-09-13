@@ -1,4 +1,4 @@
-const API='http://localhost:8787/api'
+const API=import.meta.env.VITE_API_URL || (import.meta.env.DEV?'http://localhost:8787/api':'/api')
 const TOKEN_KEY='ragnarok-idle-token'
 
 async function request(path:string,options:RequestInit={}){

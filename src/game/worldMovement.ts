@@ -14,7 +14,7 @@ const spawnNorm:Point[]=[
 
 function monsterName(){
   const label=document.querySelector<HTMLElement>('.main-mob .mob-name')
-  return (label?.textContent||'Poring').split('·')[0].trim()
+  return label?.closest<HTMLElement>('.main-mob')?.dataset.monster || (label?.textContent||'Poring').split('·')[0].trim()
 }
 
 function direction8(dx:number,dy:number){

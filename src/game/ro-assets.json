@@ -1,0 +1,2014 @@
+{
+  "monsters": {
+    "Poring": {
+      "id": 1002,
+      "src": "/ro/monsters/1002/idle-0.png",
+      "animations": {
+        "idle": [
+          "/ro/monsters/1002/idle-0.png",
+          "/ro/monsters/1002/idle-1.png",
+          "/ro/monsters/1002/idle-2.png",
+          "/ro/monsters/1002/idle-3.png",
+          "/ro/monsters/1002/idle-4.png",
+          "/ro/monsters/1002/idle-5.png",
+          "/ro/monsters/1002/idle-6.png",
+          "/ro/monsters/1002/idle-7.png"
+        ],
+        "walk": [
+          "/ro/monsters/1002/walk-0.png",
+          "/ro/monsters/1002/walk-1.png",
+          "/ro/monsters/1002/walk-2.png",
+          "/ro/monsters/1002/walk-3.png",
+          "/ro/monsters/1002/walk-4.png",
+          "/ro/monsters/1002/walk-5.png",
+          "/ro/monsters/1002/walk-6.png",
+          "/ro/monsters/1002/walk-7.png"
+        ],
+        "attack": [
+          "/ro/monsters/1002/attack-0.png",
+          "/ro/monsters/1002/attack-1.png",
+          "/ro/monsters/1002/attack-2.png",
+          "/ro/monsters/1002/attack-3.png",
+          "/ro/monsters/1002/attack-4.png",
+          "/ro/monsters/1002/attack-5.png",
+          "/ro/monsters/1002/attack-6.png",
+          "/ro/monsters/1002/attack-7.png"
+        ],
+        "hit": [
+          "/ro/monsters/1002/hit-0.png",
+          "/ro/monsters/1002/hit-1.png",
+          "/ro/monsters/1002/hit-2.png",
+          "/ro/monsters/1002/hit-3.png",
+          "/ro/monsters/1002/hit-4.png",
+          "/ro/monsters/1002/hit-5.png",
+          "/ro/monsters/1002/hit-6.png",
+          "/ro/monsters/1002/hit-7.png"
+        ],
+        "death": [
+          "/ro/monsters/1002/death-0.png",
+          "/ro/monsters/1002/death-1.png",
+          "/ro/monsters/1002/death-2.png",
+          "/ro/monsters/1002/death-3.png",
+          "/ro/monsters/1002/death-4.png",
+          "/ro/monsters/1002/death-5.png",
+          "/ro/monsters/1002/death-6.png",
+          "/ro/monsters/1002/death-7.png"
+        ]
+      },
+      "width": 41,
+      "height": 39
+    },
+    "Drops": {
+      "id": 1113,
+      "src": "/ro/monsters/1113/idle-0.png",
+      "animations": {
+        "idle": [
+          "/ro/monsters/1113/idle-0.png",
+          "/ro/monsters/1113/idle-1.png",
+          "/ro/monsters/1113/idle-2.png",
+          "/ro/monsters/1113/idle-3.png",
+          "/ro/monsters/1113/idle-4.png",
+          "/ro/monsters/1113/idle-5.png",
+          "/ro/monsters/1113/idle-6.png",
+          "/ro/monsters/1113/idle-7.png"
+        ],
+        "walk": [
+          "/ro/monsters/1113/walk-0.png",
+          "/ro/monsters/1113/walk-1.png",
+          "/ro/monsters/1113/walk-2.png",
+          "/ro/monsters/1113/walk-3.png",
+          "/ro/monsters/1113/walk-4.png",
+          "/ro/monsters/1113/walk-5.png",
+          "/ro/monsters/1113/walk-6.png",
+          "/ro/monsters/1113/walk-7.png"
+        ],
+        "attack": [
+          "/ro/monsters/1113/attack-0.png",
+          "/ro/monsters/1113/attack-1.png",
+          "/ro/monsters/1113/attack-2.png",
+          "/ro/monsters/1113/attack-3.png",
+          "/ro/monsters/1113/attack-4.png",
+          "/ro/monsters/1113/attack-5.png",
+          "/ro/monsters/1113/attack-6.png",
+          "/ro/monsters/1113/attack-7.png"
+        ],
+        "hit": [
+          "/ro/monsters/1113/hit-0.png",
+          "/ro/monsters/1113/hit-1.png",
+          "/ro/monsters/1113/hit-2.png",
+          "/ro/monsters/1113/hit-3.png",
+          "/ro/monsters/1113/hit-4.png",
+          "/ro/monsters/1113/hit-5.png",
+          "/ro/monsters/1113/hit-6.png",
+          "/ro/monsters/1113/hit-7.png"
+        ],
+        "death": [
+          "/ro/monsters/1113/death-0.png",
+          "/ro/monsters/1113/death-1.png",
+          "/ro/monsters/1113/death-2.png",
+          "/ro/monsters/1113/death-3.png",
+          "/ro/monsters/1113/death-4.png",
+          "/ro/monsters/1113/death-5.png",
+          "/ro/monsters/1113/death-6.png",
+          "/ro/monsters/1113/death-7.png"
+        ]
+      },
+      "width": 41,
+      "height": 39
+    },
+    "Lunatic": {
+      "id": 1063,
+      "src": "/ro/monsters/1063/idle-0.png",
+      "animations": {
+        "idle": [
+          "/ro/monsters/1063/idle-0.png",
+          "/ro/monsters/1063/idle-1.png",
+          "/ro/monsters/1063/idle-2.png",
+          "/ro/monsters/1063/idle-3.png",
+          "/ro/monsters/1063/idle-4.png",
+          "/ro/monsters/1063/idle-5.png",
+          "/ro/monsters/1063/idle-6.png",
+          "/ro/monsters/1063/idle-7.png"
+        ],
+        "walk": [
+          "/ro/monsters/1063/walk-0.png",
+          "/ro/monsters/1063/walk-1.png",
+          "/ro/monsters/1063/walk-2.png",
+          "/ro/monsters/1063/walk-3.png",
+          "/ro/monsters/1063/walk-4.png",
+          "/ro/monsters/1063/walk-5.png",
+          "/ro/monsters/1063/walk-6.png",
+          "/ro/monsters/1063/walk-7.png"
+        ],
+        "attack": [
+          "/ro/monsters/1063/attack-0.png",
+          "/ro/monsters/1063/attack-1.png",
+          "/ro/monsters/1063/attack-2.png",
+          "/ro/monsters/1063/attack-3.png",
+          "/ro/monsters/1063/attack-4.png",
+          "/ro/monsters/1063/attack-5.png",
+          "/ro/monsters/1063/attack-6.png",
+          "/ro/monsters/1063/attack-7.png"
+        ],
+        "hit": [
+          "/ro/monsters/1063/hit-0.png",
+          "/ro/monsters/1063/hit-1.png",
+          "/ro/monsters/1063/hit-2.png",
+          "/ro/monsters/1063/hit-3.png",
+          "/ro/monsters/1063/hit-4.png",
+          "/ro/monsters/1063/hit-5.png",
+          "/ro/monsters/1063/hit-6.png",
+          "/ro/monsters/1063/hit-7.png"
+        ],
+        "death": [
+          "/ro/monsters/1063/death-0.png",
+          "/ro/monsters/1063/death-1.png",
+          "/ro/monsters/1063/death-2.png",
+          "/ro/monsters/1063/death-3.png",
+          "/ro/monsters/1063/death-4.png",
+          "/ro/monsters/1063/death-5.png",
+          "/ro/monsters/1063/death-6.png",
+          "/ro/monsters/1063/death-7.png"
+        ]
+      },
+      "width": 34,
+      "height": 28
+    },
+    "Pupa": {
+      "id": 1008,
+      "src": "/ro/monsters/1008/idle-0.png",
+      "animations": {
+        "idle": [
+          "/ro/monsters/1008/idle-0.png",
+          "/ro/monsters/1008/idle-1.png",
+          "/ro/monsters/1008/idle-2.png",
+          "/ro/monsters/1008/idle-3.png",
+          "/ro/monsters/1008/idle-4.png",
+          "/ro/monsters/1008/idle-5.png",
+          "/ro/monsters/1008/idle-6.png",
+          "/ro/monsters/1008/idle-7.png"
+        ],
+        "walk": [
+          "/ro/monsters/1008/walk-0.png",
+          "/ro/monsters/1008/walk-1.png",
+          "/ro/monsters/1008/walk-2.png",
+          "/ro/monsters/1008/walk-3.png",
+          "/ro/monsters/1008/walk-4.png",
+          "/ro/monsters/1008/walk-5.png",
+          "/ro/monsters/1008/walk-6.png",
+          "/ro/monsters/1008/walk-7.png"
+        ],
+        "attack": [
+          "/ro/monsters/1008/attack-0.png",
+          "/ro/monsters/1008/attack-1.png",
+          "/ro/monsters/1008/attack-2.png",
+          "/ro/monsters/1008/attack-3.png",
+          "/ro/monsters/1008/attack-4.png",
+          "/ro/monsters/1008/attack-5.png",
+          "/ro/monsters/1008/attack-6.png",
+          "/ro/monsters/1008/attack-7.png"
+        ],
+        "hit": [
+          "/ro/monsters/1008/hit-0.png",
+          "/ro/monsters/1008/hit-1.png",
+          "/ro/monsters/1008/hit-2.png",
+          "/ro/monsters/1008/hit-3.png",
+          "/ro/monsters/1008/hit-4.png",
+          "/ro/monsters/1008/hit-5.png",
+          "/ro/monsters/1008/hit-6.png",
+          "/ro/monsters/1008/hit-7.png"
+        ],
+        "death": [
+          "/ro/monsters/1008/death-0.png",
+          "/ro/monsters/1008/death-1.png",
+          "/ro/monsters/1008/death-2.png",
+          "/ro/monsters/1008/death-3.png",
+          "/ro/monsters/1008/death-4.png",
+          "/ro/monsters/1008/death-5.png",
+          "/ro/monsters/1008/death-6.png",
+          "/ro/monsters/1008/death-7.png"
+        ]
+      },
+      "width": 32,
+      "height": 41
+    },
+    "Chonchon": {
+      "id": 1011,
+      "src": "/ro/monsters/1011/idle-0.png",
+      "animations": {
+        "idle": [
+          "/ro/monsters/1011/idle-0.png",
+          "/ro/monsters/1011/idle-1.png",
+          "/ro/monsters/1011/idle-2.png",
+          "/ro/monsters/1011/idle-3.png",
+          "/ro/monsters/1011/idle-4.png",
+          "/ro/monsters/1011/idle-5.png",
+          "/ro/monsters/1011/idle-6.png",
+          "/ro/monsters/1011/idle-7.png"
+        ],
+        "walk": [
+          "/ro/monsters/1011/walk-0.png",
+          "/ro/monsters/1011/walk-1.png",
+          "/ro/monsters/1011/walk-2.png",
+          "/ro/monsters/1011/walk-3.png",
+          "/ro/monsters/1011/walk-4.png",
+          "/ro/monsters/1011/walk-5.png",
+          "/ro/monsters/1011/walk-6.png",
+          "/ro/monsters/1011/walk-7.png"
+        ],
+        "attack": [
+          "/ro/monsters/1011/attack-0.png",
+          "/ro/monsters/1011/attack-1.png",
+          "/ro/monsters/1011/attack-2.png",
+          "/ro/monsters/1011/attack-3.png",
+          "/ro/monsters/1011/attack-4.png",
+          "/ro/monsters/1011/attack-5.png",
+          "/ro/monsters/1011/attack-6.png",
+          "/ro/monsters/1011/attack-7.png"
+        ],
+        "hit": [
+          "/ro/monsters/1011/hit-0.png",
+          "/ro/monsters/1011/hit-1.png",
+          "/ro/monsters/1011/hit-2.png",
+          "/ro/monsters/1011/hit-3.png",
+          "/ro/monsters/1011/hit-4.png",
+          "/ro/monsters/1011/hit-5.png",
+          "/ro/monsters/1011/hit-6.png",
+          "/ro/monsters/1011/hit-7.png"
+        ],
+        "death": [
+          "/ro/monsters/1011/death-0.png",
+          "/ro/monsters/1011/death-1.png",
+          "/ro/monsters/1011/death-2.png",
+          "/ro/monsters/1011/death-3.png",
+          "/ro/monsters/1011/death-4.png",
+          "/ro/monsters/1011/death-5.png",
+          "/ro/monsters/1011/death-6.png",
+          "/ro/monsters/1011/death-7.png"
+        ]
+      },
+      "width": 37,
+      "height": 34
+    },
+    "Fabre": {
+      "id": 1007,
+      "src": "/ro/monsters/1007/idle-0.png",
+      "animations": {
+        "idle": [
+          "/ro/monsters/1007/idle-0.png",
+          "/ro/monsters/1007/idle-1.png",
+          "/ro/monsters/1007/idle-2.png",
+          "/ro/monsters/1007/idle-3.png",
+          "/ro/monsters/1007/idle-4.png",
+          "/ro/monsters/1007/idle-5.png",
+          "/ro/monsters/1007/idle-6.png",
+          "/ro/monsters/1007/idle-7.png"
+        ],
+        "walk": [
+          "/ro/monsters/1007/walk-0.png",
+          "/ro/monsters/1007/walk-1.png",
+          "/ro/monsters/1007/walk-2.png",
+          "/ro/monsters/1007/walk-3.png",
+          "/ro/monsters/1007/walk-4.png",
+          "/ro/monsters/1007/walk-5.png",
+          "/ro/monsters/1007/walk-6.png",
+          "/ro/monsters/1007/walk-7.png"
+        ],
+        "attack": [
+          "/ro/monsters/1007/attack-0.png",
+          "/ro/monsters/1007/attack-1.png",
+          "/ro/monsters/1007/attack-2.png",
+          "/ro/monsters/1007/attack-3.png",
+          "/ro/monsters/1007/attack-4.png",
+          "/ro/monsters/1007/attack-5.png",
+          "/ro/monsters/1007/attack-6.png",
+          "/ro/monsters/1007/attack-7.png"
+        ],
+        "hit": [
+          "/ro/monsters/1007/hit-0.png",
+          "/ro/monsters/1007/hit-1.png",
+          "/ro/monsters/1007/hit-2.png",
+          "/ro/monsters/1007/hit-3.png",
+          "/ro/monsters/1007/hit-4.png",
+          "/ro/monsters/1007/hit-5.png",
+          "/ro/monsters/1007/hit-6.png",
+          "/ro/monsters/1007/hit-7.png"
+        ],
+        "death": [
+          "/ro/monsters/1007/death-0.png",
+          "/ro/monsters/1007/death-1.png",
+          "/ro/monsters/1007/death-2.png",
+          "/ro/monsters/1007/death-3.png",
+          "/ro/monsters/1007/death-4.png",
+          "/ro/monsters/1007/death-5.png",
+          "/ro/monsters/1007/death-6.png",
+          "/ro/monsters/1007/death-7.png"
+        ]
+      },
+      "width": 36,
+      "height": 29
+    },
+    "Willow": {
+      "id": 1010,
+      "src": "/ro/monsters/1010/idle-0.png",
+      "animations": {
+        "idle": [
+          "/ro/monsters/1010/idle-0.png",
+          "/ro/monsters/1010/idle-1.png",
+          "/ro/monsters/1010/idle-2.png",
+          "/ro/monsters/1010/idle-3.png",
+          "/ro/monsters/1010/idle-4.png",
+          "/ro/monsters/1010/idle-5.png",
+          "/ro/monsters/1010/idle-6.png",
+          "/ro/monsters/1010/idle-7.png"
+        ],
+        "walk": [
+          "/ro/monsters/1010/walk-0.png",
+          "/ro/monsters/1010/walk-1.png",
+          "/ro/monsters/1010/walk-2.png",
+          "/ro/monsters/1010/walk-3.png",
+          "/ro/monsters/1010/walk-4.png",
+          "/ro/monsters/1010/walk-5.png",
+          "/ro/monsters/1010/walk-6.png",
+          "/ro/monsters/1010/walk-7.png"
+        ],
+        "attack": [
+          "/ro/monsters/1010/attack-0.png",
+          "/ro/monsters/1010/attack-1.png",
+          "/ro/monsters/1010/attack-2.png",
+          "/ro/monsters/1010/attack-3.png",
+          "/ro/monsters/1010/attack-4.png",
+          "/ro/monsters/1010/attack-5.png",
+          "/ro/monsters/1010/attack-6.png",
+          "/ro/monsters/1010/attack-7.png"
+        ],
+        "hit": [
+          "/ro/monsters/1010/hit-0.png",
+          "/ro/monsters/1010/hit-1.png",
+          "/ro/monsters/1010/hit-2.png",
+          "/ro/monsters/1010/hit-3.png",
+          "/ro/monsters/1010/hit-4.png",
+          "/ro/monsters/1010/hit-5.png",
+          "/ro/monsters/1010/hit-6.png",
+          "/ro/monsters/1010/hit-7.png"
+        ],
+        "death": [
+          "/ro/monsters/1010/death-0.png",
+          "/ro/monsters/1010/death-1.png",
+          "/ro/monsters/1010/death-2.png",
+          "/ro/monsters/1010/death-3.png",
+          "/ro/monsters/1010/death-4.png",
+          "/ro/monsters/1010/death-5.png",
+          "/ro/monsters/1010/death-6.png",
+          "/ro/monsters/1010/death-7.png"
+        ]
+      },
+      "width": 70,
+      "height": 76
+    },
+    "Mandragora": {
+      "id": 1020,
+      "src": "/ro/monsters/1020/idle-0.png",
+      "animations": {
+        "idle": [
+          "/ro/monsters/1020/idle-0.png",
+          "/ro/monsters/1020/idle-1.png",
+          "/ro/monsters/1020/idle-2.png",
+          "/ro/monsters/1020/idle-3.png",
+          "/ro/monsters/1020/idle-4.png",
+          "/ro/monsters/1020/idle-5.png",
+          "/ro/monsters/1020/idle-6.png",
+          "/ro/monsters/1020/idle-7.png"
+        ],
+        "walk": [
+          "/ro/monsters/1020/walk-0.png",
+          "/ro/monsters/1020/walk-1.png",
+          "/ro/monsters/1020/walk-2.png",
+          "/ro/monsters/1020/walk-3.png",
+          "/ro/monsters/1020/walk-4.png",
+          "/ro/monsters/1020/walk-5.png",
+          "/ro/monsters/1020/walk-6.png",
+          "/ro/monsters/1020/walk-7.png"
+        ],
+        "attack": [
+          "/ro/monsters/1020/attack-0.png",
+          "/ro/monsters/1020/attack-1.png",
+          "/ro/monsters/1020/attack-2.png",
+          "/ro/monsters/1020/attack-3.png",
+          "/ro/monsters/1020/attack-4.png",
+          "/ro/monsters/1020/attack-5.png",
+          "/ro/monsters/1020/attack-6.png",
+          "/ro/monsters/1020/attack-7.png"
+        ],
+        "hit": [
+          "/ro/monsters/1020/hit-0.png",
+          "/ro/monsters/1020/hit-1.png",
+          "/ro/monsters/1020/hit-2.png",
+          "/ro/monsters/1020/hit-3.png",
+          "/ro/monsters/1020/hit-4.png",
+          "/ro/monsters/1020/hit-5.png",
+          "/ro/monsters/1020/hit-6.png",
+          "/ro/monsters/1020/hit-7.png"
+        ],
+        "death": [
+          "/ro/monsters/1020/death-0.png",
+          "/ro/monsters/1020/death-1.png",
+          "/ro/monsters/1020/death-2.png",
+          "/ro/monsters/1020/death-3.png",
+          "/ro/monsters/1020/death-4.png",
+          "/ro/monsters/1020/death-5.png",
+          "/ro/monsters/1020/death-6.png",
+          "/ro/monsters/1020/death-7.png"
+        ]
+      },
+      "width": 94,
+      "height": 72
+    },
+    "Rocker": {
+      "id": 1052,
+      "src": "/ro/monsters/1052/idle-0.png",
+      "animations": {
+        "idle": [
+          "/ro/monsters/1052/idle-0.png",
+          "/ro/monsters/1052/idle-1.png",
+          "/ro/monsters/1052/idle-2.png",
+          "/ro/monsters/1052/idle-3.png",
+          "/ro/monsters/1052/idle-4.png",
+          "/ro/monsters/1052/idle-5.png",
+          "/ro/monsters/1052/idle-6.png",
+          "/ro/monsters/1052/idle-7.png"
+        ],
+        "walk": [
+          "/ro/monsters/1052/walk-0.png",
+          "/ro/monsters/1052/walk-1.png",
+          "/ro/monsters/1052/walk-2.png",
+          "/ro/monsters/1052/walk-3.png",
+          "/ro/monsters/1052/walk-4.png",
+          "/ro/monsters/1052/walk-5.png",
+          "/ro/monsters/1052/walk-6.png",
+          "/ro/monsters/1052/walk-7.png"
+        ],
+        "attack": [
+          "/ro/monsters/1052/attack-0.png",
+          "/ro/monsters/1052/attack-1.png",
+          "/ro/monsters/1052/attack-2.png",
+          "/ro/monsters/1052/attack-3.png",
+          "/ro/monsters/1052/attack-4.png",
+          "/ro/monsters/1052/attack-5.png",
+          "/ro/monsters/1052/attack-6.png",
+          "/ro/monsters/1052/attack-7.png"
+        ],
+        "hit": [
+          "/ro/monsters/1052/hit-0.png",
+          "/ro/monsters/1052/hit-1.png",
+          "/ro/monsters/1052/hit-2.png",
+          "/ro/monsters/1052/hit-3.png",
+          "/ro/monsters/1052/hit-4.png",
+          "/ro/monsters/1052/hit-5.png",
+          "/ro/monsters/1052/hit-6.png",
+          "/ro/monsters/1052/hit-7.png"
+        ],
+        "death": [
+          "/ro/monsters/1052/death-0.png",
+          "/ro/monsters/1052/death-1.png",
+          "/ro/monsters/1052/death-2.png",
+          "/ro/monsters/1052/death-3.png",
+          "/ro/monsters/1052/death-4.png",
+          "/ro/monsters/1052/death-5.png",
+          "/ro/monsters/1052/death-6.png",
+          "/ro/monsters/1052/death-7.png"
+        ]
+      },
+      "width": 64,
+      "height": 119
+    },
+    "Spore": {
+      "id": 1014,
+      "src": "/ro/monsters/1014/idle-0.png",
+      "animations": {
+        "idle": [
+          "/ro/monsters/1014/idle-0.png",
+          "/ro/monsters/1014/idle-1.png",
+          "/ro/monsters/1014/idle-2.png",
+          "/ro/monsters/1014/idle-3.png",
+          "/ro/monsters/1014/idle-4.png",
+          "/ro/monsters/1014/idle-5.png",
+          "/ro/monsters/1014/idle-6.png",
+          "/ro/monsters/1014/idle-7.png"
+        ],
+        "walk": [
+          "/ro/monsters/1014/walk-0.png",
+          "/ro/monsters/1014/walk-1.png",
+          "/ro/monsters/1014/walk-2.png",
+          "/ro/monsters/1014/walk-3.png",
+          "/ro/monsters/1014/walk-4.png",
+          "/ro/monsters/1014/walk-5.png",
+          "/ro/monsters/1014/walk-6.png",
+          "/ro/monsters/1014/walk-7.png"
+        ],
+        "attack": [
+          "/ro/monsters/1014/attack-0.png",
+          "/ro/monsters/1014/attack-1.png",
+          "/ro/monsters/1014/attack-2.png",
+          "/ro/monsters/1014/attack-3.png",
+          "/ro/monsters/1014/attack-4.png",
+          "/ro/monsters/1014/attack-5.png",
+          "/ro/monsters/1014/attack-6.png",
+          "/ro/monsters/1014/attack-7.png"
+        ],
+        "hit": [
+          "/ro/monsters/1014/hit-0.png",
+          "/ro/monsters/1014/hit-1.png",
+          "/ro/monsters/1014/hit-2.png",
+          "/ro/monsters/1014/hit-3.png",
+          "/ro/monsters/1014/hit-4.png",
+          "/ro/monsters/1014/hit-5.png",
+          "/ro/monsters/1014/hit-6.png",
+          "/ro/monsters/1014/hit-7.png"
+        ],
+        "death": [
+          "/ro/monsters/1014/death-0.png",
+          "/ro/monsters/1014/death-1.png",
+          "/ro/monsters/1014/death-2.png",
+          "/ro/monsters/1014/death-3.png",
+          "/ro/monsters/1014/death-4.png",
+          "/ro/monsters/1014/death-5.png",
+          "/ro/monsters/1014/death-6.png",
+          "/ro/monsters/1014/death-7.png"
+        ]
+      },
+      "width": 55,
+      "height": 56
+    },
+    "Creamy": {
+      "id": 1018,
+      "src": "/ro/monsters/1018/idle-0.png",
+      "animations": {
+        "idle": [
+          "/ro/monsters/1018/idle-0.png",
+          "/ro/monsters/1018/idle-1.png",
+          "/ro/monsters/1018/idle-2.png",
+          "/ro/monsters/1018/idle-3.png",
+          "/ro/monsters/1018/idle-4.png",
+          "/ro/monsters/1018/idle-5.png",
+          "/ro/monsters/1018/idle-6.png",
+          "/ro/monsters/1018/idle-7.png"
+        ],
+        "walk": [
+          "/ro/monsters/1018/walk-0.png",
+          "/ro/monsters/1018/walk-1.png",
+          "/ro/monsters/1018/walk-2.png",
+          "/ro/monsters/1018/walk-3.png",
+          "/ro/monsters/1018/walk-4.png",
+          "/ro/monsters/1018/walk-5.png",
+          "/ro/monsters/1018/walk-6.png",
+          "/ro/monsters/1018/walk-7.png"
+        ],
+        "attack": [
+          "/ro/monsters/1018/attack-0.png",
+          "/ro/monsters/1018/attack-1.png",
+          "/ro/monsters/1018/attack-2.png",
+          "/ro/monsters/1018/attack-3.png",
+          "/ro/monsters/1018/attack-4.png",
+          "/ro/monsters/1018/attack-5.png",
+          "/ro/monsters/1018/attack-6.png",
+          "/ro/monsters/1018/attack-7.png"
+        ],
+        "hit": [
+          "/ro/monsters/1018/hit-0.png",
+          "/ro/monsters/1018/hit-1.png",
+          "/ro/monsters/1018/hit-2.png",
+          "/ro/monsters/1018/hit-3.png",
+          "/ro/monsters/1018/hit-4.png",
+          "/ro/monsters/1018/hit-5.png",
+          "/ro/monsters/1018/hit-6.png",
+          "/ro/monsters/1018/hit-7.png"
+        ],
+        "death": [
+          "/ro/monsters/1018/death-0.png",
+          "/ro/monsters/1018/death-1.png",
+          "/ro/monsters/1018/death-2.png",
+          "/ro/monsters/1018/death-3.png",
+          "/ro/monsters/1018/death-4.png",
+          "/ro/monsters/1018/death-5.png",
+          "/ro/monsters/1018/death-6.png",
+          "/ro/monsters/1018/death-7.png"
+        ]
+      },
+      "width": 55,
+      "height": 55
+    },
+    "Muka": {
+      "id": 1055,
+      "src": "/ro/monsters/1055/idle-0.png",
+      "animations": {
+        "idle": [
+          "/ro/monsters/1055/idle-0.png",
+          "/ro/monsters/1055/idle-1.png",
+          "/ro/monsters/1055/idle-2.png",
+          "/ro/monsters/1055/idle-3.png",
+          "/ro/monsters/1055/idle-4.png",
+          "/ro/monsters/1055/idle-5.png",
+          "/ro/monsters/1055/idle-6.png",
+          "/ro/monsters/1055/idle-7.png"
+        ],
+        "walk": [
+          "/ro/monsters/1055/walk-0.png",
+          "/ro/monsters/1055/walk-1.png",
+          "/ro/monsters/1055/walk-2.png",
+          "/ro/monsters/1055/walk-3.png",
+          "/ro/monsters/1055/walk-4.png",
+          "/ro/monsters/1055/walk-5.png",
+          "/ro/monsters/1055/walk-6.png",
+          "/ro/monsters/1055/walk-7.png"
+        ],
+        "attack": [
+          "/ro/monsters/1055/attack-0.png",
+          "/ro/monsters/1055/attack-1.png",
+          "/ro/monsters/1055/attack-2.png",
+          "/ro/monsters/1055/attack-3.png",
+          "/ro/monsters/1055/attack-4.png",
+          "/ro/monsters/1055/attack-5.png",
+          "/ro/monsters/1055/attack-6.png",
+          "/ro/monsters/1055/attack-7.png"
+        ],
+        "hit": [
+          "/ro/monsters/1055/hit-0.png",
+          "/ro/monsters/1055/hit-1.png",
+          "/ro/monsters/1055/hit-2.png",
+          "/ro/monsters/1055/hit-3.png",
+          "/ro/monsters/1055/hit-4.png",
+          "/ro/monsters/1055/hit-5.png",
+          "/ro/monsters/1055/hit-6.png",
+          "/ro/monsters/1055/hit-7.png"
+        ],
+        "death": [
+          "/ro/monsters/1055/death-0.png",
+          "/ro/monsters/1055/death-1.png",
+          "/ro/monsters/1055/death-2.png",
+          "/ro/monsters/1055/death-3.png",
+          "/ro/monsters/1055/death-4.png",
+          "/ro/monsters/1055/death-5.png",
+          "/ro/monsters/1055/death-6.png",
+          "/ro/monsters/1055/death-7.png"
+        ]
+      },
+      "width": 42,
+      "height": 67
+    },
+    "Peco Peco": {
+      "id": 1019,
+      "src": "/ro/monsters/1019/idle-0.png",
+      "animations": {
+        "idle": [
+          "/ro/monsters/1019/idle-0.png",
+          "/ro/monsters/1019/idle-1.png",
+          "/ro/monsters/1019/idle-2.png",
+          "/ro/monsters/1019/idle-3.png",
+          "/ro/monsters/1019/idle-4.png",
+          "/ro/monsters/1019/idle-5.png",
+          "/ro/monsters/1019/idle-6.png",
+          "/ro/monsters/1019/idle-7.png"
+        ],
+        "walk": [
+          "/ro/monsters/1019/walk-0.png",
+          "/ro/monsters/1019/walk-1.png",
+          "/ro/monsters/1019/walk-2.png",
+          "/ro/monsters/1019/walk-3.png",
+          "/ro/monsters/1019/walk-4.png",
+          "/ro/monsters/1019/walk-5.png",
+          "/ro/monsters/1019/walk-6.png",
+          "/ro/monsters/1019/walk-7.png"
+        ],
+        "attack": [
+          "/ro/monsters/1019/attack-0.png",
+          "/ro/monsters/1019/attack-1.png",
+          "/ro/monsters/1019/attack-2.png",
+          "/ro/monsters/1019/attack-3.png",
+          "/ro/monsters/1019/attack-4.png",
+          "/ro/monsters/1019/attack-5.png",
+          "/ro/monsters/1019/attack-6.png",
+          "/ro/monsters/1019/attack-7.png"
+        ],
+        "hit": [
+          "/ro/monsters/1019/hit-0.png",
+          "/ro/monsters/1019/hit-1.png",
+          "/ro/monsters/1019/hit-2.png",
+          "/ro/monsters/1019/hit-3.png",
+          "/ro/monsters/1019/hit-4.png",
+          "/ro/monsters/1019/hit-5.png",
+          "/ro/monsters/1019/hit-6.png",
+          "/ro/monsters/1019/hit-7.png"
+        ],
+        "death": [
+          "/ro/monsters/1019/death-0.png",
+          "/ro/monsters/1019/death-1.png",
+          "/ro/monsters/1019/death-2.png",
+          "/ro/monsters/1019/death-3.png",
+          "/ro/monsters/1019/death-4.png",
+          "/ro/monsters/1019/death-5.png",
+          "/ro/monsters/1019/death-6.png",
+          "/ro/monsters/1019/death-7.png"
+        ]
+      },
+      "width": 66,
+      "height": 92
+    },
+    "Smokie": {
+      "id": 1056,
+      "src": "/ro/monsters/1056/idle-0.png",
+      "animations": {
+        "idle": [
+          "/ro/monsters/1056/idle-0.png",
+          "/ro/monsters/1056/idle-1.png",
+          "/ro/monsters/1056/idle-2.png",
+          "/ro/monsters/1056/idle-3.png",
+          "/ro/monsters/1056/idle-4.png",
+          "/ro/monsters/1056/idle-5.png",
+          "/ro/monsters/1056/idle-6.png",
+          "/ro/monsters/1056/idle-7.png"
+        ],
+        "walk": [
+          "/ro/monsters/1056/walk-0.png",
+          "/ro/monsters/1056/walk-1.png",
+          "/ro/monsters/1056/walk-2.png",
+          "/ro/monsters/1056/walk-3.png",
+          "/ro/monsters/1056/walk-4.png",
+          "/ro/monsters/1056/walk-5.png",
+          "/ro/monsters/1056/walk-6.png",
+          "/ro/monsters/1056/walk-7.png"
+        ],
+        "attack": [
+          "/ro/monsters/1056/attack-0.png",
+          "/ro/monsters/1056/attack-1.png",
+          "/ro/monsters/1056/attack-2.png",
+          "/ro/monsters/1056/attack-3.png",
+          "/ro/monsters/1056/attack-4.png",
+          "/ro/monsters/1056/attack-5.png",
+          "/ro/monsters/1056/attack-6.png",
+          "/ro/monsters/1056/attack-7.png"
+        ],
+        "hit": [
+          "/ro/monsters/1056/hit-0.png",
+          "/ro/monsters/1056/hit-1.png",
+          "/ro/monsters/1056/hit-2.png",
+          "/ro/monsters/1056/hit-3.png",
+          "/ro/monsters/1056/hit-4.png",
+          "/ro/monsters/1056/hit-5.png",
+          "/ro/monsters/1056/hit-6.png",
+          "/ro/monsters/1056/hit-7.png"
+        ],
+        "death": [
+          "/ro/monsters/1056/death-0.png",
+          "/ro/monsters/1056/death-1.png",
+          "/ro/monsters/1056/death-2.png",
+          "/ro/monsters/1056/death-3.png",
+          "/ro/monsters/1056/death-4.png",
+          "/ro/monsters/1056/death-5.png",
+          "/ro/monsters/1056/death-6.png",
+          "/ro/monsters/1056/death-7.png"
+        ]
+      },
+      "width": 45,
+      "height": 50
+    },
+    "Poporing": {
+      "id": 1031,
+      "src": "/ro/monsters/1031/idle-0.png",
+      "animations": {
+        "idle": [
+          "/ro/monsters/1031/idle-0.png",
+          "/ro/monsters/1031/idle-1.png",
+          "/ro/monsters/1031/idle-2.png",
+          "/ro/monsters/1031/idle-3.png",
+          "/ro/monsters/1031/idle-4.png",
+          "/ro/monsters/1031/idle-5.png",
+          "/ro/monsters/1031/idle-6.png",
+          "/ro/monsters/1031/idle-7.png"
+        ],
+        "walk": [
+          "/ro/monsters/1031/walk-0.png",
+          "/ro/monsters/1031/walk-1.png",
+          "/ro/monsters/1031/walk-2.png",
+          "/ro/monsters/1031/walk-3.png",
+          "/ro/monsters/1031/walk-4.png",
+          "/ro/monsters/1031/walk-5.png",
+          "/ro/monsters/1031/walk-6.png",
+          "/ro/monsters/1031/walk-7.png"
+        ],
+        "attack": [
+          "/ro/monsters/1031/attack-0.png",
+          "/ro/monsters/1031/attack-1.png",
+          "/ro/monsters/1031/attack-2.png",
+          "/ro/monsters/1031/attack-3.png",
+          "/ro/monsters/1031/attack-4.png",
+          "/ro/monsters/1031/attack-5.png",
+          "/ro/monsters/1031/attack-6.png",
+          "/ro/monsters/1031/attack-7.png"
+        ],
+        "hit": [
+          "/ro/monsters/1031/hit-0.png",
+          "/ro/monsters/1031/hit-1.png",
+          "/ro/monsters/1031/hit-2.png",
+          "/ro/monsters/1031/hit-3.png",
+          "/ro/monsters/1031/hit-4.png",
+          "/ro/monsters/1031/hit-5.png",
+          "/ro/monsters/1031/hit-6.png",
+          "/ro/monsters/1031/hit-7.png"
+        ],
+        "death": [
+          "/ro/monsters/1031/death-0.png",
+          "/ro/monsters/1031/death-1.png",
+          "/ro/monsters/1031/death-2.png",
+          "/ro/monsters/1031/death-3.png",
+          "/ro/monsters/1031/death-4.png",
+          "/ro/monsters/1031/death-5.png",
+          "/ro/monsters/1031/death-6.png",
+          "/ro/monsters/1031/death-7.png"
+        ]
+      },
+      "width": 41,
+      "height": 39
+    },
+    "Elder Willow": {
+      "id": 1033,
+      "src": "/ro/monsters/1033/idle-0.png",
+      "animations": {
+        "idle": [
+          "/ro/monsters/1033/idle-0.png",
+          "/ro/monsters/1033/idle-1.png",
+          "/ro/monsters/1033/idle-2.png",
+          "/ro/monsters/1033/idle-3.png",
+          "/ro/monsters/1033/idle-4.png",
+          "/ro/monsters/1033/idle-5.png",
+          "/ro/monsters/1033/idle-6.png",
+          "/ro/monsters/1033/idle-7.png"
+        ],
+        "walk": [
+          "/ro/monsters/1033/walk-0.png",
+          "/ro/monsters/1033/walk-1.png",
+          "/ro/monsters/1033/walk-2.png",
+          "/ro/monsters/1033/walk-3.png",
+          "/ro/monsters/1033/walk-4.png",
+          "/ro/monsters/1033/walk-5.png",
+          "/ro/monsters/1033/walk-6.png",
+          "/ro/monsters/1033/walk-7.png"
+        ],
+        "attack": [
+          "/ro/monsters/1033/attack-0.png",
+          "/ro/monsters/1033/attack-1.png",
+          "/ro/monsters/1033/attack-2.png",
+          "/ro/monsters/1033/attack-3.png",
+          "/ro/monsters/1033/attack-4.png",
+          "/ro/monsters/1033/attack-5.png",
+          "/ro/monsters/1033/attack-6.png",
+          "/ro/monsters/1033/attack-7.png"
+        ],
+        "hit": [
+          "/ro/monsters/1033/hit-0.png",
+          "/ro/monsters/1033/hit-1.png",
+          "/ro/monsters/1033/hit-2.png",
+          "/ro/monsters/1033/hit-3.png",
+          "/ro/monsters/1033/hit-4.png",
+          "/ro/monsters/1033/hit-5.png",
+          "/ro/monsters/1033/hit-6.png",
+          "/ro/monsters/1033/hit-7.png"
+        ],
+        "death": [
+          "/ro/monsters/1033/death-0.png",
+          "/ro/monsters/1033/death-1.png",
+          "/ro/monsters/1033/death-2.png",
+          "/ro/monsters/1033/death-3.png",
+          "/ro/monsters/1033/death-4.png",
+          "/ro/monsters/1033/death-5.png",
+          "/ro/monsters/1033/death-6.png",
+          "/ro/monsters/1033/death-7.png"
+        ]
+      },
+      "width": 70,
+      "height": 76
+    },
+    "Yoyo": {
+      "id": 1057,
+      "src": "/ro/monsters/1057/idle-0.png",
+      "animations": {
+        "idle": [
+          "/ro/monsters/1057/idle-0.png",
+          "/ro/monsters/1057/idle-1.png",
+          "/ro/monsters/1057/idle-2.png",
+          "/ro/monsters/1057/idle-3.png",
+          "/ro/monsters/1057/idle-4.png",
+          "/ro/monsters/1057/idle-5.png",
+          "/ro/monsters/1057/idle-6.png",
+          "/ro/monsters/1057/idle-7.png"
+        ],
+        "walk": [
+          "/ro/monsters/1057/walk-0.png",
+          "/ro/monsters/1057/walk-1.png",
+          "/ro/monsters/1057/walk-2.png",
+          "/ro/monsters/1057/walk-3.png",
+          "/ro/monsters/1057/walk-4.png",
+          "/ro/monsters/1057/walk-5.png",
+          "/ro/monsters/1057/walk-6.png",
+          "/ro/monsters/1057/walk-7.png"
+        ],
+        "attack": [
+          "/ro/monsters/1057/attack-0.png",
+          "/ro/monsters/1057/attack-1.png",
+          "/ro/monsters/1057/attack-2.png",
+          "/ro/monsters/1057/attack-3.png",
+          "/ro/monsters/1057/attack-4.png",
+          "/ro/monsters/1057/attack-5.png",
+          "/ro/monsters/1057/attack-6.png",
+          "/ro/monsters/1057/attack-7.png"
+        ],
+        "hit": [
+          "/ro/monsters/1057/hit-0.png",
+          "/ro/monsters/1057/hit-1.png",
+          "/ro/monsters/1057/hit-2.png",
+          "/ro/monsters/1057/hit-3.png",
+          "/ro/monsters/1057/hit-4.png",
+          "/ro/monsters/1057/hit-5.png",
+          "/ro/monsters/1057/hit-6.png",
+          "/ro/monsters/1057/hit-7.png"
+        ],
+        "death": [
+          "/ro/monsters/1057/death-0.png",
+          "/ro/monsters/1057/death-1.png",
+          "/ro/monsters/1057/death-2.png",
+          "/ro/monsters/1057/death-3.png",
+          "/ro/monsters/1057/death-4.png",
+          "/ro/monsters/1057/death-5.png",
+          "/ro/monsters/1057/death-6.png",
+          "/ro/monsters/1057/death-7.png"
+        ]
+      },
+      "width": 35,
+      "height": 38
+    },
+    "Wolf": {
+      "id": 1013,
+      "src": "/ro/monsters/1013/idle-0.png",
+      "animations": {
+        "idle": [
+          "/ro/monsters/1013/idle-0.png",
+          "/ro/monsters/1013/idle-1.png",
+          "/ro/monsters/1013/idle-2.png",
+          "/ro/monsters/1013/idle-3.png",
+          "/ro/monsters/1013/idle-4.png",
+          "/ro/monsters/1013/idle-5.png",
+          "/ro/monsters/1013/idle-6.png",
+          "/ro/monsters/1013/idle-7.png"
+        ],
+        "walk": [
+          "/ro/monsters/1013/walk-0.png",
+          "/ro/monsters/1013/walk-1.png",
+          "/ro/monsters/1013/walk-2.png",
+          "/ro/monsters/1013/walk-3.png",
+          "/ro/monsters/1013/walk-4.png",
+          "/ro/monsters/1013/walk-5.png",
+          "/ro/monsters/1013/walk-6.png",
+          "/ro/monsters/1013/walk-7.png"
+        ],
+        "attack": [
+          "/ro/monsters/1013/attack-0.png",
+          "/ro/monsters/1013/attack-1.png",
+          "/ro/monsters/1013/attack-2.png",
+          "/ro/monsters/1013/attack-3.png",
+          "/ro/monsters/1013/attack-4.png",
+          "/ro/monsters/1013/attack-5.png",
+          "/ro/monsters/1013/attack-6.png",
+          "/ro/monsters/1013/attack-7.png"
+        ],
+        "hit": [
+          "/ro/monsters/1013/hit-0.png",
+          "/ro/monsters/1013/hit-1.png",
+          "/ro/monsters/1013/hit-2.png",
+          "/ro/monsters/1013/hit-3.png",
+          "/ro/monsters/1013/hit-4.png",
+          "/ro/monsters/1013/hit-5.png",
+          "/ro/monsters/1013/hit-6.png",
+          "/ro/monsters/1013/hit-7.png"
+        ],
+        "death": [
+          "/ro/monsters/1013/death-0.png",
+          "/ro/monsters/1013/death-1.png",
+          "/ro/monsters/1013/death-2.png",
+          "/ro/monsters/1013/death-3.png",
+          "/ro/monsters/1013/death-4.png",
+          "/ro/monsters/1013/death-5.png",
+          "/ro/monsters/1013/death-6.png",
+          "/ro/monsters/1013/death-7.png"
+        ]
+      },
+      "width": 79,
+      "height": 66
+    },
+    "Steel Chonchon": {
+      "id": 1042,
+      "src": "/ro/monsters/1042/idle-0.png",
+      "animations": {
+        "idle": [
+          "/ro/monsters/1042/idle-0.png",
+          "/ro/monsters/1042/idle-1.png",
+          "/ro/monsters/1042/idle-2.png",
+          "/ro/monsters/1042/idle-3.png",
+          "/ro/monsters/1042/idle-4.png",
+          "/ro/monsters/1042/idle-5.png",
+          "/ro/monsters/1042/idle-6.png",
+          "/ro/monsters/1042/idle-7.png"
+        ],
+        "walk": [
+          "/ro/monsters/1042/walk-0.png",
+          "/ro/monsters/1042/walk-1.png",
+          "/ro/monsters/1042/walk-2.png",
+          "/ro/monsters/1042/walk-3.png",
+          "/ro/monsters/1042/walk-4.png",
+          "/ro/monsters/1042/walk-5.png",
+          "/ro/monsters/1042/walk-6.png",
+          "/ro/monsters/1042/walk-7.png"
+        ],
+        "attack": [
+          "/ro/monsters/1042/attack-0.png",
+          "/ro/monsters/1042/attack-1.png",
+          "/ro/monsters/1042/attack-2.png",
+          "/ro/monsters/1042/attack-3.png",
+          "/ro/monsters/1042/attack-4.png",
+          "/ro/monsters/1042/attack-5.png",
+          "/ro/monsters/1042/attack-6.png",
+          "/ro/monsters/1042/attack-7.png"
+        ],
+        "hit": [
+          "/ro/monsters/1042/hit-0.png",
+          "/ro/monsters/1042/hit-1.png",
+          "/ro/monsters/1042/hit-2.png",
+          "/ro/monsters/1042/hit-3.png",
+          "/ro/monsters/1042/hit-4.png",
+          "/ro/monsters/1042/hit-5.png",
+          "/ro/monsters/1042/hit-6.png",
+          "/ro/monsters/1042/hit-7.png"
+        ],
+        "death": [
+          "/ro/monsters/1042/death-0.png",
+          "/ro/monsters/1042/death-1.png",
+          "/ro/monsters/1042/death-2.png",
+          "/ro/monsters/1042/death-3.png",
+          "/ro/monsters/1042/death-4.png",
+          "/ro/monsters/1042/death-5.png",
+          "/ro/monsters/1042/death-6.png",
+          "/ro/monsters/1042/death-7.png"
+        ]
+      },
+      "width": 37,
+      "height": 34
+    },
+    "Golem": {
+      "id": 1040,
+      "src": "/ro/monsters/1040/idle-0.png",
+      "animations": {
+        "idle": [
+          "/ro/monsters/1040/idle-0.png",
+          "/ro/monsters/1040/idle-1.png",
+          "/ro/monsters/1040/idle-2.png",
+          "/ro/monsters/1040/idle-3.png",
+          "/ro/monsters/1040/idle-4.png",
+          "/ro/monsters/1040/idle-5.png",
+          "/ro/monsters/1040/idle-6.png",
+          "/ro/monsters/1040/idle-7.png"
+        ],
+        "walk": [
+          "/ro/monsters/1040/walk-0.png",
+          "/ro/monsters/1040/walk-1.png",
+          "/ro/monsters/1040/walk-2.png",
+          "/ro/monsters/1040/walk-3.png",
+          "/ro/monsters/1040/walk-4.png",
+          "/ro/monsters/1040/walk-5.png",
+          "/ro/monsters/1040/walk-6.png",
+          "/ro/monsters/1040/walk-7.png"
+        ],
+        "attack": [
+          "/ro/monsters/1040/attack-0.png",
+          "/ro/monsters/1040/attack-1.png",
+          "/ro/monsters/1040/attack-2.png",
+          "/ro/monsters/1040/attack-3.png",
+          "/ro/monsters/1040/attack-4.png",
+          "/ro/monsters/1040/attack-5.png",
+          "/ro/monsters/1040/attack-6.png",
+          "/ro/monsters/1040/attack-7.png"
+        ],
+        "hit": [
+          "/ro/monsters/1040/hit-0.png",
+          "/ro/monsters/1040/hit-1.png",
+          "/ro/monsters/1040/hit-2.png",
+          "/ro/monsters/1040/hit-3.png",
+          "/ro/monsters/1040/hit-4.png",
+          "/ro/monsters/1040/hit-5.png",
+          "/ro/monsters/1040/hit-6.png",
+          "/ro/monsters/1040/hit-7.png"
+        ],
+        "death": [
+          "/ro/monsters/1040/death-0.png",
+          "/ro/monsters/1040/death-1.png",
+          "/ro/monsters/1040/death-2.png",
+          "/ro/monsters/1040/death-3.png",
+          "/ro/monsters/1040/death-4.png",
+          "/ro/monsters/1040/death-5.png",
+          "/ro/monsters/1040/death-6.png",
+          "/ro/monsters/1040/death-7.png"
+        ]
+      },
+      "width": 82,
+      "height": 115
+    },
+    "Sandman": {
+      "id": 1165,
+      "src": "/ro/monsters/1165/idle-0.png",
+      "animations": {
+        "idle": [
+          "/ro/monsters/1165/idle-0.png",
+          "/ro/monsters/1165/idle-1.png",
+          "/ro/monsters/1165/idle-2.png",
+          "/ro/monsters/1165/idle-3.png",
+          "/ro/monsters/1165/idle-4.png",
+          "/ro/monsters/1165/idle-5.png",
+          "/ro/monsters/1165/idle-6.png",
+          "/ro/monsters/1165/idle-7.png"
+        ],
+        "walk": [
+          "/ro/monsters/1165/walk-0.png",
+          "/ro/monsters/1165/walk-1.png",
+          "/ro/monsters/1165/walk-2.png",
+          "/ro/monsters/1165/walk-3.png",
+          "/ro/monsters/1165/walk-4.png",
+          "/ro/monsters/1165/walk-5.png",
+          "/ro/monsters/1165/walk-6.png",
+          "/ro/monsters/1165/walk-7.png"
+        ],
+        "attack": [
+          "/ro/monsters/1165/attack-0.png",
+          "/ro/monsters/1165/attack-1.png",
+          "/ro/monsters/1165/attack-2.png",
+          "/ro/monsters/1165/attack-3.png",
+          "/ro/monsters/1165/attack-4.png",
+          "/ro/monsters/1165/attack-5.png",
+          "/ro/monsters/1165/attack-6.png",
+          "/ro/monsters/1165/attack-7.png"
+        ],
+        "hit": [
+          "/ro/monsters/1165/hit-0.png",
+          "/ro/monsters/1165/hit-1.png",
+          "/ro/monsters/1165/hit-2.png",
+          "/ro/monsters/1165/hit-3.png",
+          "/ro/monsters/1165/hit-4.png",
+          "/ro/monsters/1165/hit-5.png",
+          "/ro/monsters/1165/hit-6.png",
+          "/ro/monsters/1165/hit-7.png"
+        ],
+        "death": [
+          "/ro/monsters/1165/death-0.png",
+          "/ro/monsters/1165/death-1.png",
+          "/ro/monsters/1165/death-2.png",
+          "/ro/monsters/1165/death-3.png",
+          "/ro/monsters/1165/death-4.png",
+          "/ro/monsters/1165/death-5.png",
+          "/ro/monsters/1165/death-6.png",
+          "/ro/monsters/1165/death-7.png"
+        ]
+      },
+      "width": 52,
+      "height": 66
+    },
+    "Hode": {
+      "id": 1127,
+      "src": "/ro/monsters/1127/idle-0.png",
+      "animations": {
+        "idle": [
+          "/ro/monsters/1127/idle-0.png",
+          "/ro/monsters/1127/idle-1.png",
+          "/ro/monsters/1127/idle-2.png",
+          "/ro/monsters/1127/idle-3.png",
+          "/ro/monsters/1127/idle-4.png",
+          "/ro/monsters/1127/idle-5.png",
+          "/ro/monsters/1127/idle-6.png",
+          "/ro/monsters/1127/idle-7.png"
+        ],
+        "walk": [
+          "/ro/monsters/1127/walk-0.png",
+          "/ro/monsters/1127/walk-1.png",
+          "/ro/monsters/1127/walk-2.png",
+          "/ro/monsters/1127/walk-3.png",
+          "/ro/monsters/1127/walk-4.png",
+          "/ro/monsters/1127/walk-5.png",
+          "/ro/monsters/1127/walk-6.png",
+          "/ro/monsters/1127/walk-7.png"
+        ],
+        "attack": [
+          "/ro/monsters/1127/attack-0.png",
+          "/ro/monsters/1127/attack-1.png",
+          "/ro/monsters/1127/attack-2.png",
+          "/ro/monsters/1127/attack-3.png",
+          "/ro/monsters/1127/attack-4.png",
+          "/ro/monsters/1127/attack-5.png",
+          "/ro/monsters/1127/attack-6.png",
+          "/ro/monsters/1127/attack-7.png"
+        ],
+        "hit": [
+          "/ro/monsters/1127/hit-0.png",
+          "/ro/monsters/1127/hit-1.png",
+          "/ro/monsters/1127/hit-2.png",
+          "/ro/monsters/1127/hit-3.png",
+          "/ro/monsters/1127/hit-4.png",
+          "/ro/monsters/1127/hit-5.png",
+          "/ro/monsters/1127/hit-6.png",
+          "/ro/monsters/1127/hit-7.png"
+        ],
+        "death": [
+          "/ro/monsters/1127/death-0.png",
+          "/ro/monsters/1127/death-1.png",
+          "/ro/monsters/1127/death-2.png",
+          "/ro/monsters/1127/death-3.png",
+          "/ro/monsters/1127/death-4.png",
+          "/ro/monsters/1127/death-5.png",
+          "/ro/monsters/1127/death-6.png",
+          "/ro/monsters/1127/death-7.png"
+        ]
+      },
+      "width": 54,
+      "height": 32
+    },
+    "Argiope": {
+      "id": 1099,
+      "src": "/ro/monsters/1099/idle-0.png",
+      "animations": {
+        "idle": [
+          "/ro/monsters/1099/idle-0.png",
+          "/ro/monsters/1099/idle-1.png",
+          "/ro/monsters/1099/idle-2.png",
+          "/ro/monsters/1099/idle-3.png",
+          "/ro/monsters/1099/idle-4.png",
+          "/ro/monsters/1099/idle-5.png",
+          "/ro/monsters/1099/idle-6.png",
+          "/ro/monsters/1099/idle-7.png"
+        ],
+        "walk": [
+          "/ro/monsters/1099/walk-0.png",
+          "/ro/monsters/1099/walk-1.png",
+          "/ro/monsters/1099/walk-2.png",
+          "/ro/monsters/1099/walk-3.png",
+          "/ro/monsters/1099/walk-4.png",
+          "/ro/monsters/1099/walk-5.png",
+          "/ro/monsters/1099/walk-6.png",
+          "/ro/monsters/1099/walk-7.png"
+        ],
+        "attack": [
+          "/ro/monsters/1099/attack-0.png",
+          "/ro/monsters/1099/attack-1.png",
+          "/ro/monsters/1099/attack-2.png",
+          "/ro/monsters/1099/attack-3.png",
+          "/ro/monsters/1099/attack-4.png",
+          "/ro/monsters/1099/attack-5.png",
+          "/ro/monsters/1099/attack-6.png",
+          "/ro/monsters/1099/attack-7.png"
+        ],
+        "hit": [
+          "/ro/monsters/1099/hit-0.png",
+          "/ro/monsters/1099/hit-1.png",
+          "/ro/monsters/1099/hit-2.png",
+          "/ro/monsters/1099/hit-3.png",
+          "/ro/monsters/1099/hit-4.png",
+          "/ro/monsters/1099/hit-5.png",
+          "/ro/monsters/1099/hit-6.png",
+          "/ro/monsters/1099/hit-7.png"
+        ],
+        "death": [
+          "/ro/monsters/1099/death-0.png",
+          "/ro/monsters/1099/death-1.png",
+          "/ro/monsters/1099/death-2.png",
+          "/ro/monsters/1099/death-3.png",
+          "/ro/monsters/1099/death-4.png",
+          "/ro/monsters/1099/death-5.png",
+          "/ro/monsters/1099/death-6.png",
+          "/ro/monsters/1099/death-7.png"
+        ]
+      },
+      "width": 71,
+      "height": 51
+    }
+  },
+  "players": {
+    "novice": {
+      "job": 0,
+      "src": "/ro/players/novice/idle-0.png",
+      "animations": {
+        "idle": [
+          "/ro/players/novice/idle-0.png",
+          "/ro/players/novice/idle-1.png",
+          "/ro/players/novice/idle-2.png",
+          "/ro/players/novice/idle-3.png",
+          "/ro/players/novice/idle-4.png",
+          "/ro/players/novice/idle-5.png",
+          "/ro/players/novice/idle-6.png",
+          "/ro/players/novice/idle-7.png"
+        ],
+        "walk": [
+          "/ro/players/novice/walk-0.png",
+          "/ro/players/novice/walk-1.png",
+          "/ro/players/novice/walk-2.png",
+          "/ro/players/novice/walk-3.png",
+          "/ro/players/novice/walk-4.png",
+          "/ro/players/novice/walk-5.png",
+          "/ro/players/novice/walk-6.png",
+          "/ro/players/novice/walk-7.png"
+        ],
+        "attack": [
+          "/ro/players/novice/attack-0.png",
+          "/ro/players/novice/attack-1.png",
+          "/ro/players/novice/attack-2.png",
+          "/ro/players/novice/attack-3.png",
+          "/ro/players/novice/attack-4.png",
+          "/ro/players/novice/attack-5.png",
+          "/ro/players/novice/attack-6.png",
+          "/ro/players/novice/attack-7.png"
+        ],
+        "hit": [
+          "/ro/players/novice/hit-0.png",
+          "/ro/players/novice/hit-1.png",
+          "/ro/players/novice/hit-2.png",
+          "/ro/players/novice/hit-3.png",
+          "/ro/players/novice/hit-4.png",
+          "/ro/players/novice/hit-5.png",
+          "/ro/players/novice/hit-6.png",
+          "/ro/players/novice/hit-7.png"
+        ],
+        "death": [
+          "/ro/players/novice/death-0.png",
+          "/ro/players/novice/death-1.png",
+          "/ro/players/novice/death-2.png",
+          "/ro/players/novice/death-3.png",
+          "/ro/players/novice/death-4.png",
+          "/ro/players/novice/death-5.png",
+          "/ro/players/novice/death-6.png",
+          "/ro/players/novice/death-7.png"
+        ]
+      }
+    },
+    "swordsman": {
+      "job": 1,
+      "src": "/ro/players/swordsman/idle-0.png",
+      "animations": {
+        "idle": [
+          "/ro/players/swordsman/idle-0.png",
+          "/ro/players/swordsman/idle-1.png",
+          "/ro/players/swordsman/idle-2.png",
+          "/ro/players/swordsman/idle-3.png",
+          "/ro/players/swordsman/idle-4.png",
+          "/ro/players/swordsman/idle-5.png",
+          "/ro/players/swordsman/idle-6.png",
+          "/ro/players/swordsman/idle-7.png"
+        ],
+        "walk": [
+          "/ro/players/swordsman/walk-0.png",
+          "/ro/players/swordsman/walk-1.png",
+          "/ro/players/swordsman/walk-2.png",
+          "/ro/players/swordsman/walk-3.png",
+          "/ro/players/swordsman/walk-4.png",
+          "/ro/players/swordsman/walk-5.png",
+          "/ro/players/swordsman/walk-6.png",
+          "/ro/players/swordsman/walk-7.png"
+        ],
+        "attack": [
+          "/ro/players/swordsman/attack-0.png",
+          "/ro/players/swordsman/attack-1.png",
+          "/ro/players/swordsman/attack-2.png",
+          "/ro/players/swordsman/attack-3.png",
+          "/ro/players/swordsman/attack-4.png",
+          "/ro/players/swordsman/attack-5.png",
+          "/ro/players/swordsman/attack-6.png",
+          "/ro/players/swordsman/attack-7.png"
+        ],
+        "hit": [
+          "/ro/players/swordsman/hit-0.png",
+          "/ro/players/swordsman/hit-1.png",
+          "/ro/players/swordsman/hit-2.png",
+          "/ro/players/swordsman/hit-3.png",
+          "/ro/players/swordsman/hit-4.png",
+          "/ro/players/swordsman/hit-5.png",
+          "/ro/players/swordsman/hit-6.png",
+          "/ro/players/swordsman/hit-7.png"
+        ],
+        "death": [
+          "/ro/players/swordsman/death-0.png",
+          "/ro/players/swordsman/death-1.png",
+          "/ro/players/swordsman/death-2.png",
+          "/ro/players/swordsman/death-3.png",
+          "/ro/players/swordsman/death-4.png",
+          "/ro/players/swordsman/death-5.png",
+          "/ro/players/swordsman/death-6.png",
+          "/ro/players/swordsman/death-7.png"
+        ]
+      }
+    },
+    "mage": {
+      "job": 2,
+      "src": "/ro/players/mage/idle-0.png",
+      "animations": {
+        "idle": [
+          "/ro/players/mage/idle-0.png",
+          "/ro/players/mage/idle-1.png",
+          "/ro/players/mage/idle-2.png",
+          "/ro/players/mage/idle-3.png",
+          "/ro/players/mage/idle-4.png",
+          "/ro/players/mage/idle-5.png",
+          "/ro/players/mage/idle-6.png",
+          "/ro/players/mage/idle-7.png"
+        ],
+        "walk": [
+          "/ro/players/mage/walk-0.png",
+          "/ro/players/mage/walk-1.png",
+          "/ro/players/mage/walk-2.png",
+          "/ro/players/mage/walk-3.png",
+          "/ro/players/mage/walk-4.png",
+          "/ro/players/mage/walk-5.png",
+          "/ro/players/mage/walk-6.png",
+          "/ro/players/mage/walk-7.png"
+        ],
+        "attack": [
+          "/ro/players/mage/attack-0.png",
+          "/ro/players/mage/attack-1.png",
+          "/ro/players/mage/attack-2.png",
+          "/ro/players/mage/attack-3.png",
+          "/ro/players/mage/attack-4.png",
+          "/ro/players/mage/attack-5.png",
+          "/ro/players/mage/attack-6.png",
+          "/ro/players/mage/attack-7.png"
+        ],
+        "hit": [
+          "/ro/players/mage/hit-0.png",
+          "/ro/players/mage/hit-1.png",
+          "/ro/players/mage/hit-2.png",
+          "/ro/players/mage/hit-3.png",
+          "/ro/players/mage/hit-4.png",
+          "/ro/players/mage/hit-5.png",
+          "/ro/players/mage/hit-6.png",
+          "/ro/players/mage/hit-7.png"
+        ],
+        "death": [
+          "/ro/players/mage/death-0.png",
+          "/ro/players/mage/death-1.png",
+          "/ro/players/mage/death-2.png",
+          "/ro/players/mage/death-3.png",
+          "/ro/players/mage/death-4.png",
+          "/ro/players/mage/death-5.png",
+          "/ro/players/mage/death-6.png",
+          "/ro/players/mage/death-7.png"
+        ]
+      }
+    },
+    "archer": {
+      "job": 3,
+      "src": "/ro/players/archer/idle-0.png",
+      "animations": {
+        "idle": [
+          "/ro/players/archer/idle-0.png",
+          "/ro/players/archer/idle-1.png",
+          "/ro/players/archer/idle-2.png",
+          "/ro/players/archer/idle-3.png",
+          "/ro/players/archer/idle-4.png",
+          "/ro/players/archer/idle-5.png",
+          "/ro/players/archer/idle-6.png",
+          "/ro/players/archer/idle-7.png"
+        ],
+        "walk": [
+          "/ro/players/archer/walk-0.png",
+          "/ro/players/archer/walk-1.png",
+          "/ro/players/archer/walk-2.png",
+          "/ro/players/archer/walk-3.png",
+          "/ro/players/archer/walk-4.png",
+          "/ro/players/archer/walk-5.png",
+          "/ro/players/archer/walk-6.png",
+          "/ro/players/archer/walk-7.png"
+        ],
+        "attack": [
+          "/ro/players/archer/attack-0.png",
+          "/ro/players/archer/attack-1.png",
+          "/ro/players/archer/attack-2.png",
+          "/ro/players/archer/attack-3.png",
+          "/ro/players/archer/attack-4.png",
+          "/ro/players/archer/attack-5.png",
+          "/ro/players/archer/attack-6.png",
+          "/ro/players/archer/attack-7.png"
+        ],
+        "hit": [
+          "/ro/players/archer/hit-0.png",
+          "/ro/players/archer/hit-1.png",
+          "/ro/players/archer/hit-2.png",
+          "/ro/players/archer/hit-3.png",
+          "/ro/players/archer/hit-4.png",
+          "/ro/players/archer/hit-5.png",
+          "/ro/players/archer/hit-6.png",
+          "/ro/players/archer/hit-7.png"
+        ],
+        "death": [
+          "/ro/players/archer/death-0.png",
+          "/ro/players/archer/death-1.png",
+          "/ro/players/archer/death-2.png",
+          "/ro/players/archer/death-3.png",
+          "/ro/players/archer/death-4.png",
+          "/ro/players/archer/death-5.png",
+          "/ro/players/archer/death-6.png",
+          "/ro/players/archer/death-7.png"
+        ]
+      }
+    },
+    "acolyte": {
+      "job": 4,
+      "src": "/ro/players/acolyte/idle-0.png",
+      "animations": {
+        "idle": [
+          "/ro/players/acolyte/idle-0.png",
+          "/ro/players/acolyte/idle-1.png",
+          "/ro/players/acolyte/idle-2.png",
+          "/ro/players/acolyte/idle-3.png",
+          "/ro/players/acolyte/idle-4.png",
+          "/ro/players/acolyte/idle-5.png",
+          "/ro/players/acolyte/idle-6.png",
+          "/ro/players/acolyte/idle-7.png"
+        ],
+        "walk": [
+          "/ro/players/acolyte/walk-0.png",
+          "/ro/players/acolyte/walk-1.png",
+          "/ro/players/acolyte/walk-2.png",
+          "/ro/players/acolyte/walk-3.png",
+          "/ro/players/acolyte/walk-4.png",
+          "/ro/players/acolyte/walk-5.png",
+          "/ro/players/acolyte/walk-6.png",
+          "/ro/players/acolyte/walk-7.png"
+        ],
+        "attack": [
+          "/ro/players/acolyte/attack-0.png",
+          "/ro/players/acolyte/attack-1.png",
+          "/ro/players/acolyte/attack-2.png",
+          "/ro/players/acolyte/attack-3.png",
+          "/ro/players/acolyte/attack-4.png",
+          "/ro/players/acolyte/attack-5.png",
+          "/ro/players/acolyte/attack-6.png",
+          "/ro/players/acolyte/attack-7.png"
+        ],
+        "hit": [
+          "/ro/players/acolyte/hit-0.png",
+          "/ro/players/acolyte/hit-1.png",
+          "/ro/players/acolyte/hit-2.png",
+          "/ro/players/acolyte/hit-3.png",
+          "/ro/players/acolyte/hit-4.png",
+          "/ro/players/acolyte/hit-5.png",
+          "/ro/players/acolyte/hit-6.png",
+          "/ro/players/acolyte/hit-7.png"
+        ],
+        "death": [
+          "/ro/players/acolyte/death-0.png",
+          "/ro/players/acolyte/death-1.png",
+          "/ro/players/acolyte/death-2.png",
+          "/ro/players/acolyte/death-3.png",
+          "/ro/players/acolyte/death-4.png",
+          "/ro/players/acolyte/death-5.png",
+          "/ro/players/acolyte/death-6.png",
+          "/ro/players/acolyte/death-7.png"
+        ]
+      }
+    },
+    "thief": {
+      "job": 6,
+      "src": "/ro/players/thief/idle-0.png",
+      "animations": {
+        "idle": [
+          "/ro/players/thief/idle-0.png",
+          "/ro/players/thief/idle-1.png",
+          "/ro/players/thief/idle-2.png",
+          "/ro/players/thief/idle-3.png",
+          "/ro/players/thief/idle-4.png",
+          "/ro/players/thief/idle-5.png",
+          "/ro/players/thief/idle-6.png",
+          "/ro/players/thief/idle-7.png"
+        ],
+        "walk": [
+          "/ro/players/thief/walk-0.png",
+          "/ro/players/thief/walk-1.png",
+          "/ro/players/thief/walk-2.png",
+          "/ro/players/thief/walk-3.png",
+          "/ro/players/thief/walk-4.png",
+          "/ro/players/thief/walk-5.png",
+          "/ro/players/thief/walk-6.png",
+          "/ro/players/thief/walk-7.png"
+        ],
+        "attack": [
+          "/ro/players/thief/attack-0.png",
+          "/ro/players/thief/attack-1.png",
+          "/ro/players/thief/attack-2.png",
+          "/ro/players/thief/attack-3.png",
+          "/ro/players/thief/attack-4.png",
+          "/ro/players/thief/attack-5.png",
+          "/ro/players/thief/attack-6.png",
+          "/ro/players/thief/attack-7.png"
+        ],
+        "hit": [
+          "/ro/players/thief/hit-0.png",
+          "/ro/players/thief/hit-1.png",
+          "/ro/players/thief/hit-2.png",
+          "/ro/players/thief/hit-3.png",
+          "/ro/players/thief/hit-4.png",
+          "/ro/players/thief/hit-5.png",
+          "/ro/players/thief/hit-6.png",
+          "/ro/players/thief/hit-7.png"
+        ],
+        "death": [
+          "/ro/players/thief/death-0.png",
+          "/ro/players/thief/death-1.png",
+          "/ro/players/thief/death-2.png",
+          "/ro/players/thief/death-3.png",
+          "/ro/players/thief/death-4.png",
+          "/ro/players/thief/death-5.png",
+          "/ro/players/thief/death-6.png",
+          "/ro/players/thief/death-7.png"
+        ]
+      }
+    }
+  },
+  "items": {
+    "jellopy": {
+      "id": 909,
+      "src": "/ro/items/909.png"
+    },
+    "stickyMucus": {
+      "id": 938,
+      "src": "/ro/items/938.png"
+    },
+    "clover": {
+      "id": 705,
+      "src": "/ro/items/705.png"
+    },
+    "feather": {
+      "id": 949,
+      "src": "/ro/items/949.png"
+    },
+    "chrysalis": {
+      "id": 915,
+      "src": "/ro/items/915.png"
+    },
+    "shell": {
+      "id": 935,
+      "src": "/ro/items/935.png"
+    },
+    "ironOre": {
+      "id": 1002,
+      "src": "/ro/items/1002.png"
+    },
+    "fluff": {
+      "id": 914,
+      "src": "/ro/items/914.png"
+    },
+    "treeRoot": {
+      "id": 902,
+      "src": "/ro/items/902.png"
+    },
+    "resin": {
+      "id": 907,
+      "src": "/ro/items/907.png"
+    },
+    "woodenBlock": {
+      "id": 1019,
+      "src": "/ro/items/1019.png"
+    },
+    "stem": {
+      "id": 905,
+      "src": "/ro/items/905.png"
+    },
+    "grasshopperLeg": {
+      "id": 940,
+      "src": "/ro/items/940.png"
+    },
+    "mushroomSpore": {
+      "id": 921,
+      "src": "/ro/items/921.png"
+    },
+    "butterflyPowder": {
+      "id": 924,
+      "src": "/ro/items/924.png"
+    },
+    "cactusNeedle": {
+      "id": 952,
+      "src": "/ro/items/952.png"
+    },
+    "billOfBirds": {
+      "id": 925,
+      "src": "/ro/items/925.png"
+    },
+    "raccoonLeaf": {
+      "id": 945,
+      "src": "/ro/items/945.png"
+    },
+    "eluniumStone": {
+      "id": 757,
+      "src": "/ro/items/757.png"
+    },
+    "deadBranch": {
+      "id": 604,
+      "src": "/ro/items/604.png"
+    },
+    "yoyoTail": {
+      "id": 942,
+      "src": "/ro/items/942.png"
+    },
+    "wolfClaw": {
+      "id": 920,
+      "src": "/ro/items/920.png"
+    },
+    "animalSkin": {
+      "id": 919,
+      "src": "/ro/items/919.png"
+    },
+    "steel": {
+      "id": 999,
+      "src": "/ro/items/999.png"
+    },
+    "iron": {
+      "id": 998,
+      "src": "/ro/items/998.png"
+    },
+    "stoneHeart": {
+      "id": 953,
+      "src": "/ro/items/953.png"
+    },
+    "grit": {
+      "id": 1056,
+      "src": "/ro/items/1056.png"
+    },
+    "fineSand": {
+      "id": 7049,
+      "src": "/ro/items/7049.png"
+    },
+    "earthwormPeeling": {
+      "id": 1055,
+      "src": "/ro/items/1055.png"
+    },
+    "shortLeg": {
+      "id": 1042,
+      "src": "/ro/items/1042.png"
+    },
+    "apple": {
+      "id": 512,
+      "src": "/ro/items/512.png"
+    },
+    "flyWing": {
+      "id": 601,
+      "src": "/ro/items/601.png"
+    },
+    "carrot": {
+      "id": 515,
+      "src": "/ro/items/515.png"
+    },
+    "greenHerb": {
+      "id": 511,
+      "src": "/ro/items/511.png"
+    },
+    "redHerb": {
+      "id": 507,
+      "src": "/ro/items/507.png"
+    },
+    "sweetPotato": {
+      "id": 516,
+      "src": "/ro/items/516.png"
+    },
+    "strawberry": {
+      "id": 578,
+      "src": "/ro/items/578.png"
+    },
+    "honey": {
+      "id": 518,
+      "src": "/ro/items/518.png"
+    },
+    "flower": {
+      "id": 712,
+      "src": "/ro/items/712.png"
+    },
+    "yellowHerb": {
+      "id": 508,
+      "src": "/ro/items/508.png"
+    },
+    "orange": {
+      "id": 582,
+      "src": "/ro/items/582.png"
+    },
+    "grape": {
+      "id": 514,
+      "src": "/ro/items/514.png"
+    },
+    "banana": {
+      "id": 513,
+      "src": "/ro/items/513.png"
+    },
+    "cacao": {
+      "id": 7182,
+      "src": "/ro/items/7182.png"
+    },
+    "unripeApple": {
+      "id": 619,
+      "src": "/ro/items/619.png"
+    },
+    "noviceSword": {
+      "id": 1101,
+      "src": "/ro/items/1101.png"
+    },
+    "knife": {
+      "id": 1202,
+      "src": "/ro/items/1202.png"
+    },
+    "club": {
+      "id": 1502,
+      "src": "/ro/items/1502.png"
+    },
+    "javelin": {
+      "id": 1401,
+      "src": "/ro/items/1401.png"
+    },
+    "mainGauche": {
+      "id": 1207,
+      "src": "/ro/items/1207.png"
+    },
+    "adventurerArmor": {
+      "id": 2305,
+      "src": "/ro/items/2305.png"
+    },
+    "ironShield": {
+      "id": 2103,
+      "src": "/ro/items/2103.png"
+    },
+    "guard": {
+      "id": 2102,
+      "src": "/ro/items/2102.png"
+    },
+    "poringCard": {
+      "id": 4001,
+      "src": "/ro/items/4001.png"
+    },
+    "dropsCard": {
+      "id": 4004,
+      "src": "/ro/items/4004.png"
+    },
+    "lunaticCard": {
+      "id": 4006,
+      "src": "/ro/items/4006.png"
+    },
+    "pupaCard": {
+      "id": 4003,
+      "src": "/ro/items/4003.png"
+    },
+    "chonchonCard": {
+      "id": 4009,
+      "src": "/ro/items/4009.png"
+    },
+    "fabreCard": {
+      "id": 4002,
+      "src": "/ro/items/4002.png"
+    },
+    "willowCard": {
+      "id": 4010,
+      "src": "/ro/items/4010.png"
+    },
+    "mandragoraCard": {
+      "id": 4030,
+      "src": "/ro/items/4030.png"
+    },
+    "rockerCard": {
+      "id": 4021,
+      "src": "/ro/items/4021.png"
+    },
+    "sporeCard": {
+      "id": 4022,
+      "src": "/ro/items/4022.png"
+    },
+    "creamyCard": {
+      "id": 4040,
+      "src": "/ro/items/4040.png"
+    },
+    "mukaCard": {
+      "id": 4036,
+      "src": "/ro/items/4036.png"
+    },
+    "pecoCard": {
+      "id": 4031,
+      "src": "/ro/items/4031.png"
+    },
+    "smokieCard": {
+      "id": 4044,
+      "src": "/ro/items/4044.png"
+    },
+    "poporingCard": {
+      "id": 4033,
+      "src": "/ro/items/4033.png"
+    },
+    "elderWillowCard": {
+      "id": 4052,
+      "src": "/ro/items/4052.png"
+    },
+    "yoyoCard": {
+      "id": 4051,
+      "src": "/ro/items/4051.png"
+    },
+    "wolfCard": {
+      "id": 4029,
+      "src": "/ro/items/4029.png"
+    },
+    "steelChonchonCard": {
+      "id": 4042,
+      "src": "/ro/items/4042.png"
+    },
+    "golemCard": {
+      "id": 4072,
+      "src": "/ro/items/4072.png"
+    },
+    "sandmanCard": {
+      "id": 4101,
+      "src": "/ro/items/4101.png"
+    },
+    "hodeCard": {
+      "id": 4081,
+      "src": "/ro/items/4081.png"
+    },
+    "argiopeCard": {
+      "id": 4114,
+      "src": "/ro/items/4114.png"
+    }
+  },
+  "maps": {
+    "meadow": {
+      "map": "prt_fild08",
+      "preview": "/ro/maps/prt_fild08.png",
+      "ground": "/ro/maps/meadow-ground.png",
+      "path": "/ro/maps/meadow-path.png"
+    },
+    "plains": {
+      "map": "gef_fild00",
+      "preview": "/ro/maps/gef_fild00.png",
+      "ground": "/ro/maps/plains-ground.png",
+      "path": "/ro/maps/plains-path.png"
+    },
+    "forest": {
+      "map": "pay_fild01",
+      "preview": "/ro/maps/pay_fild01.png",
+      "ground": "/ro/maps/forest-ground.png",
+      "path": "/ro/maps/forest-path.png"
+    },
+    "desert": {
+      "map": "moc_fild01",
+      "preview": "/ro/maps/moc_fild01.png",
+      "ground": "/ro/maps/desert-ground.png",
+      "path": "/ro/maps/desert-path.png"
+    },
+    "swamp": {
+      "map": "prt_fild03",
+      "preview": "/ro/maps/prt_fild03.png",
+      "ground": "/ro/maps/swamp-ground.png",
+      "path": "/ro/maps/swamp-path.png"
+    }
+  }
+}

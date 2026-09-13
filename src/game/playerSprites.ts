@@ -1,3 +1,4 @@
+import { playerAssets, playerPortrait, spriteDirection } from './assets'
 export type PlayerAnimState='idle'|'walk'|'attack'|'hit'|'death'
 
 const fallback='/sprites/swordsman.svg'
@@ -7,20 +8,18 @@ function direction8(dx:number,dy:number){
   return ((Math.round((angle+Math.PI)/(Math.PI/4))+2)%8+8)%8
 }
 
-export function getPlayerAnimation(state:PlayerAnimState,direction:number){
-  const dir=((direction%8)+8)%8
-  return `/generated/players-actions/swordsman/${state}-${dir}.gif`
+export function getPlayerAnimation(state:PlayerAnimState,direction:number,classId='novice'){
+  return (playerAssets[classId] ?? playerAssets.novice).animations[state][spriteDirection(direction)]
 }
 
-function setPlayerImage(img:HTMLImageElement,state:PlayerAnimState,direction:number){
-  const src=getPlayerAnimation(state,direction)
+function setPlayerImage(img:HTMLImageElement,state:PlayerAnimState,direction:number,classId:string){
+  const src=getPlayerAnimation(state,direction,classId)
   if(img.dataset.roPlayerSrc===src)return
   img.dataset.roPlayerSrc=src
   img.dataset.roPlayerAnimated='1'
   img.onerror=()=>{
-    img.onerror=null
-    img.src=fallback
-    img.dataset.roPlayerSrc=fallback
+    img.onerror=()=>{img.onerror=null;img.src=fallback}
+    img.src=playerPortrait(classId)
   }
   img.src=src
 }
@@ -65,7 +64,7 @@ export function installPlayerSpriteWatcher(){
 
       player.dataset.roPlayerState=state
       player.dataset.roPlayerDir=String(dir)
-      setPlayerImage(img,state,dir)
+      setPlayerImage(img,state,dir,player.dataset.classId || 'novice')
       lastX=x;lastY=y
     }
 

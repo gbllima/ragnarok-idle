@@ -9,6 +9,7 @@ import './death.css'
 import './progression.css'
 import './world.css'
 import './playerSprites.css'
+import './roAssets.css'
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>

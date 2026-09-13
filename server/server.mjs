@@ -3,6 +3,7 @@ import { promises as fs } from 'node:fs'
 import { randomBytes, scryptSync, timingSafeEqual } from 'node:crypto'
 import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
+import { serveStatic } from './static-assets.mjs'
 
 const __dirname=dirname(fileURLToPath(import.meta.url))
 const DB_PATH=join(__dirname,'data.json')
@@ -22,6 +23,7 @@ const server=http.createServer(async(req,res)=>{
   if(req.method==='OPTIONS'){return send(res,204,{})}
   try{
     const url=new URL(req.url||'/',`http://${req.headers.host}`)
+    if(await serveStatic(req,res,url.pathname))return
     if(url.pathname==='/api/health')return send(res,200,{ok:true})
     if(url.pathname==='/api/register'&&req.method==='POST'){
       const {username,password}=await body(req);if(!username||String(username).length<3||!password||String(password).length<6)return send(res,400,{error:'Usuário mínimo 3 caracteres e senha mínima 6.'})
