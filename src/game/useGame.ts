@@ -5,20 +5,38 @@ export type SaveState = {
   baseLevel:number; jobLevel:number; baseExp:number; jobExp:number; zeny:number; kills:number; hp:number; maxHp:number; sp:number; maxSp:number;
   attack:number; defense:number; mapId:string; inventory:Record<string,number>; equipped:{ weapon?:string; armor?:string; shield?:string };
   lastSeen:number; running:boolean; classId:string; statPoints:number; jobPoints:number; stats:Record<StatKey,number>; skillLevels:Record<string,number>;
+  firstJobChosen:boolean; unlockedClasses:string[];
 }
 
 const KEY='ragnarok-idle-save-v1'
 const base:SaveState={
-  baseLevel:42,jobLevel:31,baseExp:6420,jobExp:3180,zeny:258450,kills:1284,hp:1100,maxHp:1100,sp:420,maxSp:500,attack:320,defense:55,
-  mapId:'prontera-field',inventory:startingInventory,equipped:{weapon:'noviceSword',armor:'adventurerArmor',shield:'ironShield'},lastSeen:Date.now(),running:true,
-  classId:'swordsman',statPoints:12,jobPoints:8,stats:{str:24,agi:16,vit:20,int:8,dex:14,luk:6},skillLevels:{bash:5,provoke:2,firstAid:1}
+  baseLevel:1,jobLevel:1,baseExp:0,jobExp:0,zeny:500,kills:0,hp:900,maxHp:900,sp:250,maxSp:250,attack:210,defense:38,
+  mapId:'prontera-field',inventory:startingInventory,equipped:{weapon:'noviceSword',armor:'adventurerArmor'},lastSeen:Date.now(),running:true,
+  classId:'novice',statPoints:6,jobPoints:1,stats:{str:10,agi:10,vit:10,int:10,dex:10,luk:10},skillLevels:{basicSkill:1,firstAid:1},
+  firstJobChosen:false,unlockedClasses:['novice']
 }
 
 function expNeed(level:number){ return 10000 + level*450 }
 function jobNeed(level:number){ return 7000 + level*300 }
 
+function migrate(raw:Partial<SaveState>):SaveState{
+  const merged={...base,...raw} as SaveState
+  const oldClass=raw.classId || 'novice'
+  const chosen=typeof raw.firstJobChosen==='boolean' ? raw.firstJobChosen : oldClass!=='novice'
+  const unlocked=Array.isArray(raw.unlockedClasses) && raw.unlockedClasses.length ? raw.unlockedClasses : chosen ? ['novice',oldClass] : ['novice']
+  return {
+    ...merged,
+    classId:oldClass,
+    firstJobChosen:chosen,
+    unlockedClasses:Array.from(new Set(unlocked)),
+    stats:{...base.stats,...(raw.stats||{})},
+    skillLevels:{...base.skillLevels,...(raw.skillLevels||{})},
+    lastSeen:Date.now()
+  }
+}
+
 function derive(s:SaveState){
-  const eq=Object.values(s.equipped).filter(Boolean).map(id=>items[id as string])
+  const eq=Object.values(s.equipped).filter(Boolean).map(id=>items[id as string]).filter(Boolean)
   const cls=classes.find(c=>c.id===s.classId)??classes[0]
   const str=s.stats.str+(cls.bonuses.str||0), vit=s.stats.vit+(cls.bonuses.vit||0), int=s.stats.int+(cls.bonuses.int||0), dex=s.stats.dex+(cls.bonuses.dex||0)
   const attack=180+str*6+dex*2+eq.reduce((a,i)=>a+(i.attack||0),0)
@@ -30,11 +48,7 @@ function derive(s:SaveState){
 
 export function useGame(){
   const [save,setSave]=useState<SaveState>(()=>{
-    try {
-      const raw=localStorage.getItem(KEY)
-      const merged=raw?{...base,...JSON.parse(raw)}:base
-      return {...merged,stats:{...base.stats,...(merged.stats||{})},skillLevels:{...base.skillLevels,...(merged.skillLevels||{})},lastSeen:Date.now()}
-    } catch { return base }
+    try { const raw=localStorage.getItem(KEY); return raw ? migrate(JSON.parse(raw)) : base } catch { return base }
   })
   const map=useMemo(()=>maps.find(m=>m.id===save.mapId)??maps[0],[save.mapId])
   const classDef=useMemo(()=>classes.find(c=>c.id===save.classId)??classes[0],[save.classId])
@@ -46,6 +60,10 @@ export function useGame(){
   const [log,setLog]=useState<string[]>(['Sistema pronto. A caçada automática está ativa.'])
   const [offline,setOffline]=useState<{seconds:number;exp:number;job:number;zeny:number;kills:number}|null>(null)
   const [cooldowns,setCooldowns]=useState<Record<string,number>>({})
+  const [activeBuff,setActiveBuff]=useState<{name:string;multiplier:number;until:number}|null>(null)
+
+  const buffMultiplier=activeBuff&&activeBuff.until>Date.now()?activeBuff.multiplier:1
+  const effectiveAttack=Math.round(save.attack*buffMultiplier)
 
   useEffect(()=>{
     setSave(s=>{const d=derive(s);return {...s,...d,hp:Math.min(s.hp,d.maxHp),sp:Math.min(s.sp,d.maxSp)}})
@@ -55,8 +73,8 @@ export function useGame(){
     try{
       const raw=localStorage.getItem(KEY)
       if(!raw) return
-      const prev=JSON.parse(raw) as SaveState
-      const seconds=Math.max(0,Math.min(8*3600,Math.floor((Date.now()-(prev.lastSeen||Date.now()))/1000)))
+      const prev=migrate(JSON.parse(raw))
+      const seconds=Math.max(0,Math.min(8*3600,Math.floor((Date.now()-((JSON.parse(raw).lastSeen as number)||Date.now()))/1000)))
       if(seconds<30) return
       const m=maps.find(x=>x.id===prev.mapId)??maps[0]
       const cycle=1.2*Math.ceil(m.monsterHp/Math.max(1,prev.attack||base.attack))
@@ -71,7 +89,10 @@ export function useGame(){
   useEffect(()=>{ localStorage.setItem(KEY,JSON.stringify({...save,lastSeen:Date.now()})) },[save])
   useEffect(()=>{ setMonsterHp(map.monsterHp); setMonsterAlive(true) },[map.id,map.monsterHp])
   useEffect(()=>{
-    const t=window.setInterval(()=>setCooldowns(c=>Object.fromEntries(Object.entries(c).map(([k,v])=>[k,Math.max(0,v-1)]))),1000)
+    const t=window.setInterval(()=>{
+      setCooldowns(c=>Object.fromEntries(Object.entries(c).map(([k,v])=>[k,Math.max(0,v-1)])))
+      setActiveBuff(b=>b&&b.until<=Date.now()?null:b)
+    },1000)
     return()=>window.clearInterval(t)
   },[])
 
@@ -94,7 +115,7 @@ export function useGame(){
     if(!save.running || !monsterAlive || playerDead) return
     const timer=window.setInterval(()=>{
       const variance=Math.floor(Math.random()*61)-30
-      const dealt=Math.max(1,save.attack+variance)
+      const dealt=Math.max(1,effectiveAttack+variance)
       setDamage(dealt); setHit(v=>v+1)
       const incoming=Math.max(1,Math.round(map.monsterAtk-save.defense/4))
       setSave(s=>{
@@ -114,28 +135,52 @@ export function useGame(){
       })
     },1200)
     return()=>window.clearInterval(timer)
-  },[save.running,save.attack,save.defense,map,monsterAlive,playerDead])
+  },[save.running,save.attack,save.defense,map,monsterAlive,playerDead,effectiveAttack])
 
   const equip=(id:string)=>{ const item=items[id]; if(!item||item.type!=='equipment') return; setSave(s=>{const equipped={...s.equipped};if(id.toLowerCase().includes('sword')) equipped.weapon=id;else if(id.toLowerCase().includes('shield')) equipped.shield=id;else equipped.armor=id;return {...s,equipped}}) }
   const changeMap=(id:string)=>setSave(s=>({...s,mapId:id}))
   const toggle=()=>setSave(s=>({...s,running:!s.running}))
   const heal=()=>setSave(s=>({...s,hp:s.maxHp,sp:s.maxSp}))
   const addStat=(key:StatKey)=>setSave(s=>s.statPoints<=0?s:{...s,statPoints:s.statPoints-1,stats:{...s.stats,[key]:s.stats[key]+1}})
-  const changeClass=(id:string)=>{ const c=classes.find(x=>x.id===id); if(!c||save.jobLevel<c.minJob) return; setSave(s=>({...s,classId:id})) }
-  const learnSkill=(id:string)=>{ const sk=skills.find(x=>x.id===id); if(!sk) return; setSave(s=>{const lvl=s.skillLevels[id]||0;if(lvl>=sk.maxLevel||s.jobPoints<sk.jobPointCost) return s;return {...s,jobPoints:s.jobPoints-sk.jobPointCost,skillLevels:{...s.skillLevels,[id]:lvl+1}}}) }
+
+  const chooseFirstJob=(id:string)=>{
+    const c=classes.find(x=>x.id===id)
+    if(!c||c.id==='novice'||save.firstJobChosen||save.classId!=='novice'||save.baseLevel<c.minBase||save.jobLevel<c.minJob) return
+    setSave(s=>({...s,classId:id,firstJobChosen:true,unlockedClasses:Array.from(new Set([...s.unlockedClasses,id])),jobLevel:1,jobExp:0,jobPoints:0,skillLevels:{...s.skillLevels}}))
+    setLog(l=>[`Mudança de classe concluída: ${c.name}! Seu Job Level foi reiniciado para 1.`,...l].slice(0,6))
+  }
+
+  const learnSkill=(id:string)=>{
+    const sk=skills.find(x=>x.id===id); if(!sk) return
+    setSave(s=>{
+      if(sk.classId!=='novice'&&sk.classId!==s.classId) return s
+      const lvl=s.skillLevels[id]||0
+      const prereqOk=!sk.requires||(s.skillLevels[sk.requires.skillId]||0)>=sk.requires.level
+      if(!prereqOk||lvl>=sk.maxLevel||s.jobPoints<sk.jobPointCost) return s
+      return {...s,jobPoints:s.jobPoints-sk.jobPointCost,skillLevels:{...s.skillLevels,[id]:lvl+1}}
+    })
+  }
+
   const useSkill=(id:string)=>{
     const sk=skills.find(x=>x.id===id); const lvl=save.skillLevels[id]||0
     if(!sk||lvl<=0||(cooldowns[id]||0)>0||save.sp<sk.spCost||playerDead) return
+    if(sk.classId!=='novice'&&sk.classId!==save.classId) return
     setSave(s=>({...s,sp:s.sp-sk.spCost}))
     setCooldowns(c=>({...c,[id]:sk.cooldown}))
     if(sk.kind==='heal'){
       const amount=Math.round(save.maxHp*(sk.power+.03*lvl));setSave(s=>({...s,hp:Math.min(s.maxHp,s.hp+amount)}));setLog(l=>[`${sk.name} recuperou ${amount} HP.`,...l].slice(0,6));return
     }
-    const dealt=Math.round(save.attack*(sk.power+.06*lvl))
+    if(sk.kind==='buff'){
+      const multiplier=sk.power+.02*lvl
+      setActiveBuff({name:sk.name,multiplier,until:Date.now()+6000})
+      setLog(l=>[`${sk.name} ativado por 6 segundos.`,...l].slice(0,6));return
+    }
+    const dealt=Math.round(effectiveAttack*(sk.power+.06*lvl))
     setDamage(dealt);setHit(v=>v+1);setMonsterHp(h=>{const next=h-dealt;if(next<=0&&monsterAlive){rewardKill();return 0}return Math.max(0,next)})
     setLog(l=>[`${sk.name} causou ${dealt} de dano.`,...l].slice(0,6))
   }
 
   const availableSkills=skills.filter(s=>s.classId===save.classId||s.classId==='novice')
-  return {save,map,classDef,monsterHp,monsterAlive,playerDead,hit,damage,log,offline,setOffline,equip,changeMap,toggle,heal,addStat,changeClass,learnSkill,useSkill,cooldowns,availableSkills,baseNeed:expNeed(save.baseLevel),jobNeed:jobNeed(save.jobLevel)}
+  const canChangeJob=save.classId==='novice'&&!save.firstJobChosen&&save.baseLevel>=10&&save.jobLevel>=10
+  return {save,map,classDef,monsterHp,monsterAlive,playerDead,hit,damage,log,offline,setOffline,equip,changeMap,toggle,heal,addStat,chooseFirstJob,learnSkill,useSkill,cooldowns,availableSkills,activeBuff,effectiveAttack,canChangeJob,baseNeed:expNeed(save.baseLevel),jobNeed:jobNeed(save.jobLevel)}
 }
