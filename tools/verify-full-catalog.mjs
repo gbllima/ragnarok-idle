@@ -43,14 +43,33 @@ for(const map of maps){
   }
 }
 
-let status='não gerado'
+let spriteStatus='não gerado'
 try{
-  await access(new URL('public/ro/full/sprites.json',root))
-  const sprites=JSON.parse(await readFile(new URL('public/ro/full/sprites.json',root),'utf8'))
+  const spriteFile=await (async()=>{
+    try{await access(new URL('public/ro/full/sprites.json',root));return 'sprites.json'}
+    catch{await access(new URL('public/ro/full/sprites-progress.json',root));return 'sprites-progress.json'}
+  })()
+  const sprites=JSON.parse(await readFile(new URL(`public/ro/full/${spriteFile}`,root),'utf8'))
+  const itemChecked=Object.keys(sprites.items??{}).length
+  const monsterChecked=Object.keys(sprites.monsters??{}).length
   const itemAvailable=Object.values(sprites.items??{}).filter(row=>row?.available).length
   const monsterAvailable=Object.values(sprites.monsters??{}).filter(row=>row?.available).length
-  status=`${itemAvailable}/${items.length} itens, ${monsterAvailable}/${maps.length} monstros`
+  spriteStatus=`${itemAvailable}/${items.length} itens (${itemChecked} verificados), ${monsterAvailable}/${maps.length} monstros (${monsterChecked} verificados)`
 }catch{}
 
+const effectSupported=items.filter(item=>!item.unsupportedEffects).length
+const effectPending=items.length-effectSupported
+const equipment=items.filter(item=>item.type==='equipment')
+const equipmentSupported=equipment.filter(item=>!item.unsupportedEffects).length
+const equipmentPending=equipment.length-equipmentSupported
+const pendingByCategory=Object.entries(items.filter(item=>item.unsupportedEffects).reduce((acc,item)=>{
+  const key=item.category||item.type||'Outro'
+  acc[key]=(acc[key]||0)+1
+  return acc
+},{})).sort((a,b)=>b[1]-a[1]).slice(0,8)
+
 console.log(`Catálogo Renewal OK: ${items.length.toLocaleString('pt-BR')} itens, ${weaponCount.toLocaleString('pt-BR')} armas, ${maps.length.toLocaleString('pt-BR')} monstros, ${dropCount.toLocaleString('pt-BR')} drops.`)
-console.log(`Sprites locais: ${status}.`)
+console.log(`Sprites locais: ${spriteStatus}.`)
+console.log(`Efeitos idle: ${effectSupported.toLocaleString('pt-BR')} itens compatíveis; ${effectPending.toLocaleString('pt-BR')} com scripts especiais pendentes.`)
+console.log(`Equipamentos: ${equipmentSupported.toLocaleString('pt-BR')} totalmente compatíveis; ${equipmentPending.toLocaleString('pt-BR')} com efeitos especiais pendentes.`)
+if(pendingByCategory.length)console.log(`Pendências por categoria: ${pendingByCategory.map(([name,count])=>`${name}=${count.toLocaleString('pt-BR')}`).join(', ')}.`)
