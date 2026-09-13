@@ -47,8 +47,26 @@ async function download(url) {
 const isPng = bytes => bytes?.length>24 && bytes.subarray(0,8).toString('hex')==='89504e470d0a1a0a' && bytes.readUInt32BE(16)>1 && bytes.readUInt32BE(20)>1
 const pngDimensions = bytes=>({width:bytes.readUInt32BE(16),height:bytes.readUInt32BE(20)})
 
-async function checkpoint(){
-  await writeFile(new URL('sprites-progress.json',output),JSON.stringify(result))
+function compactStatus(){
+  return Object.fromEntries(Object.entries(result).map(([kind,rows])=>[
+    kind,
+    Object.fromEntries(Object.entries(rows).map(([id,row])=>[id,row.available ? [row.width,row.height] : null])),
+  ]))
+}
+
+function availabilitySummary(){
+  return Object.fromEntries(Object.entries(result).map(([kind,rows])=>[kind,{
+    checked:Object.keys(rows).length,
+    available:Object.values(rows).filter(row=>row.available).length,
+    unavailable:Object.values(rows).filter(row=>row && !row.available).length,
+  }]))
+}
+
+async function checkpoint(final=false){
+  await writeFile(new URL(final?'sprites.json':'sprites-progress.json',output),JSON.stringify(result))
+  // Keep the game aware of files already downloaded even if this process is stopped halfway.
+  await writeFile(new URL('src/game/full-sprite-status.json',root),JSON.stringify(compactStatus()))
+  console.log(JSON.stringify(availabilitySummary()))
 }
 
 async function processJob({kind,id}){
@@ -75,9 +93,9 @@ async function processJob({kind,id}){
     : {available:false}
 
   completed++
-  if(completed%250===0 || completed===total){
+  if(completed%100===0 || completed===total){
     console.log(`${completed}/${total} previews checked`)
-    await checkpoint()
+    await checkpoint(false)
   }
 }
 
@@ -89,14 +107,5 @@ await Promise.all(Array.from({length:Math.min(concurrency,Math.max(1,queue.lengt
   }
 }))
 
-await writeFile(new URL('sprites.json',output),JSON.stringify(result))
-await writeFile(new URL('src/game/full-sprite-status.json',root),JSON.stringify(Object.fromEntries(Object.entries(result).map(([kind,rows])=>[
-  kind,
-  Object.fromEntries(Object.entries(rows).map(([id,row])=>[id,row.available ? [row.width,row.height] : null])),
-]))))
-
-const summary=Object.fromEntries(Object.entries(result).map(([kind,rows])=>[kind,{
-  total:Object.keys(rows).length,
-  available:Object.values(rows).filter(row=>row.available).length,
-}]))
-console.log(JSON.stringify(summary))
+await checkpoint(true)
+console.log('Sprite sync concluído.')
