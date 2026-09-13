@@ -15,6 +15,7 @@ import './pronteraTileBot05.css'
 import './pronteraTileBot07.css'
 import './pronteraTileG01.css'
 import './pronteraTiles.css'
+import './party.css'
 
 const root=ReactDOM.createRoot(document.getElementById('root')!)
 root.render(<div className="catalog-loading" role="status">Carregando Ragnarok Idle…</div>)
