@@ -1,6 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import { App } from './App'
+import { installMonsterSpriteWatcher } from './game/monsterSprites'
 import './styles.css'
 import './death.css'
 import './progression.css'
@@ -10,3 +11,5 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
     <App />
   </React.StrictMode>,
 )
+
+installMonsterSpriteWatcher()
