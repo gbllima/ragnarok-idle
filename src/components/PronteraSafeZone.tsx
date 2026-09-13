@@ -10,7 +10,7 @@ const SPEED=285
 const START={x:1100,y:1015}
 
 type Point={x:number;y:number}
-type MenuTarget='Inventário'|'Loja'|'Personagem'|'Mapas'
+type MenuTarget='Inventário'|'Equipamentos'|'Loja'|'Personagem'|'Mapas'
 type Interaction={id:string;x:number;y:number;label:string;detail:string;action:MenuTarget}
 
 const interactions:Interaction[]=[
@@ -43,9 +43,7 @@ function stopHunt(){const button=document.querySelector<HTMLButtonElement>('.sto
 function startHunt(){const button=document.querySelector<HTMLButtonElement>('.stop-btn');if(button&&button.classList.contains('paused'))button.click()}
 
 function canStand(x:number,y:number){
-  // Fountain and its stone base.
   if(Math.hypot(x-1100,y-800)<118)return false
-  // Organic gardens use rectangular collision bounds slightly smaller than the art.
   if(gardenCollisions.some(g=>x>g.x+18&&x<g.x+g.w-18&&y>g.y+18&&y<g.y+g.h-18))return false
   return true
 }
@@ -126,7 +124,6 @@ export function PronteraSafeZone(){
         const len=Math.hypot(dx,dy)||1;dx/=len;dy/=len
         const requested={x:clamp(p.x+dx*SPEED*dt,70,WORLD_W-70),y:clamp(p.y+dy*SPEED*dt,70,WORLD_H-70)}
         let next={...p}
-        // Axis-separated collision keeps movement smooth along garden/fountain edges.
         if(canStand(requested.x,p.y))next.x=requested.x
         if(canStand(next.x,requested.y))next.y=requested.y
         if(next.x===p.x&&next.y===p.y){moving=false;targetRef.current={...p}}
@@ -173,11 +170,7 @@ export function PronteraSafeZone(){
   return <>
     {active&&<section ref={viewportRef} className="prontera-safe-zone" aria-label="Prontera Safe Zone" onPointerDown={moveTo}>
       <div className="prontera-world" style={{transform:`translate3d(${-camera.x}px,${-camera.y}px,0)`,width:WORLD_W,height:WORLD_H}}>
-        <div className="prontera-map"/>
-        <div className="prontera-plaza"/>
-        <div className="prontera-road prontera-road-ns"/>
-        <div className="prontera-road prontera-road-ew"/>
-        <div className="prontera-plaza-ring ring-1"/><div className="prontera-plaza-ring ring-2"/>
+        <div className="prontera-map"/><div className="prontera-plaza"/><div className="prontera-road prontera-road-ns"/><div className="prontera-road prontera-road-ew"/><div className="prontera-plaza-ring ring-1"/><div className="prontera-plaza-ring ring-2"/>
         <div className="prontera-fountain"><i/><b/><span>PRONTERA</span></div>
         <div className="prontera-garden garden-a"/><div className="prontera-garden garden-b"/><div className="prontera-garden garden-c"/><div className="prontera-garden garden-d"/>
         {lamps.map(([x,y],i)=><span key={`lamp-${i}`} className="prontera-lamp" style={{left:x,top:y}}><i/><b/></span>)}
@@ -189,36 +182,16 @@ export function PronteraSafeZone(){
         <button className="prontera-npc npc-job" style={{left:825,top:935}} onClick={()=>open('Personagem')}><span className="npc-doll job-doll"><i/><b/></span><strong>Guia de Classes</strong><small>Evolução</small></button>
         <button className="prontera-portal" style={{left:1100,top:1390}} onClick={()=>open('Mapas')}><i/><b/><span>CAÇADAS</span></button>
 
-        <div className={`prontera-player ${walking?'walking':''}`} style={{left:player.x,top:player.y}} aria-label="Seu personagem em Prontera">
-          <div className="prontera-player-shadow"/>
-          <img src={spriteSrc} alt="Personagem" onError={e=>{e.currentTarget.onerror=null;e.currentTarget.src=fallback}}/>
-          <b>Knock</b><small>Área Segura</small>
-        </div>
+        <div className={`prontera-player ${walking?'walking':''}`} style={{left:player.x,top:player.y}} aria-label="Seu personagem em Prontera"><div className="prontera-player-shadow"/><img src={spriteSrc} alt="Personagem" onError={e=>{e.currentTarget.onerror=null;e.currentTarget.src=fallback}}/><b>Knock</b><small>Área Segura</small></div>
       </div>
 
       <div className="prontera-screen-ui prontera-city-title"><Castle size={22}/><div><strong>PRONTERA</strong><span>SAFE ZONE · PRAÇA CENTRAL</span></div></div>
       <div className="prontera-screen-ui prontera-move-tip"><MapPin size={14}/><span><b>Explore Prontera</b><small>WASD / setas · clique ou toque no chão para andar</small></span></div>
       {nearby&&<button className="prontera-screen-ui prontera-interact" onClick={()=>open(nearby.action)}><b>{nearby.label}</b><span>{nearby.detail}</span><small>Pressione E ou toque para interagir</small></button>}
 
-      <aside className="prontera-screen-ui prontera-lobby-card card">
-        <header><MapPin size={18}/><div><b>Prontera · Safe Zone</b><small>Lobby explorável e ponto de retorno</small></div></header>
-        <p>Explore a praça, fale com NPCs e use o portal ao sul para escolher uma caçada. Não existe combate dentro da cidade.</p>
-        <button className="prontera-primary" onClick={()=>open('Mapas')}><Swords size={17}/> ESCOLHER CAÇADA</button>
-        <div className="prontera-actions">
-          <button onClick={()=>open('Loja')}><ShoppingBag size={16}/> Loja</button>
-          <button onClick={()=>open('Equipamentos')}><Shield size={16}/> Equipamentos</button>
-          <button onClick={()=>open('Inventário')}><Backpack size={16}/> Inventário</button>
-          <button onClick={()=>open('Personagem')}><UserRoundCog size={16}/> Classe</button>
-        </div>
-        <footer><span>🛡 PvE desativado</span><span>♥ Ponto de respawn</span></footer>
-      </aside>
+      <aside className="prontera-screen-ui prontera-lobby-card card"><header><MapPin size={18}/><div><b>Prontera · Safe Zone</b><small>Lobby explorável e ponto de retorno</small></div></header><p>Explore a praça, fale com NPCs e use o portal ao sul para escolher uma caçada. Não existe combate dentro da cidade.</p><button className="prontera-primary" onClick={()=>open('Mapas')}><Swords size={17}/> ESCOLHER CAÇADA</button><div className="prontera-actions"><button onClick={()=>open('Loja')}><ShoppingBag size={16}/> Loja</button><button onClick={()=>open('Equipamentos')}><Shield size={16}/> Equipamentos</button><button onClick={()=>open('Inventário')}><Backpack size={16}/> Inventário</button><button onClick={()=>open('Personagem')}><UserRoundCog size={16}/> Classe</button></div><footer><span>🛡 PvE desativado</span><span>♥ Ponto de respawn</span></footer></aside>
 
-      <div className="prontera-screen-ui prontera-mobile-pad" aria-label="Controle de movimento">
-        <button className="pad-up" onPointerDown={padDown('arrowup')} onPointerUp={padUp('arrowup')} onPointerCancel={padUp('arrowup')} onPointerLeave={padUp('arrowup')}>▲</button>
-        <button className="pad-left" onPointerDown={padDown('arrowleft')} onPointerUp={padUp('arrowleft')} onPointerCancel={padUp('arrowleft')} onPointerLeave={padUp('arrowleft')}>◀</button>
-        <button className="pad-right" onPointerDown={padDown('arrowright')} onPointerUp={padUp('arrowright')} onPointerCancel={padUp('arrowright')} onPointerLeave={padUp('arrowright')}>▶</button>
-        <button className="pad-down" onPointerDown={padDown('arrowdown')} onPointerUp={padUp('arrowdown')} onPointerCancel={padUp('arrowdown')} onPointerLeave={padUp('arrowdown')}>▼</button>
-      </div>
+      <div className="prontera-screen-ui prontera-mobile-pad" aria-label="Controle de movimento"><button className="pad-up" onPointerDown={padDown('arrowup')} onPointerUp={padUp('arrowup')} onPointerCancel={padUp('arrowup')} onPointerLeave={padUp('arrowup')}>▲</button><button className="pad-left" onPointerDown={padDown('arrowleft')} onPointerUp={padUp('arrowleft')} onPointerCancel={padUp('arrowleft')} onPointerLeave={padUp('arrowleft')}>◀</button><button className="pad-right" onPointerDown={padDown('arrowright')} onPointerUp={padUp('arrowright')} onPointerCancel={padUp('arrowright')} onPointerLeave={padUp('arrowright')}>▶</button><button className="pad-down" onPointerDown={padDown('arrowdown')} onPointerUp={padUp('arrowdown')} onPointerCancel={padUp('arrowdown')} onPointerLeave={padUp('arrowdown')}>▼</button></div>
     </section>}
     {!active&&<button className="return-prontera-btn" onClick={returnToProntera} title="Voltar para Prontera Safe Zone"><Home size={16}/> Prontera</button>}
   </>
