@@ -81,8 +81,11 @@ export function installWorldMovement(){
         decorTimer=0
         document.querySelectorAll<HTMLElement>('.mob-2,.mob-3').forEach((el,i)=>{
           el.style.transition='left 2.8s linear, top 2.8s linear'
-          const p=chooseSpot()
-          placePercent(el,{x:clamp(p.x+(i?.035:-.025),.36,.79),y:clamp(p.y+(i?.03:-.035),.36,.72)})
+          const spot=chooseSpot()
+          placePercent(el,{
+            x:clamp(spot.x+(i===0?.035:-.025),.36,.79),
+            y:clamp(spot.y+(i===0?.03:-.035),.36,.72),
+          })
         })
       }
     }
