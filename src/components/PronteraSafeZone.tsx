@@ -1,17 +1,18 @@
 import { useEffect, useRef, useState } from 'react'
 import { Backpack, Castle, Home, MapPin, Shield, ShoppingBag, Swords } from 'lucide-react'
+import { getPlayerAnimation } from '../game/playerSprites'
+import { playerPortrait } from '../game/assets'
 
 const HUNT_ACTION=/Caçar aqui|Caçada atual|Melhor caçada agora|MVP recomendado/i
 const WORLD_W=2200
 const WORLD_H=1600
 const SPEED=285
-const START={x:1110,y:840}
+const START={x:1110,y:930}
 
 type Point={x:number;y:number}
 
 function clickMenu(title:string){
-  const button=document.querySelector<HTMLButtonElement>(`.side-menu button[title="${title}"]`)
-  button?.click()
+  document.querySelector<HTMLButtonElement>(`.side-menu button[title="${title}"]`)?.click()
 }
 
 function stopHunt(){
@@ -25,15 +26,18 @@ function startHunt(){
 }
 
 const clamp=(value:number,min:number,max:number)=>Math.max(min,Math.min(max,value))
+function direction8(dx:number,dy:number){
+  const angle=Math.atan2(dy,dx)
+  return ((Math.round((angle+Math.PI)/(Math.PI/4))+2)%8+8)%8
+}
 
 export function PronteraSafeZone(){
-  // Session-only lobby: every fresh entry/reload begins in Prontera.
   const [active,setActive]=useState(true)
-  const [portrait,setPortrait]=useState('')
+  const [classId,setClassId]=useState('novice')
   const [player,setPlayer]=useState<Point>(START)
   const [camera,setCamera]=useState<Point>({x:0,y:0})
   const [walking,setWalking]=useState(false)
-  const [faceLeft,setFaceLeft]=useState(false)
+  const [direction,setDirection]=useState(0)
   const playerRef=useRef<Point>(START)
   const targetRef=useRef<Point>(START)
   const cameraRef=useRef<Point>({x:0,y:0})
@@ -48,12 +52,12 @@ export function PronteraSafeZone(){
   },[active])
 
   useEffect(()=>{
-    const syncPortrait=()=>{
-      const src=document.querySelector<HTMLImageElement>('.portrait-img')?.src
-      if(src)setPortrait(src)
+    const syncClass=()=>{
+      const id=document.querySelector<HTMLElement>('.player-sprite')?.dataset.classId
+      if(id)setClassId(id)
     }
-    syncPortrait()
-    const timer=window.setInterval(syncPortrait,1000)
+    syncClass()
+    const timer=window.setInterval(syncClass,600)
     return()=>window.clearInterval(timer)
   },[])
 
@@ -62,7 +66,6 @@ export function PronteraSafeZone(){
       if(!active)return
       const button=(event.target as HTMLElement | null)?.closest<HTMLButtonElement>('button')
       if(!button||!button.closest('.game-modal')||!HUNT_ACTION.test(button.textContent||''))return
-      // Existing React map handler runs first; then the lobby closes and hunting resumes.
       window.setTimeout(()=>{
         setActive(false)
         window.setTimeout(startHunt,80)
@@ -114,10 +117,10 @@ export function PronteraSafeZone(){
       if(moving){
         const len=Math.hypot(dx,dy)||1
         dx/=len;dy/=len
-        const next={x:clamp(p.x+dx*SPEED*dt,110,WORLD_W-110),y:clamp(p.y+dy*SPEED*dt,140,WORLD_H-105)}
+        const next={x:clamp(p.x+dx*SPEED*dt,90,WORLD_W-90),y:clamp(p.y+dy*SPEED*dt,90,WORLD_H-90)}
         playerRef.current=next
         setPlayer(next)
-        if(Math.abs(dx)>.08)setFaceLeft(dx<0)
+        setDirection(direction8(dx,dy))
         if(Math.hypot(target.x-next.x,target.y-next.y)<9)targetRef.current={...next}
       }
       setWalking(moving)
@@ -138,51 +141,53 @@ export function PronteraSafeZone(){
   },[active])
 
   const moveTo=(event:React.PointerEvent<HTMLElement>)=>{
-    if((event.target as HTMLElement).closest('button,.prontera-screen-ui,.prontera-landmark'))return
+    if((event.target as HTMLElement).closest('button,.prontera-screen-ui'))return
     const rect=viewportRef.current?.getBoundingClientRect();if(!rect)return
-    targetRef.current={
-      x:clamp(event.clientX-rect.left+cameraRef.current.x,110,WORLD_W-110),
-      y:clamp(event.clientY-rect.top+cameraRef.current.y,140,WORLD_H-105),
-    }
+    const x=clamp(event.clientX-rect.left+cameraRef.current.x,90,WORLD_W-90)
+    const y=clamp(event.clientY-rect.top+cameraRef.current.y,90,WORLD_H-90)
+    const p=playerRef.current
+    targetRef.current={x,y}
+    setDirection(direction8(x-p.x,y-p.y))
   }
 
-  const padDown=(key:string)=>(event:React.PointerEvent)=>{
-    event.preventDefault();event.stopPropagation();keys.current.add(key)
-  }
-  const padUp=(key:string)=>(event:React.PointerEvent)=>{
-    event.preventDefault();event.stopPropagation();keys.current.delete(key)
-  }
-
+  const padDown=(key:string)=>(event:React.PointerEvent)=>{event.preventDefault();event.stopPropagation();keys.current.add(key)}
+  const padUp=(key:string)=>(event:React.PointerEvent)=>{event.preventDefault();event.stopPropagation();keys.current.delete(key)}
   const open=(title:string)=>clickMenu(title)
-  const returnToProntera=()=>{
-    stopHunt();playerRef.current=START;targetRef.current=START;setPlayer(START);setActive(true)
-  }
+  const returnToProntera=()=>{stopHunt();playerRef.current=START;targetRef.current=START;setPlayer(START);setDirection(0);setActive(true)}
+
+  const spriteSrc=getPlayerAnimation(walking?'walk':'idle',direction,classId)
+  const fallback=playerPortrait(classId)
 
   return <>
     {active&&<section ref={viewportRef} className="prontera-safe-zone" aria-label="Prontera Safe Zone" onPointerDown={moveTo}>
       <div className="prontera-world" style={{transform:`translate3d(${-camera.x}px,${-camera.y}px,0)`,width:WORLD_W,height:WORLD_H}}>
         <div className="prontera-map"/>
+        <div className="prontera-plaza"/>
+        <div className="prontera-road prontera-road-ns"/>
+        <div className="prontera-road prontera-road-ew"/>
+        <div className="prontera-plaza-ring ring-1"/>
+        <div className="prontera-plaza-ring ring-2"/>
+        <div className="prontera-fountain"><i/><b/><span>PRONTERA</span></div>
+        <div className="prontera-garden garden-a"/><div className="prontera-garden garden-b"/><div className="prontera-garden garden-c"/><div className="prontera-garden garden-d"/>
         <div className="prontera-vignette"/>
 
-        <div className="prontera-landmark landmark-kafra"><span>✦</span><b>Kafra</b><small>Armazém e serviços</small></div>
-        <div className="prontera-landmark landmark-market"><span>⚖</span><b>Mercado</b><small>Itens e equipamentos</small></div>
-        <div className="prontera-landmark landmark-gate"><span>⚔</span><b>Portão de Caçadas</b><small>Escolha sua área de batalha</small></div>
-        <div className="prontera-landmark landmark-fountain"><span>◈</span><b>Praça Central</b><small>Centro de Prontera</small></div>
+        <div className="prontera-landmark landmark-gate"><span>⚔</span><b>Portão de Caçadas</b><small>Escolha sua próxima área</small></div>
+        <div className="prontera-landmark landmark-fountain"><span>◈</span><b>Praça Central</b><small>Safe Zone de Prontera</small></div>
 
         <div className={`prontera-player ${walking?'walking':''}`} style={{left:player.x,top:player.y}} aria-label="Seu personagem em Prontera">
           <div className="prontera-player-shadow"/>
-          {portrait&&<img src={portrait} alt="Personagem" style={{transform:faceLeft?'scaleX(-1)':'scaleX(1)'}}/>}
+          <img src={spriteSrc} alt="Personagem" onError={e=>{e.currentTarget.onerror=null;e.currentTarget.src=fallback}}/>
           <b>Knock</b>
           <small>Área Segura</small>
         </div>
       </div>
 
-      <div className="prontera-screen-ui prontera-city-title"><Castle size={22}/><div><strong>PRONTERA</strong><span>SAFE ZONE · CAPITAL DE RUNE-MIDGARD</span></div></div>
+      <div className="prontera-screen-ui prontera-city-title"><Castle size={22}/><div><strong>PRONTERA</strong><span>SAFE ZONE · PRAÇA CENTRAL</span></div></div>
       <div className="prontera-screen-ui prontera-move-tip"><MapPin size={14}/><span><b>Explore Prontera</b><small>WASD / setas · clique ou toque no chão para andar</small></span></div>
 
       <aside className="prontera-screen-ui prontera-lobby-card card">
         <header><MapPin size={18}/><div><b>Prontera · Safe Zone</b><small>Lobby explorável e ponto de retorno</small></div></header>
-        <p>Ande pela cidade livremente. Combate e Auto Hunt permanecem desativados dentro de Prontera.</p>
+        <p>Use a praça para organizar seu personagem e escolher a próxima caçada. Não existe combate dentro da cidade.</p>
         <button className="prontera-primary" onClick={()=>open('Mapas')}><Swords size={17}/> ESCOLHER CAÇADA</button>
         <div className="prontera-actions">
           <button onClick={()=>open('Loja')}><ShoppingBag size={16}/> Loja</button>
