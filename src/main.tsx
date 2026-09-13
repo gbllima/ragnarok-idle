@@ -9,11 +9,12 @@ import './roAssets.css'
 import './catalog.css'
 import './gameChrome.css'
 import './authenticMaps.css'
+import './pronteraSafeZone.css'
 
 const root=ReactDOM.createRoot(document.getElementById('root')!)
 root.render(<div className="catalog-loading" role="status">Carregando Ragnarok Idle…</div>)
-Promise.all([import('./App'),import('./game/monsterSprites'),import('./game/playerSprites'),import('./game/worldMovement')]).then(([{App},monsters,players,world])=>{
-  root.render(<React.StrictMode><App/></React.StrictMode>)
+Promise.all([import('./App'),import('./components/PronteraSafeZone'),import('./game/monsterSprites'),import('./game/playerSprites'),import('./game/worldMovement')]).then(([{App},{PronteraSafeZone},monsters,players,world])=>{
+  root.render(<React.StrictMode><App/><PronteraSafeZone/></React.StrictMode>)
   monsters.installMonsterSpriteWatcher()
   players.installPlayerSpriteWatcher()
   world.installWorldMovement()
