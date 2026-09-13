@@ -17,12 +17,14 @@ import './pronteraTileG01.css'
 import './pronteraTiles.css'
 import './party.css'
 import './quickInventoryTrim.css'
+import './partyPolish.css'
 
 const root=ReactDOM.createRoot(document.getElementById('root')!)
 root.render(<div className="catalog-loading" role="status">Carregando Ragnarok Idle…</div>)
-Promise.all([import('./App'),import('./components/PronteraSafeZone'),import('./game/monsterSprites'),import('./game/playerSprites'),import('./game/worldMovement')]).then(([{App},{PronteraSafeZone},monsters,players,world])=>{
+Promise.all([import('./App'),import('./components/PronteraSafeZone'),import('./game/monsterSprites'),import('./game/playerSprites'),import('./game/worldMovement'),import('./game/partyWorld')]).then(([{App},{PronteraSafeZone},monsters,players,world,partyWorld])=>{
   root.render(<React.StrictMode><App/><PronteraSafeZone/></React.StrictMode>)
   monsters.installMonsterSpriteWatcher()
   players.installPlayerSpriteWatcher()
   world.installWorldMovement()
+  partyWorld.installPartyWorld()
 }).catch(error=>root.render(<div className="catalog-loading" role="alert"><p>{error instanceof Error?error.message:'Falha ao carregar o jogo.'}</p><button onClick={()=>window.location.reload()}>Tentar novamente</button></div>))
