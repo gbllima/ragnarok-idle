@@ -27,9 +27,13 @@ export function setMonsterImage(img:HTMLImageElement,name:string,state:MonsterAn
   img.dataset.roSrc=stateSrc
   let fallbackIndex=0
   img.onerror=()=>{
-    const next=candidates[fallbackIndex++]
+    let next:string|undefined
+    const current=img.getAttribute('src')||''
+    while(fallbackIndex<candidates.length&&!next){
+      const candidate=candidates[fallbackIndex++]
+      if(candidate!==current)next=candidate
+    }
     if(!next){img.onerror=null;return}
-    if(next===img.src){img.onerror?.(new Event('error') as unknown as Event);return}
     if(next===fallback)img.onerror=null
     img.src=next
   }
