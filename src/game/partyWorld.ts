@@ -108,7 +108,7 @@ export function installPartyWorld(){
         desiredY=ly+ny*36+py*side*58
       }
 
-      const speed=walking?.22:.16
+      const speed=walking ? .22 : .16
       actor.pos.x+=(desiredX-actor.pos.x)*speed
       actor.pos.y+=(desiredY-actor.pos.y)*speed
       actor.pos.x=clamp(actor.pos.x,36,Math.max(36,zone.clientWidth-36))
