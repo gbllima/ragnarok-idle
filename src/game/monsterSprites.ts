@@ -17,18 +17,21 @@ export function setMonsterImage(img:HTMLImageElement,name:string,state:MonsterAn
   const asset=monsterSprites[name]
   if(!asset){img.onerror=null;img.src=fallback;return}
   const stateSrc=getMonsterAnimation(name,state,dir)
-  const baseSrc=asset.src
+  const candidates=[
+    asset.src,
+    `https://assets.latam-tools.com.br/image?job=${asset.id}&action=0&enableShadow=false`,
+    `https://static.divine-pride.net/images/mobs/png/${asset.id}.png`,
+    fallback,
+  ]
   if(img.dataset.roSrc===stateSrc)return
   img.dataset.roSrc=stateSrc
-  delete img.dataset.roFallback
+  let fallbackIndex=0
   img.onerror=()=>{
-    if(img.dataset.roFallback==='1'){
-      img.onerror=null
-      img.src=fallback
-      return
-    }
-    img.dataset.roFallback='1'
-    img.src=baseSrc
+    const next=candidates[fallbackIndex++]
+    if(!next){img.onerror=null;return}
+    if(next===img.src){img.onerror?.(new Event('error') as unknown as Event);return}
+    if(next===fallback)img.onerror=null
+    img.src=next
   }
   img.src=stateSrc
 }
