@@ -1,16 +1,16 @@
 import type { EquipSlot, ItemDef, StatKey } from './starterData'
+import { rathenaJobNames, refineBonus } from './progression'
 
 export const equipmentSlots:ReadonlyArray<readonly [EquipSlot,string]>=[['weapon','Arma'],['shield','Escudo'],['armor','Armadura'],['headTop','Cabeça · topo'],['headMid','Cabeça · meio'],['headBottom','Cabeça · baixo'],['garment','Capa'],['shoes','Calçado'],['accessoryLeft','Acessório 1'],['accessoryRight','Acessório 2'],['ammo','Munição'],['costumeTop','Visual · topo'],['costumeMid','Visual · meio'],['costumeBottom','Visual · baixo'],['costumeGarment','Visual · capa'],['shadowWeapon','Arma sombria'],['shadowShield','Escudo sombrio'],['shadowArmor','Armadura sombria'],['shadowShoes','Calçado sombrio'],['shadowAccessoryLeft','Acessório sombrio 1'],['shadowAccessoryRight','Acessório sombrio 2']]
-export type EquipmentState={baseLevel:number;classId:string;rebirths:number;inventory:Record<string,number>;equipped:Partial<Record<EquipSlot,string>>;socketedCards:Partial<Record<EquipSlot,string>>}
-const jobs:Record<string,string>={novice:'Novice',swordsman:'Swordman',mage:'Mage',archer:'Archer',acolyte:'Acolyte',thief:'Thief'}
+export type EquipmentState={baseLevel:number;classId:string;rebirths:number;inventory:Record<string,number>;equipped:Partial<Record<EquipSlot,string>>;socketedCards:Partial<Record<EquipSlot,string>>;refinements?:Record<string,number>}
 
 export function equipmentReason(state:EquipmentState,item:ItemDef){
   if(item.type!=='equipment'||!item.slot)return 'Este item não é equipável.'
   if((state.inventory[item.id]||0)<1)return 'Você não possui este item.'
   if(state.baseLevel<(item.equipLevel||1))return `Requer Base Lv. ${item.equipLevel}.`
   if(item.equipLevelMax&&state.baseLevel>item.equipLevelMax)return `Permitido até Base Lv. ${item.equipLevelMax}.`
-  if(item.source!=='game'&&item.jobs){const job=jobs[state.classId];if(!(item.jobs[job]??item.jobs.All??false))return 'Sua classe não pode equipar este item.'}
-  if(item.classRestrictions&&!item.classRestrictions.All&&!item.classRestrictions.Normal)return 'Requer uma classe avançada de Ragnarok ainda não disponível.'
+  if(item.source!=='game'&&item.jobs){const names=rathenaJobNames(state.classId);if(!Object.entries(item.jobs).some(([job,ok])=>ok&&names.has(job)))return 'Sua classe não pode equipar este item.'}
+  if(item.classRestrictions&&!item.classRestrictions.All&&!item.classRestrictions.Normal&&state.rebirths<1)return 'Requer personagem avançado/transcendente.'
   return ''
 }
 
@@ -21,7 +21,6 @@ export function equipOwned<T extends EquipmentState>(state:T,item:ItemDef):T {
   const replaced=new Set(slots.map(slot=>state.equipped[slot]).filter(Boolean))
   replaced.add(item.id)
   const equipped={...state.equipped},socketedCards={...state.socketedCards},inventory={...state.inventory}
-  // A two-handed weapon / multi-position headgear occupies several slots but grants stats once.
   for(const [slot,id] of Object.entries(equipped) as [EquipSlot,string][]){
     if(!replaced.has(id))continue
     delete equipped[slot]
@@ -48,7 +47,9 @@ export function equipmentStats(state:EquipmentState,registry:Record<string,ItemD
   const cards=Object.values(state.socketedCards).map(id=>registry[id!]).filter(Boolean)
   const stats:Record<StatKey,number>={str:0,agi:0,vit:0,int:0,dex:0,luk:0}
   for(const item of [...gear,...cards]) for(const key of Object.keys(stats) as StatKey[]) stats[key]+=item.statBonus?.[key]||0
-  return {gear,cards,stats}
+  let refineAttack=0,refineDefense=0
+  for(const item of gear){const level=state.refinements?.[item.id]||0;const bonus=refineBonus(item,level);refineAttack+=bonus.attack;refineDefense+=bonus.defense}
+  return {gear,cards,stats,refineAttack,refineDefense}
 }
 
 export function canConsume(item:ItemDef){return item.type==='consumable'&&!!(item.heal||item.hp||item.sp)}
