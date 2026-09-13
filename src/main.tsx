@@ -8,6 +8,7 @@ import './playerSprites.css'
 import './roAssets.css'
 import './catalog.css'
 import './gameChrome.css'
+import './authenticMaps.css'
 
 const root=ReactDOM.createRoot(document.getElementById('root')!)
 root.render(<div className="catalog-loading" role="status">Carregando Ragnarok Idle…</div>)
