@@ -16,7 +16,11 @@ function balanceMap(map:MapDef):MapDef{
   const jobExp=Math.max(2,Math.round(jobBase/kills*sourceSignal(map.jobExp)*(boss?4.2:1)))
   const zeny=Math.max(5,Math.round((8+level*2.8)*(boss?8:1)))
   const minLevel=Math.min(map.minLevel,Math.max(1,level-(boss?2:4)))
-  return {...map,minLevel,exp,jobExp,zeny}
+  const normalHpCap=120+level*level*3
+  const monsterHp=Math.round(clamp(map.monsterHp,Math.max(25,level*6),boss?normalHpCap*10:normalHpCap))
+  const monsterAtk=Math.round(clamp(map.monsterAtk,Math.max(1,level*.35),boss?(20+level*5)*2.5:20+level*5))
+  const monsterDef=Math.round(clamp(map.monsterDef,0,boss?(10+level*3)*2:10+level*3))
+  return {...map,minLevel,exp,jobExp,zeny,monsterHp,monsterAtk,monsterDef}
 }
 
 export function expandCatalog(database:FullDatabase, starterItems:Record<string,ItemDef>, starterMaps:MapDef[], icons:Record<string,{id:number}>) {
