@@ -1,0 +1,6 @@
+.player-sprite img[data-ro-player-animated="1"]{transform:none!important;image-rendering:pixelated;object-fit:contain;width:128px;height:128px;max-width:none;max-height:none}
+.player-sprite[data-ro-player-state="walk"]{animation:none!important}
+.player-sprite[data-ro-player-state="attack"]{animation:none!important}
+.player-sprite[data-ro-player-state="attack"] .slash{opacity:.28}
+.player-sprite[data-ro-player-state="hit"]{filter:brightness(1.12)}
+.player-sprite[data-ro-player-state="death"] .sprite-shadow{opacity:.35}
