@@ -1,0 +1,117 @@
+/* Final pass for the right MMO dock: readable Party, independent backpack scroll and matching Auto Hunt chrome. */
+.game-right-stack{
+  right:12px!important;top:62px!important;bottom:318px!important;width:326px!important;
+  display:flex!important;flex-direction:column!important;gap:8px!important;
+  overflow:hidden!important;padding-right:0!important;
+}
+
+.party-dock{
+  width:100%!important;max-height:326px!important;padding:9px!important;
+  border:2px solid #76543a!important;border-radius:8px!important;
+  background:linear-gradient(155deg,#2a211b,#171311 70%)!important;
+  box-shadow:0 2px 0 #24160e,0 8px 20px #0006!important;
+}
+.party-dock>header{height:34px!important;padding:0 2px 7px!important;border-bottom:1px solid #5b4231!important}
+.party-dock>header b{font-size:13px!important;color:#f0c96f!important;text-shadow:0 1px #000}
+.party-dock>header span{font-size:8px!important;background:#15110e!important;border-color:#6d553e!important;color:#cfbfa9!important}
+.party-dock>header button{height:27px!important;padding:0 8px!important;font-size:8px!important;background:linear-gradient(#3a2c23,#211a16)!important;border-color:#7e5b3b!important;color:#e3d2b8!important}
+.party-dock-scroll{max-height:245px!important;overflow-y:auto!important;overflow-x:hidden!important;padding:4px 2px 2px!important;scrollbar-gutter:stable}
+
+.ro-party-member{padding:8px 2px 7px!important;opacity:.82!important;border-bottom:1px solid #46372d!important}
+.ro-party-member.leader{opacity:1!important;background:linear-gradient(90deg,#35271777,transparent)!important;border-left:2px solid #c49345!important;padding-left:5px!important}
+.ro-party-member.active{opacity:1!important}
+.ro-party-member.out-range{opacity:.68!important;filter:saturate(.6)!important}
+.ro-party-main{display:grid!important;grid-template-columns:48px minmax(0,1fr)!important;grid-template-rows:auto auto!important;gap:5px 8px!important;align-items:center!important}
+.ro-party-portrait{width:48px!important;height:62px!important;grid-row:1!important;border-color:#5b4637!important;background:radial-gradient(circle at 50% 42%,#6f59424a,#100e0d 74%)!important}
+.ro-party-portrait img{width:43px!important;height:57px!important}
+.ro-party-info{grid-column:2!important;min-width:0!important}
+.ro-party-name{gap:5px!important;margin-bottom:2px!important}
+.ro-party-name strong{font-size:12px!important;color:#f0d291!important}
+.ro-party-name em{font-size:7px!important;padding:1px 4px!important;border-radius:7px!important;background:#6a4b252e!important;color:#efc96f!important}
+.ro-party-info>small{font-size:8px!important;color:#b8aa99!important;margin:2px 0 5px!important;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.party-role{min-width:30px!important;height:15px!important;font-size:7px!important}
+.ro-party-bar{height:15px!important;grid-template-columns:21px minmax(0,1fr)!important;gap:3px!important}
+.ro-party-bar>span{font-size:7px!important;font-weight:800!important}
+.ro-party-bar>i{height:10px!important;border-color:#44362e!important}
+.ro-party-bar>i>em{top:0!important;right:3px!important;font-size:7px!important;line-height:8px!important}
+.party-mini-equipment{grid-column:1/-1!important;grid-row:2!important;display:grid!important;grid-template-columns:repeat(8,minmax(0,1fr))!important;gap:3px!important;margin-top:2px!important}
+.party-mini-equipment>span{height:31px!important;border-radius:3px!important;border-color:#51463c!important}
+.party-mini-equipment .ro-item-icon{width:25px!important;height:25px!important}
+.party-mini-equipment small{font-size:5px!important}
+.ro-party-actions{grid-template-columns:1fr 1fr auto!important;gap:4px!important;margin-top:6px!important}
+.ro-party-actions button{min-height:27px!important;font-size:8px!important;background:#211b17!important;border-color:#5c4939!important;color:#cec0ae!important}
+.ro-party-actions button:hover{background:#30241c!important;color:#f2d79a!important}
+.party-warning{font-size:7px!important;padding:4px 6px!important;margin-top:5px!important;background:#2b2017!important;border-left:2px solid #b27a41!important;color:#d9ad7b!important}
+.party-empty{height:34px!important;font-size:8px!important}
+.party-locked{padding:7px!important;margin-top:5px!important}.party-locked>span{font-size:7px!important}.party-locked button{height:29px!important;font-size:8px!important}
+.party-dock>footer{font-size:8px!important;padding-top:7px!important}.party-dock>footer b{font-size:9px!important}
+
+/* Backpack owns its own viewport instead of disappearing below the Party panel. */
+.game-right-stack .quick-inventory{
+  position:relative!important;inset:auto!important;width:100%!important;
+  min-height:0!important;height:190px!important;max-height:190px!important;flex:0 0 190px!important;
+  padding:8px!important;overflow:hidden!important;
+  border:2px solid #76543a!important;border-radius:8px!important;
+  background:linear-gradient(155deg,#241d18,#151312 72%)!important;
+  box-shadow:0 2px 0 #24160e,0 8px 20px #0005!important;
+}
+.game-right-stack .quick-inventory .bag-title{height:25px!important;margin:0!important;padding:0 3px 5px!important;border-bottom:1px solid #49382c!important;color:#e4c982!important;font-size:12px!important}
+.game-right-stack .quick-inventory .bag-title b{font-size:8px!important;color:#9f9285!important}
+.game-right-stack .quick-inventory .bag-grid{
+  grid-template-columns:repeat(6,minmax(0,1fr))!important;gap:4px!important;
+  max-height:145px!important;overflow-y:auto!important;overflow-x:hidden!important;
+  padding:5px 3px 4px 0!important;scrollbar-width:thin;scrollbar-color:#735039 #171310;
+}
+.game-right-stack .quick-inventory .bag-grid button{min-height:43px!important;aspect-ratio:1!important}
+.game-right-stack .quick-inventory .bag-grid .ro-item-icon{width:30px!important;height:30px!important}
+
+/* Auto Hunt now belongs to the same Ragnarok dark/gold interface family. */
+.auto-hunt.card{
+  right:12px!important;bottom:12px!important;top:auto!important;width:326px!important;
+  max-height:294px!important;padding:9px!important;overflow:hidden!important;
+  border:2px solid #76543a!important;border-radius:8px!important;
+  background:linear-gradient(155deg,#2a211b,#171311 72%)!important;
+  color:#e8ddcf!important;box-shadow:0 2px 0 #24160e,0 8px 20px #0006!important;
+}
+.auto-hunt .panel-title{justify-content:flex-start!important;gap:7px!important;margin:0 0 6px!important;padding:0 2px 7px!important;border-bottom:1px solid #5b4231!important;color:#efc86e!important;font-size:14px!important;letter-spacing:.04em!important;text-shadow:0 1px #000!important}
+.auto-hunt .stats{display:grid!important;grid-template-columns:1fr 1fr!important;gap:0 12px!important;margin-bottom:4px!important}
+.auto-hunt .stats p{min-width:0!important;margin:3px 0!important;font-size:8px!important;color:#9f9386!important}
+.auto-hunt .stats p:nth-child(1),.auto-hunt .stats p:nth-child(2){grid-column:1/-1!important}
+.auto-hunt .stats p span{color:#9f9386!important}.auto-hunt .stats p b{max-width:64%!important;color:#eadcc8!important;white-space:nowrap!important;overflow:hidden!important;text-overflow:ellipsis!important}
+.auto-hunt .drops{margin-top:5px!important;padding:6px!important;max-height:118px!important;overflow-y:auto!important;border:1px solid #4c392c!important;border-radius:5px!important;background:#11100f!important;scrollbar-width:thin;scrollbar-color:#705039 #15110e!important}
+.auto-hunt .drops h3{margin:0 0 4px!important;color:#d9b86f!important;font-size:10px!important}
+.auto-hunt .drops div{min-height:25px!important;padding:3px 2px!important;border-color:#332a24!important;color:#cbbdad!important;font-size:8px!important}
+.auto-hunt .drops div span{min-width:0!important;overflow:hidden!important;text-overflow:ellipsis!important;white-space:nowrap!important}.auto-hunt .drops div small{color:#8f8275!important}.auto-hunt .drops div b{color:#e8cb82!important}
+.auto-hunt .drops .ro-item-icon{width:18px!important;height:18px!important;min-width:18px!important}
+.auto-hunt .stop-btn{height:34px!important;margin-top:7px!important;border-color:#6f211d!important;border-radius:5px!important;background:linear-gradient(#d94b43,#ae2724)!important;color:#fff7ec!important;font-size:10px!important;box-shadow:inset 0 1px #ff8175!important}
+.auto-hunt .stop-btn.paused{background:linear-gradient(#4f7b43,#315b32)!important;border-color:#294d28!important}
+
+/* Active party members are real actors in the hunting field. */
+.party-world-member{position:absolute;width:82px;height:108px;transform:translate(-50%,-72%);pointer-events:none;will-change:left,top;filter:drop-shadow(0 3px 2px #0004);z-index:13}
+.party-world-member img{position:absolute;left:50%;bottom:16px;transform:translateX(-50%);width:78px;height:88px;object-fit:contain;image-rendering:pixelated}
+.party-world-shadow{position:absolute;left:50%;bottom:13px;width:46px;height:13px;transform:translateX(-50%);border-radius:50%;background:#1d160f45;filter:blur(1px)}
+.party-world-name{position:absolute;left:50%;top:-2px;transform:translateX(-50%);max-width:100px;padding:2px 5px;border-radius:4px;background:#17120ecc;color:#f2dfb8;font-size:8px;font-weight:900;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-shadow:1px 1px #000}
+.party-world-hp{position:absolute;left:12px;right:12px;bottom:3px;height:5px;border:1px solid #211812;background:#0c0b0a;border-radius:3px;overflow:hidden}.party-world-hp i{display:block;height:100%;background:linear-gradient(90deg,#b94d4d,#69c66f)}
+.party-world-status{position:absolute;right:7px;top:17px;padding:1px 3px;border-radius:3px;background:#252018cc;color:#c8b58e;font-size:5px;font-weight:900;letter-spacing:.05em}
+.party-world-member[data-state="attack"]{animation:partyAttackLunge .5s ease-in-out infinite}.party-world-member[data-state="death"]{filter:grayscale(.85);opacity:.55;animation:none}.party-world-member[data-state="death"] .party-world-status{color:#ffaaa0;background:#4d1717cc}
+@keyframes partyAttackLunge{0%,100%{margin-top:0}45%{margin-top:-5px}70%{margin-top:-1px}}
+
+@media(max-width:1180px) and (min-width:768px){
+  .game-right-stack{right:8px!important;bottom:300px!important;width:268px!important}
+  .party-dock{max-height:306px!important}.party-dock-scroll{max-height:225px!important}
+  .ro-party-main{grid-template-columns:42px minmax(0,1fr)!important}.party-mini-equipment>span{height:28px!important}
+  .game-right-stack .quick-inventory{height:168px!important;max-height:168px!important;flex-basis:168px!important}.game-right-stack .quick-inventory .bag-grid{max-height:123px!important}
+  .auto-hunt.card{right:8px!important;width:268px!important;max-height:278px!important}.auto-hunt .drops{max-height:102px!important}
+}
+
+@media(max-width:767px){
+  .game-right-stack{display:contents!important}
+  .party-dock{display:none!important}
+  .game-right-stack .quick-inventory{position:absolute!important;right:7px!important;top:104px!important;width:208px!important;height:102px!important;max-height:102px!important;padding:6px!important;background:#171412ec!important}
+  .game-right-stack .quick-inventory .bag-title{height:20px!important;font-size:9px!important}
+  .game-right-stack .quick-inventory .bag-grid{grid-template-columns:repeat(6,1fr)!important;max-height:70px!important;overflow-y:auto!important;gap:2px!important;padding-top:3px!important}
+  .game-right-stack .quick-inventory .bag-grid button{display:grid!important;min-height:30px!important}.game-right-stack .quick-inventory .bag-grid .ro-item-icon{width:24px!important;height:24px!important}
+  .auto-hunt.card{right:7px!important;bottom:calc(70px + var(--safe-bottom))!important;width:206px!important;max-height:132px!important;padding:6px!important;background:#181411ed!important;backdrop-filter:blur(4px)}
+  .auto-hunt .panel-title{font-size:11px!important;padding-bottom:4px!important;margin-bottom:3px!important}.auto-hunt .stats{display:flex!important;gap:6px!important;flex-wrap:wrap!important}.auto-hunt .stats p{display:none!important}.auto-hunt .stats p:nth-child(2),.auto-hunt .stats p:nth-child(5),.auto-hunt .stats p:nth-child(7){display:flex!important;gap:3px!important;margin:0!important;font-size:7px!important}.auto-hunt .drops{display:none!important}.auto-hunt .stop-btn{height:29px!important;margin-top:5px!important;font-size:8px!important}
+  .party-world-member{width:68px;height:92px}.party-world-member img{width:64px;height:74px}.party-world-name{font-size:7px}.party-world-status{display:none}
+}
