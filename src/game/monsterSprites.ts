@@ -23,12 +23,13 @@ const monsterSprites:Record<string,MonsterSpriteAsset>={
 }
 
 const clamp=(n:number,min:number,max:number)=>Math.max(min,Math.min(max,n))
+const fallback='/sprites/poring.svg'
 
 function setSprite(el:HTMLElement,asset:MonsterSpriteAsset,name:string,scale:number,minW:number,maxW:number,minH:number,maxH:number){
   const img=el.querySelector<HTMLImageElement>('img')
   if(img&&img.dataset.roSrc!==asset.src){
     img.dataset.roSrc=asset.src
-    img.onerror=()=>{img.onerror=null;img.src='/sprites/poring.svg'}
+    img.onerror=()=>{img.onerror=null;img.src=fallback}
     img.src=asset.src
   }
   el.style.width=`${clamp(Math.round(asset.width*scale),minW,maxW)}px`
@@ -36,16 +37,28 @@ function setSprite(el:HTMLElement,asset:MonsterSpriteAsset,name:string,scale:num
   el.dataset.roMonster=name
 }
 
+function resetSprite(el:HTMLElement){
+  const img=el.querySelector<HTMLImageElement>('img')
+  if(img){img.onerror=null;img.dataset.roSrc='';img.src=fallback}
+  el.style.removeProperty('width')
+  el.style.removeProperty('height')
+  delete el.dataset.roMonster
+}
+
 function applyMonsterSprite(){
   const nameEl=document.querySelector<HTMLElement>('.main-mob .mob-name')
   if(!nameEl)return
   const name=(nameEl.textContent||'').split('·')[0].trim()
-  const asset=monsterSprites[name]
-  if(!asset)return
-
   const main=document.querySelector<HTMLElement>('.main-mob')
+  const decorative=[...document.querySelectorAll<HTMLElement>('.mob-2,.mob-3')]
+  const asset=monsterSprites[name]
+  if(!asset){
+    if(main)resetSprite(main)
+    decorative.forEach(resetSprite)
+    return
+  }
   if(main)setSprite(main,asset,name,1.35,72,132,66,150)
-  document.querySelectorAll<HTMLElement>('.mob-2,.mob-3').forEach(el=>setSprite(el,asset,name,.9,58,100,52,112))
+  decorative.forEach(el=>setSprite(el,asset,name,.9,58,100,52,112))
 }
 
 export function installMonsterSpriteWatcher(){
