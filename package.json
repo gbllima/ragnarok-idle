@@ -12,7 +12,9 @@
     "assets:verify": "node tools/verify-ro-assets.mjs",
     "catalog:sync": "node tools/sync-ragnarok-db.mjs",
     "catalog:sprites": "node tools/sync-full-sprites.mjs",
-    "catalog:verify": "node --experimental-strip-types tools/verify-full-catalog.mjs"
+    "catalog:sprites:items": "node tools/sync-full-sprites.mjs --items-only",
+    "catalog:sprites:monsters": "node tools/sync-full-sprites.mjs --monsters-only",
+    "catalog:verify": "node tools/verify-full-catalog.mjs"
   },
   "dependencies": {
     "@vitejs/plugin-react": "latest",
