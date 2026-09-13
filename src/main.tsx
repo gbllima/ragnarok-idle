@@ -6,6 +6,7 @@ import { installWorldMovement } from './game/worldMovement'
 import './styles.css'
 import './death.css'
 import './progression.css'
+import './world.css'
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
