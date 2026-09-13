@@ -1,0 +1,32 @@
+/* Prontera rebuilt with the four terrain references supplied by the project owner. */
+.prontera-safe-zone{background:#526c2f}
+.prontera-world{background:var(--prt-g01) repeat 0 0/256px 256px!important;image-rendering:auto}
+.prontera-map{inset:0;background:var(--prt-g01) repeat 0 0/256px 256px!important;image-rendering:auto}
+.prontera-map:before,.prontera-map:after{display:none!important}
+
+/* Main city paving: prt_city_bot02 */
+.prontera-road{background:var(--prt-bot02) repeat 0 0/256px 256px!important;box-shadow:0 0 0 3px #756e57,inset 0 0 18px #4c48392a!important}
+.prontera-road-ns{left:968px!important;top:0!important;width:264px!important;height:1600px!important}
+.prontera-road-ew{left:0!important;top:668px!important;width:2200px!important;height:264px!important}
+
+/* Central plaza: bot02 around it, bot05 exactly below the fountain. */
+.prontera-plaza{left:724px!important;top:424px!important;width:752px!important;height:752px!important;border:0!important;border-radius:50%!important;background:var(--prt-bot02) repeat 0 0/256px 256px!important;box-shadow:0 0 0 7px #77705b,0 9px 22px #0002!important;overflow:visible}
+.prontera-plaza:before{content:"";position:absolute;left:50%;top:50%;width:256px;height:256px;transform:translate(-50%,-50%);background:var(--prt-bot05) no-repeat center/256px 256px;border-radius:50%;pointer-events:none}
+.prontera-plaza:after{content:"";position:absolute;left:50%;top:50%;width:560px;height:560px;transform:translate(-50%,-50%);border:3px solid #81796480;border-radius:50%;box-shadow:inset 0 0 0 2px #e1dbc499;pointer-events:none}
+.prontera-plaza-ring{display:none!important}
+
+/* Grass: prt_city_g01 */
+.prontera-garden{border:0!important;background:var(--prt-g01) repeat 0 0/256px 256px!important;box-shadow:none!important;overflow:visible!important}
+.garden-a{left:220px!important;top:205px!important;width:430px!important;height:325px!important;border-radius:42% 58% 44% 56%/56% 43% 57% 44%!important}
+.garden-b{left:1550px!important;top:205px!important;width:430px!important;height:325px!important;border-radius:58% 42% 56% 44%/43% 57% 44% 56%!important}
+.garden-c{left:220px!important;top:1070px!important;width:430px!important;height:305px!important;border-radius:55% 45% 43% 57%/48% 59% 41% 52%!important}
+.garden-d{left:1550px!important;top:1070px!important;width:430px!important;height:305px!important;border-radius:45% 55% 57% 43%/59% 42% 58% 41%!important}
+
+/* Stone/grass junction: prt_city_bot07, rotated for each side. */
+.prontera-garden:before{content:"";position:absolute;width:256px;height:256px;background:var(--prt-bot07) no-repeat center/256px 256px;pointer-events:none}
+.garden-a:before{right:-44px;bottom:-45px;transform:rotate(0deg)}
+.garden-b:before{left:-44px;bottom:-45px;transform:scaleX(-1)}
+.garden-c:before{right:-44px;top:-45px;transform:scaleY(-1)}
+.garden-d:before{left:-44px;top:-45px;transform:rotate(180deg)}
+
+.prontera-fountain{left:1041px!important;top:747px!important;z-index:6!important}
