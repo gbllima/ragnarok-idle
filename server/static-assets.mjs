@@ -15,8 +15,12 @@ export async function serveStatic(req, res, pathname) {
   const path = resolve(root, '.' + (decoded === '/' ? '/index.html' : decoded))
   if (!path.startsWith(resolve(root) + sep)) return false
   try {
-    const bytes = await readFile(path)
-    res.writeHead(200, { 'Content-Type': mime[extname(path)] ?? 'application/octet-stream', 'Content-Length': bytes.length, 'Cache-Control': decoded === '/' ? 'no-cache' : 'public, max-age=3600', 'X-Content-Type-Options': 'nosniff' })
+    let bytes, compressed=false
+    if(extname(path)==='.json'&&/\bgzip\b/.test(req.headers['accept-encoding']||'')){
+      try{bytes=await readFile(path+'.gz');compressed=true}catch(error){if(error.code!=='ENOENT')throw error}
+    }
+    bytes??=await readFile(path)
+    res.writeHead(200, { 'Content-Type': mime[extname(path)] ?? 'application/octet-stream', 'Content-Length': bytes.length, 'Cache-Control': decoded === '/' || extname(path)==='.json' ? 'no-cache' : 'public, max-age=3600', 'X-Content-Type-Options': 'nosniff', ...(extname(path)==='.json'?{'Vary':'Accept-Encoding'}:{}), ...(compressed?{'Content-Encoding':'gzip'}:{}) })
     res.end(req.method === 'HEAD' ? undefined : bytes)
     return true
   } catch (error) {

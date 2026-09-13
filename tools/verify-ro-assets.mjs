@@ -2,7 +2,7 @@ import assert from 'node:assert/strict'
 import { readFile } from 'node:fs/promises'
 import { createHash } from 'node:crypto'
 import http from 'node:http'
-import { maps, items, classes } from '../src/game/data.ts'
+import { maps, items, classes } from '../src/game/starterData.ts'
 import { serveStatic } from '../server/static-assets.mjs'
 
 const root = new URL('../', import.meta.url)

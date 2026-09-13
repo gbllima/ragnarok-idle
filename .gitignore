@@ -1,3 +1,9 @@
 public/generated/monsters/
 public/generated/monsters-actions/
 public/generated/players-actions/
+node_modules/
+dist/
+*.tsbuildinfo
+server/data.json
+public/ro/monster-actions/
+public/ro/full/sprites-progress.json

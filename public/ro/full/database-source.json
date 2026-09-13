@@ -1,0 +1,30 @@
+{
+  "mode": "Renewal",
+  "commit": "e985006171d2eb320ee512a653f4c83aea3d81b6",
+  "importedAt": "2026-09-13T16:05:20.896Z",
+  "sources": [
+    {
+      "url": "https://raw.githubusercontent.com/rathena/rathena/e985006171d2eb320ee512a653f4c83aea3d81b6/db/re/item_db_usable.yml",
+      "sha256": "fb49acd7d7b81ae3075bece7cfa4baf3be1c0d68c0da35240496b933db9d473e"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/rathena/rathena/e985006171d2eb320ee512a653f4c83aea3d81b6/db/re/item_db_equip.yml",
+      "sha256": "0ded923764d64ad81ad6fae14880f6c0946d91a91ab931d18cce7d4dbcf75f5f"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/rathena/rathena/e985006171d2eb320ee512a653f4c83aea3d81b6/db/re/item_db_etc.yml",
+      "sha256": "385e14a6ce2a943ee847cc6ae876390cc4aeac484e77491eaf83962f44cac137"
+    },
+    {
+      "url": "https://raw.githubusercontent.com/rathena/rathena/e985006171d2eb320ee512a653f4c83aea3d81b6/db/re/mob_db.yml",
+      "sha256": "fe79480381a98953a0281edafd775486926b5e186feec0a99816a95433907136"
+    },
+    {
+      "url": "https://assets.latam-tools.com.br/raw/items.json",
+      "sha256": "66c04e4b2fba7398208c931e797498b1af2dd9eca1a7b8e51acd46956c2b5304"
+    }
+  ],
+  "itemCount": 29356,
+  "weaponCount": 2806,
+  "monsterCount": 2675
+}

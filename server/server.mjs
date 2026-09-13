@@ -4,6 +4,7 @@ import { randomBytes, scryptSync, timingSafeEqual } from 'node:crypto'
 import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { serveStatic } from './static-assets.mjs'
+import { serveMonsterSprite } from './monster-sprites.mjs'
 
 const __dirname=dirname(fileURLToPath(import.meta.url))
 const DB_PATH=join(__dirname,'data.json')
@@ -23,6 +24,7 @@ const server=http.createServer(async(req,res)=>{
   if(req.method==='OPTIONS'){return send(res,204,{})}
   try{
     const url=new URL(req.url||'/',`http://${req.headers.host}`)
+    if(await serveMonsterSprite(req,res,url.pathname))return
     if(await serveStatic(req,res,url.pathname))return
     if(url.pathname==='/api/health')return send(res,200,{ok:true})
     if(url.pathname==='/api/register'&&req.method==='POST'){

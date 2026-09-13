@@ -36,7 +36,7 @@ function createVisualMob(zone:HTMLElement,index:number,name:string):HTMLElement{
   el.dataset.roWorldMob=String(index)
   el.innerHTML='<div class="sprite-shadow"></div><img alt=""><div class="ro-mob-label"></div>'
   const label=el.querySelector<HTMLElement>('.ro-mob-label')!
-  label.textContent=name
+  label.textContent=getMonsterAsset(name)?.label||name
   zone.appendChild(el)
   return el
 }
@@ -96,7 +96,7 @@ export function installWorldMovement(){
     actors.forEach((a,i)=>{
       sizeMob(a.el,name,i===0)
       const label=a.el.querySelector<HTMLElement>('.ro-mob-label')
-      if(label)label.textContent=name
+      if(label)label.textContent=getMonsterAsset(name)?.label||name
       setActorState(a,name,'idle',a.dir)
     })
   }

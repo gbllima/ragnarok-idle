@@ -1,10 +1,11 @@
-import { useEffect, useMemo, useState } from 'react'
-import { classes, items, maps, quests, skills, startingInventory, type StatKey } from './data'
+import { useEffect, useMemo, useRef, useState } from 'react'
+import { classes, items, maps, quests, skills, startingInventory, type StatKey, type EquipSlot } from './data'
+import { equipOwned, equipmentReason, equipmentStats, cardReason, canConsume, healingAmount } from './equipment'
 
 export type AutoConfig={enabledSkills:string[];healPct:number;useConsumables:boolean;autoSellCommon:boolean}
 export type SaveState={
   version:number;baseLevel:number;jobLevel:number;baseExp:number;jobExp:number;zeny:number;kills:number;hp:number;maxHp:number;sp:number;maxSp:number;
-  attack:number;defense:number;mapId:string;inventory:Record<string,number>;equipped:{weapon?:string;armor?:string;shield?:string};socketedCards:{weapon?:string;armor?:string;shield?:string};
+  attack:number;defense:number;mapId:string;inventory:Record<string,number>;equipped:Partial<Record<EquipSlot,string>>;socketedCards:Partial<Record<EquipSlot,string>>;
   lastSeen:number;running:boolean;classId:string;statPoints:number;jobPoints:number;stats:Record<StatKey,number>;skillLevels:Record<string,number>;
   firstJobChosen:boolean;unlockedClasses:string[];bestiary:Record<string,number>;claimedQuests:string[];auto:AutoConfig;rebirths:number;rebirthPoints:number;
 }
@@ -31,14 +32,13 @@ function migrate(raw:Partial<SaveState>):SaveState{
 }
 
 function derived(s:SaveState){
-  const eq=Object.values(s.equipped).filter(Boolean).map(id=>items[id as string]).filter(Boolean)
-  const socketCards=Object.values(s.socketedCards).filter(Boolean).map(id=>items[id as string]).filter(Boolean)
+  const {gear:eq,cards:socketCards,stats:bonus}=equipmentStats(s,items)
   const cls=classes.find(c=>c.id===s.classId)??classes[0]
-  const str=s.stats.str+(cls.bonuses.str||0),vit=s.stats.vit+(cls.bonuses.vit||0),int=s.stats.int+(cls.bonuses.int||0),dex=s.stats.dex+(cls.bonuses.dex||0)
+  const str=s.stats.str+(cls.bonuses.str||0)+bonus.str,vit=s.stats.vit+(cls.bonuses.vit||0)+bonus.vit,int=s.stats.int+(cls.bonuses.int||0)+bonus.int,dex=s.stats.dex+(cls.bonuses.dex||0)+bonus.dex
   const rb=1+s.rebirths*.08
   const cardAttack=socketCards.reduce((a,i)=>a+(i.cardBonus?.attack||0),0),cardDefense=socketCards.reduce((a,i)=>a+(i.cardBonus?.defense||0),0)
   const cardHp=socketCards.reduce((a,i)=>a+(i.cardBonus?.hp||0),0),cardSp=socketCards.reduce((a,i)=>a+(i.cardBonus?.sp||0),0)
-  const attack=Math.round((180+str*6+dex*2+eq.reduce((a,i)=>a+(i.attack||0),0)+cardAttack)*rb)
+  const attack=Math.round((180+(s.classId==='mage'||s.classId==='acolyte'?int:str)*6+dex*2+eq.reduce((a,i)=>a+(s.classId==='mage'||s.classId==='acolyte'?Math.max(i.magicAttack||0,i.attack||0):(i.attack||0)),0)+cardAttack)*rb)
   const defense=Math.round((20+Math.floor(vit*1.8)+eq.reduce((a,i)=>a+(i.defense||0),0)+cardDefense)*rb)
   const maxHp=Math.round((700+vit*24+eq.reduce((a,i)=>a+(i.hp||0),0)+cardHp)*rb)
   const maxSp=Math.round((220+int*18+eq.reduce((a,i)=>a+(i.sp||0),0)+cardSp)*(1+s.rebirths*.04))
@@ -59,6 +59,7 @@ export function useGame(){
   const classDef=useMemo(()=>classes.find(c=>c.id===save.classId)??classes[0],[save.classId])
   const [monsterHp,setMonsterHp]=useState(map.monsterHp)
   const [monsterAlive,setMonsterAlive]=useState(true)
+  const monsterHpRef=useRef(map.monsterHp),aliveRef=useRef(true),respawnTimer=useRef<number|undefined>(undefined)
   const [playerDead,setPlayerDead]=useState(false)
   const [hit,setHit]=useState(0)
   const [damage,setDamage]=useState(0)
@@ -80,29 +81,35 @@ export function useGame(){
       const rawText=localStorage.getItem(KEY);if(!rawText)return
       const parsed=JSON.parse(rawText);const prev=migrate(parsed);if(!prev.running)return
       const seconds=Math.max(0,Math.min(8*3600,Math.floor((Date.now()-(parsed.lastSeen||Date.now()))/1000)));if(seconds<30)return
-      const m=maps.find(x=>x.id===prev.mapId)??maps[0];const ds=derived(prev);const cycle=1.2*Math.max(1,Math.ceil(m.monsterHp/Math.max(1,ds.attack-m.monsterDef)));const kills=Math.floor(seconds/cycle);if(kills<=0)return
+      const m=maps.find(x=>x.id===prev.mapId)??maps[0];const ds=derived(prev);const hits=Math.max(1,Math.ceil(m.monsterHp/Math.max(1,ds.attack-m.monsterDef)));const cycle=1.2*hits;const incoming=Math.max(1,m.monsterAtk-ds.defense/5)
+      // Offline hunting must survive its target; a high-level boss cannot be farmed by logging out.
+      if(m.imported&&incoming*hits>=ds.maxHp)return
+      const kills=Math.floor(seconds/cycle);if(kills<=0)return
       const exp=kills*m.exp,job=kills*m.jobExp,zeny=kills*m.zeny,drops:Record<string,number>={}
-      for(const dr of m.drops){const qty=Math.floor(kills*Math.min(10000,dr.rate*(1+ds.dropBonus/100))/10000);if(qty>0)drops[dr.itemId]=qty}
-      setSave(s=>{let next=grantProgress(s,exp,job);const inv={...next.inventory};let extraZeny=0;for(const [id,qty] of Object.entries(drops)){const it=items[id];if(next.auto.autoSellCommon&&it?.rarity==='common'&&it.type==='material')extraZeny+=sellValue(id)*qty;else inv[id]=(inv[id]||0)+qty}return {...next,inventory:inv,zeny:next.zeny+zeny+extraZeny,kills:next.kills+kills,bestiary:{...next.bestiary,[m.monster]:(next.bestiary[m.monster]||0)+kills}}})
+      for(const dr of m.drops){const qty=Math.floor(kills*Math.min(10000,dr.rate*(1+ds.dropBonus/100))/10000);if(qty>0)drops[dr.itemId]=(drops[dr.itemId]||0)+qty}
+      setSave(s=>{let next=grantProgress(s,exp,job);const inv={...next.inventory};let extraZeny=0;for(const [id,qty] of Object.entries(drops)){const it=items[id];if(next.auto.autoSellCommon&&it?.rarity==='common'&&it.type==='material'&&!it.noSell)extraZeny+=sellValue(id)*qty;else inv[id]=(inv[id]||0)+qty}return {...next,inventory:inv,zeny:next.zeny+zeny+extraZeny,kills:next.kills+kills,bestiary:{...next.bestiary,[m.bestiaryKey||m.monster]:(next.bestiary[m.bestiaryKey||m.monster]||0)+kills}}})
       setOffline({seconds,exp,job,zeny,kills,drops})
     }catch{}
   },[])
 
   useEffect(()=>{localStorage.setItem(KEY,JSON.stringify({...save,lastSeen:Date.now()}))},[save])
-  useEffect(()=>{setMonsterHp(map.monsterHp);setMonsterAlive(true)},[map.id,map.monsterHp])
+  useEffect(()=>{window.clearTimeout(respawnTimer.current);monsterHpRef.current=map.monsterHp;aliveRef.current=true;setMonsterHp(map.monsterHp);setMonsterAlive(true);return()=>window.clearTimeout(respawnTimer.current)},[map.id,map.monsterHp])
   useEffect(()=>{const t=window.setInterval(()=>{setCooldowns(c=>Object.fromEntries(Object.entries(c).map(([k,v])=>[k,Math.max(0,v-1)])));setActiveBuff(b=>b&&b.until<=Date.now()?null:b)},1000);return()=>window.clearInterval(t)},[])
 
   const rewardKill=()=>{
+    if(!aliveRef.current)return
+    aliveRef.current=false
     setMonsterAlive(false)
-    const dropped:string[]=[]
+    const dropBoost=1+derived(save).dropBonus/100
+    const rolled=map.drops.filter(dr=>roll(Math.min(10000,dr.rate*dropBoost)))
+    const dropped=rolled.map(dr=>items[dr.itemId]?.name||dr.itemId)
     setSave(s=>{
       let next=grantProgress(s,map.exp,map.jobExp);const inv={...next.inventory};let bonusZeny=0
-      const dropBoost=1+derived(next).dropBonus/100
-      for(const dr of map.drops){if(roll(Math.min(10000,dr.rate*dropBoost))){const it=items[dr.itemId];if(next.auto.autoSellCommon&&it?.rarity==='common'&&it.type==='material')bonusZeny+=sellValue(dr.itemId);else{inv[dr.itemId]=(inv[dr.itemId]||0)+1;dropped.push(it?.name||dr.itemId)}}}
-      return {...next,inventory:inv,zeny:next.zeny+map.zeny+bonusZeny,kills:next.kills+1,bestiary:{...next.bestiary,[map.monster]:(next.bestiary[map.monster]||0)+1},hp:Math.min(next.maxHp,next.hp+8),sp:Math.min(next.maxSp,next.sp+3)}
+      for(const dr of rolled){const it=items[dr.itemId];if(next.auto.autoSellCommon&&it?.rarity==='common'&&it.type==='material'&&!it.noSell)bonusZeny+=sellValue(dr.itemId);else inv[dr.itemId]=(inv[dr.itemId]||0)+1}
+      return {...next,inventory:inv,zeny:next.zeny+map.zeny+bonusZeny,kills:next.kills+1,bestiary:{...next.bestiary,[map.bestiaryKey||map.monster]:(next.bestiary[map.bestiaryKey||map.monster]||0)+1},hp:Math.min(next.maxHp,next.hp+8),sp:Math.min(next.maxSp,next.sp+3)}
     })
     setLog(l=>[`${map.monster} derrotado! +${map.exp} EXP · +${map.jobExp} Job EXP · +${map.zeny} Zeny${dropped.length?` · Drop: ${dropped.join(', ')}`:''}`,...l].slice(0,7))
-    window.setTimeout(()=>{setMonsterHp(map.monsterHp);setMonsterAlive(true)},850)
+    respawnTimer.current=window.setTimeout(()=>{monsterHpRef.current=map.monsterHp;aliveRef.current=true;setMonsterHp(map.monsterHp);setMonsterAlive(true)},850)
   }
 
   useEffect(()=>{
@@ -113,7 +120,7 @@ export function useGame(){
       const dealt=Math.max(1,Math.round((effectiveAttack-map.monsterDef+variance)*(crit?1.6:1)));setDamage(dealt);setHit(v=>v+1)
       const dodge=Math.min(.45,save.stats.agi*.004);const incoming=Math.random()<dodge?0:Math.max(1,Math.round(map.monsterAtk-save.defense/5))
       setSave(s=>{const nextHp=Math.max(0,s.hp-incoming);if(nextHp===0){setPlayerDead(true);setLog(l=>['Você foi derrotado. Respawn em 3 segundos.',...l].slice(0,7));window.setTimeout(()=>{setSave(current=>({...current,hp:current.maxHp,sp:current.maxSp}));setPlayerDead(false)},3000)}return {...s,hp:nextHp}})
-      setMonsterHp(hp=>{const next=hp-dealt;setLog(l=>[`${crit?'CRÍTICO! ':''}${dealt} de dano em ${map.monster}.`,...l].slice(0,7));if(next>0)return next;rewardKill();return 0})
+      const next=Math.max(0,monsterHpRef.current-dealt);monsterHpRef.current=next;setMonsterHp(next);setLog(l=>[`${dealt} de dano em ${map.monster}.`,...l].slice(0,7));if(next===0)rewardKill()
     },speed)
     return()=>window.clearInterval(timer)
   },[save.running,save.defense,save.stats.agi,save.stats.luk,map,monsterAlive,playerDead,effectiveAttack])
@@ -124,25 +131,27 @@ export function useGame(){
     setSave(s=>({...s,sp:s.sp-sk.spCost}));setCooldowns(c=>({...c,[id]:sk.cooldown}))
     if(sk.kind==='heal'){const amount=Math.round(save.maxHp*(sk.power+.03*lvl));setSave(s=>({...s,hp:Math.min(s.maxHp,s.hp+amount)}));setLog(l=>[`${sk.name} recuperou ${amount} HP.`,...l].slice(0,7));return}
     if(sk.kind==='buff'){setActiveBuff({name:sk.name,multiplier:sk.power+.02*lvl,until:Date.now()+6000});setLog(l=>[`${sk.name} ativado por 6 segundos.`,...l].slice(0,7));return}
-    const dealt=Math.max(1,Math.round(effectiveAttack*(sk.power+.06*lvl))-map.monsterDef);setDamage(dealt);setHit(v=>v+1);setMonsterHp(h=>{const next=h-dealt;if(next<=0&&monsterAlive){rewardKill();return 0}return Math.max(0,next)});setLog(l=>[`${sk.name}${sk.element?` [${sk.element}]`:''} causou ${dealt} de dano.`,...l].slice(0,7))
+    const dealt=Math.max(1,Math.round(effectiveAttack*(sk.power+.06*lvl))-map.monsterDef);setDamage(dealt);setHit(v=>v+1);(()=>{if(!aliveRef.current)return;const next=Math.max(0,monsterHpRef.current-dealt);monsterHpRef.current=next;setMonsterHp(next);if(next===0)rewardKill()})();setLog(l=>[`${sk.name}${sk.element?` [${sk.element}]`:''} causou ${dealt} de dano.`,...l].slice(0,7))
   }
 
   useEffect(()=>{
     if(!save.running||playerDead)return
     const timer=window.setInterval(()=>{
       const hpPct=save.hp/save.maxHp*100
-      if(hpPct<=save.auto.healPct){const heal=activeSkills.find(sk=>sk.kind==='heal'&&(save.skillLevels[sk.id]||0)>0&&(cooldowns[sk.id]||0)<=0&&save.sp>=sk.spCost);if(heal){useSkill(heal.id);return}if(save.auto.useConsumables){const food=['honey','redHerb','greenHerb','apple'].find(id=>(save.inventory[id]||0)>0);if(food){consumeItem(food);return}}}
+      if(hpPct<=save.auto.healPct){const heal=activeSkills.find(sk=>sk.kind==='heal'&&(save.skillLevels[sk.id]||0)>0&&(cooldowns[sk.id]||0)<=0&&save.sp>=sk.spCost);if(heal){useSkill(heal.id);return}if(save.auto.useConsumables){const food=Object.keys(save.inventory).find(id=>save.inventory[id]>0&&items[id]&&canConsume(items[id])&&((items[id].hp||0)>0||(items[id].heal?.hp?.[1]||0)>0||(items[id].heal?.hpPercent?.[1]||0)>0));if(food){consumeItem(food);return}}}
       const attackSkill=activeSkills.find(sk=>save.auto.enabledSkills.includes(sk.id)&&sk.kind!=='heal'&&(save.skillLevels[sk.id]||0)>0&&(cooldowns[sk.id]||0)<=0&&save.sp>=sk.spCost);if(attackSkill)useSkill(attackSkill.id)
     },1400)
     return()=>window.clearInterval(timer)
   },[save.running,save.hp,save.maxHp,save.sp,save.inventory,save.auto,save.skillLevels,cooldowns,playerDead,activeSkills])
 
-  const equip=(id:string)=>{const item=items[id];if(!item||item.type!=='equipment'||!item.slot)return;if(item.equipLevel&&save.baseLevel<item.equipLevel){setLog(l=>[`Requer Base Lv. ${item.equipLevel} para ${item.name}.`,...l].slice(0,7));return}setSave(s=>({...s,equipped:{...s.equipped,[item.slot!]:id}}))}
-  const socketCard=(slot:'weapon'|'armor'|'shield',cardId:string)=>{const c=items[cardId];if(!c||c.type!=='card'||(save.inventory[cardId]||0)<=0||!save.equipped[slot])return;setSave(s=>{const inv={...s.inventory,[cardId]:(s.inventory[cardId]||0)-1};const old=s.socketedCards[slot];if(old)inv[old]=(inv[old]||0)+1;return {...s,inventory:inv,socketedCards:{...s.socketedCards,[slot]:cardId}}})}
-  const removeCard=(slot:'weapon'|'armor'|'shield')=>setSave(s=>{const old=s.socketedCards[slot];if(!old)return s;return {...s,inventory:{...s.inventory,[old]:(s.inventory[old]||0)+1},socketedCards:{...s.socketedCards,[slot]:undefined}}})
-  const consumeItem=(id:string)=>{const it=items[id];if(!it||it.type!=='consumable'||(save.inventory[id]||0)<=0)return;setSave(s=>({...s,inventory:{...s.inventory,[id]:Math.max(0,(s.inventory[id]||0)-1)},hp:Math.min(s.maxHp,s.hp+(it.hp||0)),sp:Math.min(s.maxSp,s.sp+(it.sp||0))}))}
-  const buyItem=(id:string)=>{const it=items[id];if(!it?.buy||save.zeny<it.buy)return;setSave(s=>({...s,zeny:s.zeny-it.buy!,inventory:{...s.inventory,[id]:(s.inventory[id]||0)+1}}))}
-  const sellItem=(id:string,qty=1)=>{if((save.inventory[id]||0)<qty)return;const equipped=Object.values(save.equipped).includes(id);if(equipped&&save.inventory[id]<=1)return;setSave(s=>({...s,zeny:s.zeny+sellValue(id)*qty,inventory:{...s.inventory,[id]:Math.max(0,(s.inventory[id]||0)-qty)}}))}
+  const equip=(id:string)=>{const item=items[id];if(!item)return;const reason=equipmentReason(save,item);if(reason){setLog(l=>[reason,...l].slice(0,7));return}setSave(s=>equipOwned(s,item))}
+  const unequip=(slot:EquipSlot)=>setSave(s=>{const id=s.equipped[slot];if(!id)return s;const equipped={...s.equipped},socketedCards={...s.socketedCards},inventory={...s.inventory};for(const [key,value] of Object.entries(equipped) as [EquipSlot,string][]){if(value!==id)continue;delete equipped[key];const card=socketedCards[key];if(card){inventory[card]=(inventory[card]||0)+1;delete socketedCards[key]}}return {...s,equipped,socketedCards,inventory}})
+  const socketCard=(slot:EquipSlot,cardId:string)=>{const c=items[cardId];if(!c)return;const reason=cardReason(save,slot,c,items);if(reason){setLog(l=>[reason,...l].slice(0,7));return};setSave(s=>{const inv={...s.inventory,[cardId]:(s.inventory[cardId]||0)-1};const old=s.socketedCards[slot];if(old)inv[old]=(inv[old]||0)+1;return {...s,inventory:inv,socketedCards:{...s.socketedCards,[slot]:cardId}}})}
+  const removeCard=(slot:EquipSlot)=>setSave(s=>{const old=s.socketedCards[slot];if(!old)return s;return {...s,inventory:{...s.inventory,[old]:(s.inventory[old]||0)+1},socketedCards:{...s.socketedCards,[slot]:undefined}}})
+  const consumeItem=(id:string)=>{const it=items[id];if(!it||!canConsume(it))return;setSave(s=>{if((s.inventory[id]||0)<=0)return s;const heal=healingAmount(it,s.maxHp,s.maxSp);return {...s,inventory:{...s.inventory,[id]:s.inventory[id]-1},hp:Math.min(s.maxHp,s.hp+heal.hp),sp:Math.min(s.maxSp,s.sp+heal.sp)}})}
+  const buyCatalogItem=(id:string)=>{const it=items[id];if(!it?.marketPrice)return;setSave(s=>s.zeny<it.marketPrice!||s.baseLevel<(it.equipLevel||1)?s:{...s,zeny:s.zeny-it.marketPrice!,inventory:{...s.inventory,[it.id]:(s.inventory[it.id]||0)+1}})}
+  const buyItem=(id:string)=>{const it=items[id];if(!it?.buy||save.zeny<it.buy)return;setSave(s=>s.zeny<it.buy!?s:{...s,zeny:s.zeny-it.buy!,inventory:{...s.inventory,[id]:(s.inventory[id]||0)+1}})}
+  const sellItem=(id:string,qty=1)=>{if(!Number.isInteger(qty)||qty<=0||items[id]?.noSell||(save.inventory[id]||0)<qty)return;const equipped=Object.values(save.equipped).includes(id);if(equipped&&save.inventory[id]<=1)return;setSave(s=>({...s,zeny:s.zeny+sellValue(id)*qty,inventory:{...s.inventory,[id]:Math.max(0,(s.inventory[id]||0)-qty)}}))}
   const changeMap=(id:string)=>{const next=maps.find(m=>m.id===id);if(!next||save.baseLevel<next.minLevel)return;setSave(s=>({...s,mapId:id}))}
   const toggle=()=>setSave(s=>({...s,running:!s.running}))
   const heal=()=>setSave(s=>({...s,hp:s.maxHp,sp:s.maxSp}))
@@ -161,5 +170,5 @@ export function useGame(){
 
   const availableSkills=skills.filter(s=>s.classId===save.classId||s.classId==='novice')
   const canChangeJob=save.classId==='novice'&&!save.firstJobChosen&&save.baseLevel>=10&&save.jobLevel>=10
-  return {save,map,classDef,monsterHp,monsterAlive,playerDead,hit,damage,log,offline,setOffline,equip,socketCard,removeCard,consumeItem,buyItem,sellItem,changeMap,toggle,heal,addStat,chooseFirstJob,learnSkill,useSkill,cooldowns,availableSkills,activeSkills,activeBuff,effectiveAttack,passiveMultiplier,canChangeJob,baseNeed:expNeed(save.baseLevel),jobNeed:jobNeed(save.jobLevel),toggleAutoSkill,setAutoOption,questProgress,claimQuest,canRebirth,rebirth,resetSave}
+  return {save,map,classDef,monsterHp,monsterAlive,playerDead,hit,damage,log,offline,setOffline,equip,unequip,buyCatalogItem,socketCard,removeCard,consumeItem,buyItem,sellItem,changeMap,toggle,heal,addStat,chooseFirstJob,learnSkill,useSkill,cooldowns,availableSkills,activeSkills,activeBuff,effectiveAttack,passiveMultiplier,canChangeJob,baseNeed:expNeed(save.baseLevel),jobNeed:jobNeed(save.jobLevel),toggleAutoSkill,setAutoOption,questProgress,claimQuest,canRebirth,rebirth,resetSave}
 }

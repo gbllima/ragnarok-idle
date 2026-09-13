@@ -2,7 +2,7 @@ import { mkdir, readFile, writeFile } from 'node:fs/promises'
 import { dirname, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { createHash } from 'node:crypto'
-import { maps, items, classes } from '../src/game/data.ts'
+import { maps, items, classes } from '../src/game/starterData.ts'
 
 const root = fileURLToPath(new URL('../', import.meta.url))
 const origin = 'https://assets.latam-tools.com.br'
