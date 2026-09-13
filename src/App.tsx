@@ -1,140 +1,38 @@
-import { useEffect, useMemo, useState } from 'react'
-import { Backpack, BookOpen, CircleUserRound, Crown, Gem, Map, PawPrint, Settings, Shield, Sparkles, Swords, Trophy } from 'lucide-react'
+import { useState } from 'react'
+import { Backpack, BookOpen, CircleUserRound, Crown, Gem, Map, PawPrint, Settings, Shield, Sparkles, Swords, Trophy, X } from 'lucide-react'
+import { items, maps } from './game/data'
+import { useGame } from './game/useGame'
 
-const menu = [
-  [CircleUserRound, 'Personagem'],
-  [Shield, 'Equipamentos'],
-  [Backpack, 'Inventário'],
-  [Sparkles, 'Skills'],
-  [Map, 'Mapas'],
-  [BookOpen, 'Quests'],
-  [PawPrint, 'Pets'],
-  [Trophy, 'Ranking'],
-] as const
+type Panel='Personagem'|'Equipamentos'|'Inventário'|'Skills'|'Mapas'|'Quests'|'Pets'|'Ranking'|null
+const menu = [[CircleUserRound,'Personagem'],[Shield,'Equipamentos'],[Backpack,'Inventário'],[Sparkles,'Skills'],[Map,'Mapas'],[BookOpen,'Quests'],[PawPrint,'Pets'],[Trophy,'Ranking']] as const
 
-type Monster = { id: number; x: number; y: number; hp: number; maxHp: number; alive: boolean; respawnAt: number; variant: number }
+export function App(){
+  const g=useGame(); const [panel,setPanel]=useState<Panel>(null)
+  const hpPct=g.save.hp/g.save.maxHp*100, spPct=g.save.sp/g.save.maxSp*100, expPct=g.save.baseExp/g.baseNeed*100, jobPct=g.save.jobExp/g.jobNeed*100
+  return <main className={`game-shell biome-${g.map.bg}`}>
+    <section className="hud card"><img className="portrait-img" src="/sprites/swordsman.svg"/><div className="hud-copy"><strong>Knock</strong><span>Swordsman</span><div className="levels"><span>Base Lv. {g.save.baseLevel}</span><span>Job Lv. {g.save.jobLevel}</span></div><div className="bar-row"><small>HP {Math.round(g.save.hp)}/{g.save.maxHp}</small><div className="meter hp"><i style={{width:`${hpPct}%`}}/></div></div><div className="bar-row"><small>SP {g.save.sp}/{g.save.maxSp}</small><div className="meter sp"><i style={{width:`${spPct}%`}}/></div></div></div></section>
+    <section className="topbar"><div className="currency">🪙 <b>{g.save.zeny.toLocaleString('pt-BR')}</b> Zeny</div><div className="currency"><Gem size={18}/> 1.250</div><button className="icon-btn">✉</button><button className="icon-btn"><Settings size={20}/></button></section>
+    <aside className="side-menu card">{menu.map(([Icon,label])=><button key={label} onClick={()=>setPanel(label)}><Icon size={20}/><span>{label}</span></button>)}</aside>
 
-const initialMonsters: Monster[] = [
-  { id: 1, x: 61, y: 51, hp: 620, maxHp: 620, alive: true, respawnAt: 0, variant: 0 },
-  { id: 2, x: 72, y: 43, hp: 620, maxHp: 620, alive: true, respawnAt: 0, variant: 1 },
-  { id: 3, x: 77, y: 59, hp: 620, maxHp: 620, alive: true, respawnAt: 0, variant: 2 },
-  { id: 4, x: 66, y: 66, hp: 620, maxHp: 620, alive: true, respawnAt: 0, variant: 3 },
-]
+    <section className="hunt-zone"><div className="sky"/><div className="cloud c1"/><div className="cloud c2"/><div className="mountains"/><div className="castle"><i/><i/><i/><span/></div><div className="far-trees"/><div className="field"/><div className="path"/><div className="pond"/><div className="tree tree-a"><i/><b/></div><div className="tree tree-b"><i/><b/></div><div className="tree tree-c"><i/><b/></div><div className="fence fence-a"/><div className="fence fence-b"/><div className="signpost"><b>{g.map.name.replace(' Field','')}</b></div><div className="flowers f1">✿ ✾ ✿</div><div className="flowers f2">✾ ✿ ✾</div>
+      <div className={`sprite player-sprite ${g.save.running?'attacking':''}`} key={g.hit}><div className="sprite-shadow"/><img src="/sprites/swordsman.svg"/><div className="slash"/></div>
+      <div className="sprite mob main-mob"><div className="sprite-shadow"/><img src="/sprites/poring.svg"/><div className="mob-name">{g.map.monster}</div><div className="mob-hp"><i style={{width:`${Math.max(0,g.monsterHp/g.map.monsterHp*100)}%`}}/></div>{g.damage>0&&<div className="damage-number" key={g.hit}>{g.damage}</div>}</div>
+      <div className="sprite mob mob-2 decorative"><img src="/sprites/poring.svg"/></div><div className="sprite mob mob-3 decorative"><img src="/sprites/poring.svg"/></div>
+      <div className="loot loot-a">◆</div><div className="loot loot-b">●</div><div className="battle-popups" key={g.save.kills}><strong>+{g.map.exp} EXP</strong><em>+{g.map.jobExp} Job EXP</em><span>+{g.map.zeny} Zeny</span></div><div className="world-label">{g.map.name}<small>Base Lv. recomendado: {g.map.minLevel}+</small></div>
+    </section>
 
-export function App() {
-  const [monsters, setMonsters] = useState(initialMonsters)
-  const [targetId, setTargetId] = useState(1)
-  const [hit, setHit] = useState(0)
-  const [damage, setDamage] = useState(325)
-  const [kills, setKills] = useState(1284)
-  const [zeny, setZeny] = useState(258450)
-  const [running, setRunning] = useState(true)
-  const [log, setLog] = useState(['[10:14] Você causou 325 de dano em Poring.', '[10:14] +125 EXP obtida.', '[10:14] +42 Zeny obtido.', '[10:15] Poring derrotado!'])
+    <aside className="auto-hunt card"><div className="panel-title"><Swords size={20}/> AUTO HUNT</div><div className="stats"><p><span>Mapa:</span><b>{g.map.name}</b></p><p><span>Monstro:</span><b>{g.map.monster}</b></p><p><span>ATK:</span><b>{g.save.attack}</b></p><p><span>DEF:</span><b>{g.save.defense}</b></p><p><span>EXP/kill:</span><b>{g.map.exp}</b></p><p><span>Job EXP/kill:</span><b>{g.map.jobExp}</b></p><p><span>Monstros derrotados:</span><b>{g.save.kills.toLocaleString('pt-BR')}</b></p></div><div className="drops"><h3>Drops Obtidos</h3>{['jellopy','apple','poringCard'].map(id=><div key={id} className={items[id].rarity==='rare'?'rare':''}><span>{items[id].icon} {items[id].name}</span><b>x{g.save.inventory[id]||0}</b></div>)}</div><button className={`stop-btn ${!g.save.running?'paused':''}`} onClick={g.toggle}>{g.save.running?'PARAR CAÇADA':'INICIAR CAÇADA'}</button></aside>
 
-  const target = useMemo(() => monsters.find(m => m.id === targetId) ?? monsters[0], [monsters, targetId])
+    <section className="skillbar card"><button>⚔</button><button>💥</button><button onClick={g.heal}>✚</button><button>🛡</button>{[0,1,2,3].map(i=><button key={i}>+</button>)}</section>
+    <section className="expbar card"><div className="xp-line"><span>Base EXP</span><b>{expPct.toFixed(1)}%</b><div className="meter exp"><i style={{width:`${Math.min(100,expPct)}%`}}/></div></div><div className="xp-line job-line"><span>Job EXP</span><b>{jobPct.toFixed(1)}%</b><div className="meter job"><i style={{width:`${Math.min(100,jobPct)}%`}}/></div></div></section>
+    <section className="chat card"><div className="chat-tabs"><b>Batalha</b><span>Sistema</span></div>{g.log.map((x,i)=><p key={i}>› {x}</p>)}</section><div className="brand"><Crown size={24}/> RAGNAROK <span>IDLE</span></div>
 
-  useEffect(() => {
-    if (!running) return
-    const timer = window.setInterval(() => {
-      const now = Date.now()
-      setMonsters(current => current.map(m => !m.alive && now >= m.respawnAt ? { ...m, alive: true, hp: m.maxHp } : m))
-    }, 400)
-    return () => window.clearInterval(timer)
-  }, [running])
-
-  useEffect(() => {
-    if (!running) return
-    const timer = window.setInterval(() => {
-      setMonsters(current => {
-        const living = current.filter(m => m.alive)
-        if (!living.length) return current
-        const active = current.find(m => m.id === targetId && m.alive) ?? living[0]
-        if (active.id !== targetId) setTargetId(active.id)
-        const dealt = 285 + Math.floor(Math.random() * 95)
-        setDamage(dealt)
-        setHit(v => v + 1)
-        let killed = false
-        const next = current.map(m => {
-          if (m.id !== active.id || !m.alive) return m
-          const nextHp = m.hp - dealt
-          if (nextHp <= 0) {
-            killed = true
-            return { ...m, hp: 0, alive: false, respawnAt: Date.now() + 2600 }
-          }
-          return { ...m, hp: nextHp }
-        })
-        setLog(items => [`[Agora] Você causou ${dealt} de dano em Poring.`, ...items].slice(0, 6))
-        if (killed) {
-          setKills(v => v + 1)
-          setZeny(v => v + 42)
-          setLog(items => ['[Agora] Poring derrotado! +125 EXP · +42 Zeny', ...items].slice(0, 6))
-          const nextTarget = next.find(m => m.alive)
-          if (nextTarget) setTargetId(nextTarget.id)
-        }
-        return next
-      })
-    }, 1200)
-    return () => window.clearInterval(timer)
-  }, [running, targetId])
-
-  return (
-    <main className="game-shell">
-      <section className="hud card">
-        <div className="portrait"><div className="portrait-head"/><div className="portrait-body"/></div>
-        <div className="hud-copy">
-          <strong>Knock</strong><span>Swordsman</span>
-          <div className="levels"><span>Base Lv. 42</span><span>Job Lv. 31</span></div>
-          <div className="meter hp"><i style={{ width: '84%' }} /></div>
-          <div className="meter sp"><i style={{ width: '72%' }} /></div>
-        </div>
-      </section>
-
-      <section className="topbar">
-        <div className="currency">🪙 <b>{zeny.toLocaleString('pt-BR')}</b> Zeny</div>
-        <div className="currency"><Gem size={18}/> 1.250</div>
-        <button className="icon-btn">✉</button><button className="icon-btn"><Settings size={20}/></button>
-      </section>
-
-      <aside className="side-menu card">{menu.map(([Icon, label]) => <button key={label}><Icon size={20}/><span>{label}</span></button>)}</aside>
-
-      <section className="hunt-zone">
-        <div className="sky"/><div className="cloud c1"/><div className="cloud c2"/>
-        <div className="castle"><i/><i/><i/><span/></div>
-        <div className="far-trees"/><div className="field"/><div className="path"/>
-        <div className="tree tree-a"><i/><b/></div><div className="tree tree-b"><i/><b/></div>
-        <div className="fence fence-a"/><div className="fence fence-b"/>
-        <div className="signpost"><b>Prontera</b></div>
-        <div className="flowers f1">✿ ✾ ✿</div><div className="flowers f2">✾ ✿</div>
-
-        <div className={`swordsman ${running ? 'attacking' : ''}`} key={hit}>
-          <div className="shadow"/><div className="boots"/><div className="body"/><div className="head"><i/></div><div className="arm"/><div className="sword"/>
-          <div className="slash"/>
-        </div>
-
-        {monsters.map(monster => (
-          <div key={monster.id} className={`poring p${monster.id} ${monster.alive ? '' : 'dead'} ${target?.id === monster.id ? 'targeted' : ''}`} style={{ left: `${monster.x}%`, top: `${monster.y}%` }}>
-            <div className="poring-shadow"/><div className="poring-body"><i className="eye e1"/><i className="eye e2"/><i className="mouth"/></div>
-            <div className="mob-hp"><i style={{ width: `${Math.max(0, monster.hp / monster.maxHp * 100)}%` }}/></div>
-            {target?.id === monster.id && monster.alive && <div className="damage-number" key={hit}>{damage}</div>}
-          </div>
-        ))}
-
-        <div className="loot-bag">◒</div><div className="loot-apple">●</div><div className="loot-jellopy">◆</div>
-        <div className="battle-popups" key={`popup-${kills}`}><strong>+125 EXP</strong><strong>+42 Zeny</strong><span>Jellopy obtido</span></div>
-        <div className="world-label">Prontera Field <small>X: 156 &nbsp; Y: 203</small></div>
-      </section>
-
-      <aside className="auto-hunt card">
-        <div className="panel-title"><Swords size={20}/> AUTO HUNT</div>
-        <div className="stats"><p><span>Mapa:</span><b>Prontera Field</b></p><p><span>Tempo de Caçada:</span><b>02:37:42</b></p><p><span>EXP/h:</span><b>148.520</b></p><p><span>Job EXP/h:</span><b>61.300</b></p><p><span>Zeny/h:</span><b>24.840</b></p><p><span>Monstros derrotados:</span><b>{kills.toLocaleString('pt-BR')}</b></p></div>
-        <div className="drops"><h3>Drops Obtidos</h3><div><span>💧 Jellopy</span><b>x42</b></div><div><span>🍎 Apple</span><b>x7</b></div><div className="rare"><span>🃏 Poring Card</span><b>x1 · RARO</b></div></div>
-        <button className={`stop-btn ${!running ? 'paused' : ''}`} onClick={() => setRunning(v => !v)}>{running ? 'PARAR CAÇADA' : 'INICIAR CAÇADA'}</button>
-      </aside>
-
-      <section className="skillbar card">{['⚔️','💥','✚','🛡️','+','+','+','+'].map((item,i) => <button key={i}>{item}</button>)}</section>
-      <section className="expbar card"><div className="exp-copy"><span>Base EXP</span><b>64.2%</b></div><div className="meter exp"><i style={{ width:'64.2%' }}/></div></section>
-      <section className="chat card"><div className="chat-tabs"><b>Geral</b><span>Sistema</span><span>Batalha</span></div>{log.map((item,i)=><p key={`${item}-${i}`}>{item}</p>)}</section>
-      <div className="brand"><Crown size={24}/> RAGNAROK <span>IDLE</span></div>
-    </main>
-  )
+    {panel&&<div className="modal-backdrop" onMouseDown={()=>setPanel(null)}><section className="game-modal card" onMouseDown={e=>e.stopPropagation()}><header><h2>{panel}</h2><button onClick={()=>setPanel(null)}><X/></button></header>{panel==='Personagem'&&<Character g={g}/>} {panel==='Inventário'&&<Inventory g={g}/>} {panel==='Equipamentos'&&<Equipment g={g}/>} {panel==='Mapas'&&<Maps g={g} close={()=>setPanel(null)}/>} {!['Personagem','Inventário','Equipamentos','Mapas'].includes(panel)&&<div className="coming"><Sparkles/><h3>{panel}</h3><p>Sistema preparado para a próxima etapa de conteúdo.</p></div>}</section></div>}
+    {g.offline&&<div className="modal-backdrop"><section className="offline-card card"><Crown/><h2>Bem-vindo de volta!</h2><p>Seu personagem continuou caçando por <b>{Math.floor(g.offline.seconds/60)} minutos</b>.</p><div className="offline-grid"><b>⚔ {g.offline.kills} kills</b><b>✦ {g.offline.exp.toLocaleString()} EXP</b><b>✧ {g.offline.job.toLocaleString()} Job EXP</b><b>🪙 {g.offline.zeny.toLocaleString()} Zeny</b></div><button className="primary-btn" onClick={()=>g.setOffline(null)}>COLETAR</button></section></div>}
+  </main>
 }
+
+function Character({g}:{g:ReturnType<typeof useGame>}){return <div className="character-panel"><img src="/sprites/swordsman.svg"/><div><h3>Knock · Swordsman</h3><p>Base Lv. <b>{g.save.baseLevel}</b> · Job Lv. <b>{g.save.jobLevel}</b></p><div className="attribute-grid"><span>ATK <b>{g.save.attack}</b></span><span>DEF <b>{g.save.defense}</b></span><span>HP <b>{g.save.maxHp}</b></span><span>SP <b>{g.save.maxSp}</b></span></div><button className="primary-btn" onClick={g.heal}>Recuperar HP/SP</button></div></div>}
+function Inventory({g}:{g:ReturnType<typeof useGame>}){return <div className="inventory-grid">{Object.entries(g.save.inventory).filter(([,q])=>q>0).map(([id,q])=>{const it=items[id];return <div className={`item-slot ${it.rarity}`} key={id}><i>{it.icon}</i><b>{it.name}</b><small>{it.type}</small><em>x{q}</em>{it.type==='equipment'&&<button onClick={()=>g.equip(id)}>Equipar</button>}</div>})}</div>}
+function Equipment({g}:{g:ReturnType<typeof useGame>}){return <div className="equipment-layout"><div className="paperdoll"><img src="/sprites/swordsman.svg"/></div><div className="equipment-slots">{([['Arma',g.save.equipped.weapon],['Armadura',g.save.equipped.armor],['Escudo',g.save.equipped.shield]] as const).map(([slot,id])=><div key={slot}><span>{slot}</span><b>{id?items[id].name:'Vazio'}</b></div>)}<p>ATK total: <b>{g.save.attack}</b></p><p>DEF total: <b>{g.save.defense}</b></p></div></div>}
+function Maps({g,close}:{g:ReturnType<typeof useGame>;close:()=>void}){return <div className="map-grid">{maps.map(m=><button className={`map-card ${g.map.id===m.id?'selected':''}`} disabled={g.save.baseLevel<m.minLevel} key={m.id} onClick={()=>{g.changeMap(m.id);close()}}><span className={`map-thumb ${m.bg}`}/><strong>{m.name}</strong><small>Lv. {m.minLevel}+ · {m.monster}</small><em>{m.exp} EXP · {m.zeny} Zeny</em></button>)}</div>}
