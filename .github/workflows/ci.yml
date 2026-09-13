@@ -17,4 +17,5 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npm run catalog:verify
+      - run: npm run progression:verify
       - run: npm run build
