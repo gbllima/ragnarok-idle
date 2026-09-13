@@ -1,0 +1,20 @@
+.hunt-zone[data-ro-camera="1"]{perspective:1000px}
+.hunt-zone[data-ro-camera="1"] .sky{transform:translate3d(var(--ro-cam-far-x,0),var(--ro-cam-y,0),0) scale(1.12);transform-origin:center;will-change:transform}
+.hunt-zone[data-ro-camera="1"] .mountains,.hunt-zone[data-ro-camera="1"] .castle,.hunt-zone[data-ro-camera="1"] .cloud,.hunt-zone[data-ro-camera="1"] .far-trees{translate:var(--ro-cam-far-x,0) var(--ro-cam-y,0);will-change:translate}
+.hunt-zone[data-ro-camera="1"] .field,.hunt-zone[data-ro-camera="1"] .path,.hunt-zone[data-ro-camera="1"] .pond,.hunt-zone[data-ro-camera="1"] .tree,.hunt-zone[data-ro-camera="1"] .fence,.hunt-zone[data-ro-camera="1"] .signpost{translate:var(--ro-cam-x,0) var(--ro-cam-y,0);will-change:translate}
+.hunt-zone[data-ro-camera="1"] .field{inset:25% -18% -18% 150px}
+.hunt-zone[data-ro-camera="1"] .path{height:115%;width:34%;left:34%}
+.hunt-zone[data-ro-camera="1"] .decorative{display:none}
+.ro-world-mob{position:absolute;pointer-events:none;transition:opacity .2s;transform:translate(-50%,-50%);will-change:left,top;filter:drop-shadow(0 2px 1px #0002)}
+.ro-world-mob img,.main-mob[data-ro-animated="1"] img{image-rendering:pixelated}
+.ro-mob-label{position:absolute;left:50%;top:-17px;transform:translateX(-50%);white-space:nowrap;padding:2px 5px;border-radius:5px;background:#16120db8;color:#fff;font-size:10px;font-weight:800;text-shadow:1px 1px #000;opacity:.82}
+.main-mob[data-ro-state="death"]{filter:grayscale(.25);opacity:.82}
+.main-mob[data-ro-state="hit"]{filter:brightness(1.18)}
+.player-sprite[data-ro-walking="1"]{animation:roWalkBob .28s steps(2,end) infinite!important}
+.player-sprite[data-ro-combat-state="walk"] .sprite-shadow{animation:roWalkShadow .28s steps(2,end) infinite}
+.player-sprite.ro-attacking{animation:roCombatLunge .52s ease-in-out infinite!important}
+.player-sprite.ro-attacking .slash{animation:slash .52s infinite!important}
+@keyframes roWalkBob{0%,100%{margin-top:0}50%{margin-top:-5px}}
+@keyframes roWalkShadow{0%,100%{transform:scaleX(1)}50%{transform:scaleX(.82)}}
+@keyframes roCombatLunge{0%,100%{margin-left:0}42%{margin-left:13px}65%{margin-left:4px}}
+@media (prefers-reduced-motion:reduce){.ro-world-mob,.player-sprite{animation:none!important}.hunt-zone *{transition:none!important}}
