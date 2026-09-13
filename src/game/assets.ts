@@ -16,14 +16,29 @@ export const playerPortrait = (classId: string) => (playerAssets[classId] ?? pla
 export const mapAsset = (biome: string) => mapAssets[biome] ?? mapAssets.meadow
 
 export const fullSpriteStatus=JSON.parse(rawSpriteStatus) as {items:Record<string,[number,number]|null>;monsters:Record<string,[number,number]|null>}
+
+// The full sprite download is intentionally resumable. Do not hide an asset just because
+// the status index has not been regenerated yet: point at its deterministic local path and
+// let the image components fall back gracefully when a particular PNG is still missing.
 for(const item of Object.values(items)){
   if(!item.aegisId||itemAssets[item.id])continue
-  itemAssets[item.id]={id:item.aegisId,src:fullSpriteStatus.items[item.aegisId]?item.sprite!:'/sprites/missing-item.svg'}
+  itemAssets[item.id]={id:item.aegisId,src:item.sprite??`/ro/full/items/${item.aegisId}.png`}
 }
+
 for(const map of maps){
   if(!map.imported)continue
   const size=fullSpriteStatus.monsters[map.monsterId]
-  const src=size?map.sprite!:'/sprites/missing-monster.svg'
-  const animations=Object.fromEntries((['idle','walk','attack','hit','death'] as const).map(state=>[state,Array.from({length:8},(_,dir)=>size?`/ro/monster-actions/${map.monsterId}/${state}-${dir}.png`:src)])) as Record<AnimationState,string[]>
-  monsterAssets[map.spriteKey!]={id:map.monsterId,label:map.monster,src,width:size?.[0]||64,height:size?.[1]||72,animations}
+  const src=map.sprite??`/ro/full/monsters/${map.monsterId}.png`
+  const animations=Object.fromEntries((['idle','walk','attack','hit','death'] as const).map(state=>[
+    state,
+    Array.from({length:8},(_,dir)=>`/ro/monster-actions/${map.monsterId}/${state}-${dir}.png`),
+  ])) as Record<AnimationState,string[]>
+  monsterAssets[map.spriteKey!]={
+    id:map.monsterId,
+    label:map.monster,
+    src,
+    width:size?.[0]||64,
+    height:size?.[1]||72,
+    animations,
+  }
 }
