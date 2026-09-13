@@ -10,6 +10,11 @@ import './catalog.css'
 import './gameChrome.css'
 import './authenticMaps.css'
 import './pronteraSafeZone.css'
+import './pronteraTileBot02.css'
+import './pronteraTileBot05.css'
+import './pronteraTileBot07.css'
+import './pronteraTileG01.css'
+import './pronteraTiles.css'
 
 const root=ReactDOM.createRoot(document.getElementById('root')!)
 root.render(<div className="catalog-loading" role="status">Carregando Ragnarok Idle…</div>)
