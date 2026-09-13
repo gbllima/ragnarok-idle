@@ -1,5 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
+import { AccountGate } from './components/AccountGate'
 import './styles.css'
 import './death.css'
 import './progression.css'
@@ -18,11 +19,12 @@ import './pronteraTiles.css'
 import './party.css'
 import './quickInventoryTrim.css'
 import './partyPolish.css'
+import './onboarding.css'
 
 const root=ReactDOM.createRoot(document.getElementById('root')!)
 root.render(<div className="catalog-loading" role="status">Carregando Ragnarok Idle…</div>)
 Promise.all([import('./App'),import('./components/PronteraSafeZone'),import('./game/monsterSprites'),import('./game/playerSprites'),import('./game/worldMovement'),import('./game/partyWorld')]).then(([{App},{PronteraSafeZone},monsters,players,world,partyWorld])=>{
-  root.render(<React.StrictMode><App/><PronteraSafeZone/></React.StrictMode>)
+  root.render(<React.StrictMode><AccountGate><App/><PronteraSafeZone/></AccountGate></React.StrictMode>)
   monsters.installMonsterSpriteWatcher()
   players.installPlayerSpriteWatcher()
   world.installWorldMovement()
