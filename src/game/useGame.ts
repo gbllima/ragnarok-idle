@@ -19,6 +19,8 @@ export function useGame(){
   })
   const map=useMemo(()=>maps.find(m=>m.id===save.mapId)??maps[0],[save.mapId])
   const [monsterHp,setMonsterHp]=useState(map.monsterHp)
+  const [monsterAlive,setMonsterAlive]=useState(true)
+  const [playerDead,setPlayerDead]=useState(false)
   const [hit,setHit]=useState(0)
   const [damage,setDamage]=useState(0)
   const [log,setLog]=useState<string[]>(['Sistema pronto. A caçada automática está ativa.'])
@@ -42,19 +44,33 @@ export function useGame(){
   },[])
 
   useEffect(()=>{ localStorage.setItem(KEY,JSON.stringify({...save,lastSeen:Date.now()})) },[save])
-  useEffect(()=>{ setMonsterHp(map.monsterHp) },[map.id,map.monsterHp])
+  useEffect(()=>{ setMonsterHp(map.monsterHp); setMonsterAlive(true) },[map.id,map.monsterHp])
 
   useEffect(()=>{
-    if(!save.running) return
+    if(!save.running || !monsterAlive || playerDead) return
     const timer=window.setInterval(()=>{
       const variance=Math.floor(Math.random()*61)-30
       const dealt=Math.max(1,save.attack+variance)
       setDamage(dealt); setHit(v=>v+1)
+      const incoming=Math.max(1,Math.round(map.monsterAtk-save.defense/4))
+      setSave(s=>{
+        const nextHp=Math.max(0,s.hp-incoming)
+        if(nextHp===0){
+          setPlayerDead(true)
+          setLog(l=>['Você foi derrotado. Respawn em Prontera em 3 segundos.',...l].slice(0,6))
+          window.setTimeout(()=>{
+            setSave(current=>({...current,hp:current.maxHp,sp:current.maxSp}))
+            setPlayerDead(false)
+            setLog(l=>['Você renasceu com HP e SP restaurados.',...l].slice(0,6))
+          },3000)
+        }
+        return {...s,hp:nextHp}
+      })
       setMonsterHp(hp=>{
         const next=hp-dealt
-        setSave(s=>({...s,hp:Math.max(1,s.hp-Math.max(1,map.monsterAtk-s.defense/4))}))
         setLog(l=>[`Você causou ${dealt} de dano em ${map.monster}.`,...l].slice(0,6))
         if(next>0) return next
+        setMonsterAlive(false)
         setSave(s=>{
           const inv={...s.inventory,jellopy:(s.inventory.jellopy||0)+1}
           if(Math.random()<.25) inv.apple=(inv.apple||0)+1
@@ -65,11 +81,12 @@ export function useGame(){
           return {...s,inventory:inv,baseExp,jobExp,baseLevel,jobLevel,zeny:s.zeny+map.zeny,kills:s.kills+1,hp:Math.min(s.maxHp,s.hp+18)}
         })
         setLog(l=>[`${map.monster} derrotado! +${map.exp} EXP · +${map.jobExp} Job EXP · +${map.zeny} Zeny`,...l].slice(0,6))
-        return map.monsterHp
+        window.setTimeout(()=>{ setMonsterHp(map.monsterHp); setMonsterAlive(true) },1800)
+        return 0
       })
     },1200)
     return()=>window.clearInterval(timer)
-  },[save.running,save.attack,save.defense,map])
+  },[save.running,save.attack,save.defense,map,monsterAlive,playerDead])
 
   const equip=(id:string)=>{
     const item=items[id]; if(!item||item.type!=='equipment') return
@@ -86,5 +103,5 @@ export function useGame(){
   const toggle=()=>setSave(s=>({...s,running:!s.running}))
   const heal=()=>setSave(s=>({...s,hp:s.maxHp,sp:s.maxSp}))
 
-  return {save,map,monsterHp,hit,damage,log,offline,setOffline,equip,changeMap,toggle,heal,baseNeed:expNeed(save.baseLevel),jobNeed:jobNeed(save.jobLevel)}
+  return {save,map,monsterHp,monsterAlive,playerDead,hit,damage,log,offline,setOffline,equip,changeMap,toggle,heal,baseNeed:expNeed(save.baseLevel),jobNeed:jobNeed(save.jobLevel)}
 }
