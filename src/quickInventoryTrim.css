@@ -1,0 +1,10 @@
+/* Remove o paperdoll duplicado do dock direito. O acesso completo a Equipamentos e Inventário continua pelo menu principal e pela Party. */
+.quick-inventory .quick-head,
+.quick-inventory .paperdoll-dock{display:none!important}
+
+.game-right-stack .quick-inventory{min-height:0!important;height:auto!important;padding-top:7px!important}
+.game-right-stack .quick-inventory .bag-title{margin-top:0!important}
+
+@media(max-width:767px){
+  .game-right-stack .quick-inventory{min-height:0!important;height:auto!important;padding-top:5px!important}
+}
