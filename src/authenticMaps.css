@@ -1,0 +1,44 @@
+/* Final visual pass for the in-game HUD.
+   It intentionally comes after gameChrome.css so the persistent inventory and map scene
+   can be fixed without changing combat/world movement code. */
+
+/* ---------- Persistent equipment + backpack ---------- */
+.quick-inventory{height:366px!important;overflow:hidden}
+.paperdoll-dock{grid-template-columns:minmax(0,1fr) 88px!important;height:138px!important}
+.dock-slots{grid-template-columns:repeat(4,minmax(44px,1fr))!important;grid-template-rows:repeat(2,minmax(50px,1fr))!important;gap:6px!important;min-width:0}
+.dock-slot{min-width:0!important;min-height:50px!important}
+.dock-slot .ro-item-icon{display:block!important;width:40px!important;height:40px!important;min-width:40px!important;object-fit:contain!important;opacity:1!important;visibility:visible!important}
+.dock-slot>span{font-size:7px!important;line-height:1.05}
+.dock-character{width:88px!important;min-width:88px!important}
+.dock-character img{width:64px!important;height:78px!important}
+.bag-title{height:25px!important;margin-top:2px}
+.bag-grid{grid-template-columns:repeat(6,minmax(0,1fr))!important;grid-auto-rows:45px!important;max-height:142px;overflow-y:auto;overflow-x:hidden;padding:1px 4px 2px 1px;align-content:start;scrollbar-width:thin;scrollbar-color:#9b7448 #171310}
+.bag-grid::-webkit-scrollbar{width:5px}.bag-grid::-webkit-scrollbar-track{background:#171310}.bag-grid::-webkit-scrollbar-thumb{background:#9b7448;border-radius:5px}
+.bag-grid button{width:100%;height:45px;aspect-ratio:auto!important;min-width:0;overflow:hidden}
+.bag-grid .ro-item-icon{display:block!important;width:34px!important;height:34px!important;min-width:34px!important;object-fit:contain!important;opacity:1!important;visibility:visible!important}
+.bag-grid small{z-index:2;background:#080808aa;border-radius:3px;padding:0 2px;line-height:12px}
+
+/* ---------- Real Ragnarok map scene ---------- */
+.hunt-zone.ro-authentic-map{background:#24351f!important;overflow:hidden!important}
+.hunt-zone.ro-authentic-map .authentic-map-bg{position:absolute;z-index:0;inset:-8%;pointer-events:none;background-image:linear-gradient(#10180b05,#10180b18),var(--ro-scene),var(--ro-scene-fallback),var(--ro-ground);background-repeat:no-repeat,no-repeat,no-repeat,repeat;background-position:center,center,center,center;background-size:cover,cover,cover,256px 256px;transform:translate3d(var(--ro-cam-x,0),var(--ro-cam-y,0),0) scale(1.12);transform-origin:center;filter:saturate(1.08) contrast(1.04) brightness(.98);will-change:transform}
+/* The old scenery was made from CSS shapes. Once a real field render is available it must not
+   draw fake trees, fences, castle, pond or road over Ragnarok scenery. */
+.hunt-zone.ro-authentic-map>.sky,.hunt-zone.ro-authentic-map>.cloud,.hunt-zone.ro-authentic-map>.mountains,.hunt-zone.ro-authentic-map>.castle,.hunt-zone.ro-authentic-map>.far-trees,.hunt-zone.ro-authentic-map>.field,.hunt-zone.ro-authentic-map>.path,.hunt-zone.ro-authentic-map>.pond,.hunt-zone.ro-authentic-map>.tree,.hunt-zone.ro-authentic-map>.fence,.hunt-zone.ro-authentic-map>.signpost{display:none!important}
+.hunt-zone.ro-authentic-map:after{content:"";position:absolute;z-index:1;inset:0;pointer-events:none;background:radial-gradient(ellipse at center,transparent 48%,#10180c25 100%)}
+.hunt-zone.ro-authentic-map .sprite,.hunt-zone.ro-authentic-map .ro-world-mob,.hunt-zone.ro-authentic-map .battle-popups,.hunt-zone.ro-authentic-map .world-label{z-index:7}
+.hunt-zone.ro-authentic-map .world-label{z-index:12;background:#15120edb;border-color:#a27c50;backdrop-filter:blur(2px)}
+
+/* Imported catalog mobs do not have an individual field id yet. Their biome preview still uses
+   an authentic Ragnarok field render through mapScene(), never the old CSS tree mockup. */
+
+@media (min-width:768px) and (max-height:720px){
+  .quick-inventory{height:305px!important}.paperdoll-dock{height:116px!important}.dock-slots{grid-template-rows:repeat(2,minmax(42px,1fr))!important}.dock-slot{min-height:42px!important}.dock-slot .ro-item-icon{width:34px!important;height:34px!important;min-width:34px!important}.bag-grid{max-height:91px;grid-auto-rows:42px!important}.bag-grid button{height:42px}.auto-hunt{max-height:294px!important}
+}
+
+@media (max-width:1180px) and (min-width:768px){
+  .paperdoll-dock{grid-template-columns:1fr!important}.dock-character{display:none!important}.quick-inventory{height:326px!important}.bag-grid{max-height:132px}
+}
+
+@media (max-width:767px){
+  .quick-inventory{height:auto!important;max-height:94px!important;overflow:hidden}.paperdoll-dock{display:none!important}.bag-grid{overflow:hidden!important;max-height:32px!important;grid-auto-rows:32px!important}.bag-grid button{height:32px!important}.bag-grid .ro-item-icon{width:25px!important;height:25px!important;min-width:25px!important}.hunt-zone.ro-authentic-map .authentic-map-bg{inset:-12%;background-size:cover,cover,cover,220px 220px;transform:translate3d(var(--ro-cam-x,0),var(--ro-cam-y,0),0) scale(1.16)}
+}
