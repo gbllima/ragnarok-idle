@@ -14,7 +14,8 @@
     "catalog:sprites": "node tools/sync-full-sprites.mjs",
     "catalog:sprites:items": "node tools/sync-full-sprites.mjs --items-only",
     "catalog:sprites:monsters": "node tools/sync-full-sprites.mjs --monsters-only",
-    "catalog:verify": "node tools/verify-full-catalog.mjs"
+    "catalog:verify": "node tools/verify-full-catalog.mjs",
+    "progression:verify": "node tools/verify-progression.mjs"
   },
   "dependencies": {
     "@vitejs/plugin-react": "latest",
