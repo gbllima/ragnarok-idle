@@ -34,6 +34,15 @@ export function marketReason(item:ItemDef,baseLevel:number){
   return ''
 }
 
+export function isProgressionMarketItem(item:ItemDef,baseLevel:number){
+  const unlock=marketUnlockLevel(item)
+  if(unlock>baseLevel)return false
+  if(item.type==='equipment')return unlock>=Math.max(1,baseLevel-20)&&unlock<=baseLevel
+  if(item.type==='card')return baseLevel>=30&&unlock>=Math.max(1,baseLevel-30)
+  if(item.type==='consumable')return item.category!=='Cash'&&item.category!=='PetEgg'
+  return false
+}
+
 export function isMagicClass(classId:string){
   const root=jobMeta[classId]?.root||classId
   return root==='mage'||root==='acolyte'
