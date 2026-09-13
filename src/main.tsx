@@ -20,6 +20,7 @@ import './party.css'
 import './quickInventoryTrim.css'
 import './partyPolish.css'
 import './onboarding.css'
+import './onboardingNovice.css'
 
 const root=ReactDOM.createRoot(document.getElementById('root')!)
 root.render(<div className="catalog-loading" role="status">Carregando Ragnarok Idle…</div>)
